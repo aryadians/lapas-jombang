@@ -2,68 +2,144 @@
 
 @section('content')
 
-<section class="relative bg-navy-light text-white py-24">
-    <div class="container mx-auto px-6 text-center">
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">Selamat Datang di Lapas Kelas 2B Jombang</h1>
-        <p class="text-xl text-gray-300 mb-8">Pelayanan Prima, Pemasyarakatan Maju.</p>
-        <a href="#profil" class="bg-gold text-navy-dark bg-yellow-500 hover:bg-yellow-400 font-bold py-3 px-8 rounded-full shadow-lg transition">
-            Selengkapnya
-        </a>
+<section class="relative bg-slate-900 text-white min-h-[600px] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 z-0">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Kantor_Wilayah_Kementerian_Hukum_dan_HAM_Republik_Indonesia_Jawa_Tengah.jpg/1200px-Kantor_Wilayah_Kementerian_Hukum_dan_HAM_Republik_Indonesia_Jawa_Tengah.jpg" 
+             alt="Background Lapas" 
+             class="w-full h-full object-cover opacity-30">
+        <div class="absolute inset-0 bg-gradient-to-b from-slate-900/80 to-slate-900/90"></div>
     </div>
-    </section>
 
-<section id="profil" class="py-16 bg-white">
-    <div class="container mx-auto px-6 text-center max-w-3xl">
-        <h2 class="text-3xl font-bold text-navy-dark mb-6">Tentang Kami</h2>
-        <p class="text-gray-600 leading-relaxed">
-            Lembaga Pemasyarakatan Kelas 2B Jombang berkomitmen untuk memberikan pembinaan kepada warga binaan agar menjadi manusia seutuhnya, menyadari kesalahan, memperbaiki diri, dan tidak mengulangi tindak pidana.
+    <div class="container mx-auto px-6 text-center relative z-10">
+        <div class="mb-6 flex justify-center">
+            <img src="{{ asset('img/logo.png') }}" 
+                 alt="Logo Lapas" 
+                 class="h-24 md:h-32 w-auto drop-shadow-2xl animate-fade-in-down"
+                 onerror="this.style.display='none'">
+        </div>
+
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight">
+            Lapas Kelas 2B <span class="text-yellow-500">Jombang</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto font-light">
+            Mewujudkan pelayanan pemasyarakatan yang PASTI (Profesional, Akuntabel, Sinergi, Transparan, dan Inovatif).
         </p>
+        
+        <div class="flex justify-center gap-4">
+            <a href="#berita" class="bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1">
+                Berita Terbaru
+            </a>
+            <a href="#profil" class="border-2 border-white hover:bg-white hover:text-slate-900 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1">
+                Profil Kami
+            </a>
+        </div>
     </div>
 </section>
 
-<section id="berita" class="py-16 bg-gray-100">
+<section id="profil" class="py-20 bg-white">
     <div class="container mx-auto px-6">
-        <div class="flex justify-between items-center mb-10">
-            <h2 class="text-3xl font-bold text-navy-dark border-l-4 border-blue-600 pl-4">Berita Terkini</h2>
-            <a href="#" class="text-blue-700 font-semibold hover:underline">Lihat Semua Berita &rarr;</a>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-                <img src="https://via.placeholder.com/400x250" alt="News" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Kegiatan</span>
-                    <h3 class="text-xl font-bold mt-2 mb-2 text-gray-800">Kunjungan Kakanwil Jatim</h3>
-                    <p class="text-gray-600 text-sm mb-4">Kepala Kantor Wilayah melakukan monitoring dan evaluasi di Lapas Jombang...</p>
-                    <a href="#" class="text-navy-dark font-semibold text-sm hover:text-blue-600">Baca Selengkapnya</a>
-                </div>
-            </div>
-            
-            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-                <img src="https://via.placeholder.com/400x250" alt="News" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Pembinaan</span>
-                    <h3 class="text-xl font-bold mt-2 mb-2 text-gray-800">Pelatihan Kemandirian WBP</h3>
-                    <p class="text-gray-600 text-sm mb-4">Warga Binaan Pemasyarakatan mengikuti pelatihan pertukangan kayu...</p>
-                    <a href="#" class="text-navy-dark font-semibold text-sm hover:text-blue-600">Baca Selengkapnya</a>
-                </div>
-            </div>
-
-            <div class="bg-navy-dark text-white rounded-lg p-6 shadow-md">
-                <h3 class="text-xl font-bold mb-4 text-yellow-500">📢 Pengumuman</h3>
-                <ul class="space-y-4">
-                    <li class="border-b border-gray-700 pb-3">
-                        <span class="text-xs text-gray-400 block">03 Des 2025</span>
-                        <a href="#" class="hover:text-yellow-400 transition">Jadwal Kunjungan Tatap Muka Terbaru</a>
-                    </li>
-                    <li class="border-b border-gray-700 pb-3">
-                        <span class="text-xs text-gray-400 block">01 Des 2025</span>
-                        <a href="#" class="hover:text-yellow-400 transition">Persyaratan Penitipan Barang Makanan</a>
-                    </li>
-                </ul>
-            </div>
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">Tentang Kami</h2>
+            <div class="h-1 w-20 bg-yellow-500 mx-auto mb-8"></div>
+            <p class="text-gray-600 leading-relaxed text-lg">
+                Lembaga Pemasyarakatan Kelas 2B Jombang berkomitmen tinggi dalam memberikan pembinaan kepribadian dan kemandirian kepada Warga Binaan Pemasyarakatan (WBP). Kami bertekad menciptakan lingkungan yang aman, tertib, dan manusiawi sebagai bekal mereka kembali ke masyarakat.
+            </p>
         </div>
     </div>
 </section>
+
+<section id="berita" class="py-20 bg-slate-50 border-t border-gray-200">
+    <div class="container mx-auto px-6">
+        
+        <div class="flex flex-col md:flex-row gap-12">
+            
+            <div class="md:w-2/3">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-slate-800 border-l-4 border-yellow-500 pl-4">Berita Terkini</h2>
+                    <a href="#" class="text-blue-700 font-semibold hover:underline text-sm">Lihat Semua &rarr;</a>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    @forelse($news as $item)
+                    <div class="bg-white rounded-xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden group border border-gray-100">
+                        <div class="relative h-48 overflow-hidden">
+                            @if($item->image)
+                                <img src="{{ $item->image }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            @else
+                                <div class="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400">
+                                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                </div>
+                            @endif
+                            <div class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
+                                {{ $item->created_at->format('d M Y') }}
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-slate-800 mb-3 group-hover:text-blue-700 transition line-clamp-2">
+                                {{ $item->title }}
+                            </h3>
+                            <p class="text-gray-500 text-sm mb-4 line-clamp-3">
+                                {{ Str::limit($item->content, 100) }}
+                            </p>
+                            <a href="#" class="inline-block text-sm font-bold text-yellow-600 hover:text-yellow-700">
+                                Baca Selengkapnya &rarr;
+                            </a>
+                        </div>
+                    </div>
+                    @empty
+                    <div class="col-span-2 text-center py-10 bg-white rounded-xl border border-dashed border-gray-300">
+                        <p class="text-gray-500">Belum ada berita yang diterbitkan.</p>
+                    </div>
+                    @endforelse
+                </div>
+            </div>
+
+            <div class="md:w-1/3">
+                <div class="bg-slate-900 rounded-xl shadow-lg p-6 text-white sticky top-10">
+                    <div class="flex items-center mb-6 pb-4 border-b border-slate-700">
+                        <span class="text-2xl mr-2">📢</span>
+                        <h3 class="text-xl font-bold text-yellow-500">Papan Pengumuman</h3>
+                    </div>
+
+                    <ul class="space-y-6">
+                        @forelse($announcements as $info)
+                        <li class="group">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 text-center bg-slate-800 rounded p-2 mr-3 border border-slate-700 group-hover:border-yellow-500 transition">
+                                    <span class="block text-xl font-bold text-white">{{ $info->date->format('d') }}</span>
+                                    <span class="block text-xs uppercase text-gray-400">{{ $info->date->format('M') }}</span>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-gray-200 group-hover:text-yellow-400 transition leading-snug">
+                                        {{ $info->title }}
+                                    </h4>
+                                    <p class="text-xs text-gray-500 mt-1 line-clamp-2">
+                                        {{ Str::limit($info->content, 60) }}
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        @empty
+                        <li class="text-center text-gray-500 text-sm italic py-4">
+                            Tidak ada pengumuman aktif.
+                        </li>
+                        @endforelse
+                    </ul>
+
+                    <div class="mt-8 pt-4 border-t border-slate-700 text-center">
+                        <a href="#" class="text-sm text-gray-400 hover:text-white transition">Lihat Arsip Pengumuman</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<footer class="bg-slate-950 text-white py-8 border-t border-slate-900">
+    <div class="container mx-auto px-6 text-center">
+        <p class="text-sm text-gray-500">&copy; {{ date('Y') }} Lembaga Pemasyarakatan Kelas 2B Jombang. All rights reserved.</p>
+    </div>
+</footer>
 
 @endsection

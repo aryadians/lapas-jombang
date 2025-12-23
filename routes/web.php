@@ -5,63 +5,81 @@ use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Models\News;
 use App\Models\Announcement;
-use App\Models\User; // <--- BARIS INI YANG SEBELUMNYA KURANG
+use App\Models\User; // <--- PENTING: Agar User::count() berfungsi
 use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
+|
+| Di sini adalah tempat mendaftarkan route untuk aplikasi.
+| Route '/' untuk pengunjung publik.
+| Route '/dashboard' dan lainnya untuk admin yang sudah login.
+|
 */
 
-// --- 1. HALAMAN DEPAN (PUBLIK) ---
+// =========================================================================
+// 1. HALAMAN DEPAN (PUBLIK - PENGUNJUNG)
+// =========================================================================
 Route::get('/', function () {
-    // AMBIL BERITA: Hanya yang statusnya 'published', ambil 3 terbaru
+    // A. AMBIL BERITA
+    // Syarat: Status harus 'published'
+    // Urutkan: Terbaru
+    // Jumlah: Ambil 4 berita
     $news = News::where('status', 'published')
                 ->latest()
-                ->take(3)
+                ->take(4)
                 ->get();
 
-    // AMBIL PENGUMUMAN: Ambil 5 terbaru
-    // Saya tambahkan filter 'published' juga agar konsisten (jika kolom status ada)
-    $announcements = Announcement::where('status', 'published') 
+    // B. AMBIL PENGUMUMAN
+    // Syarat: Status harus 'published' (Pastikan kolom status sudah ada di tabel announcements)
+    // Urutkan: Berdasarkan tanggal kegiatan (date)
+    // Jumlah: Ambil 5 pengumuman
+    $announcements = Announcement::where('status', 'published')
                                  ->orderBy('date', 'desc')
                                  ->take(5)
                                  ->get();
     
+    // Kirim data ke view 'welcome.blade.php'
     return view('welcome', compact('news', 'announcements'));
 });
 
 
-// --- 2. HALAMAN ADMIN (WAJIB LOGIN) ---
+// =========================================================================
+// 2. HALAMAN ADMIN (WAJIB LOGIN)
+// =========================================================================
 Route::middleware(['auth', 'verified'])->group(function () {
     
-    // DASHBOARD: Mengirim data statistik ke view
+    // A. DASHBOARD ADMIN
     Route::get('/dashboard', function () {
-        // 1. Hitung Total Data
+        // 1. Hitung Total Data (Semua data, termasuk Draft)
         $totalNews = News::count();
         $totalAnnouncements = Announcement::count();
-        $totalUsers = User::count(); // <--- Ini sekarang aman karena User sudah di-import di atas
+        $totalUsers = User::count();
 
-        // 2. Ambil 5 Berita Terbaru untuk Tabel "Aktivitas Terbaru"
+        // 2. Ambil 5 Berita Terakhir (Untuk tabel aktivitas di dashboard)
+        // Kita ambil semua status (Draft & Published) agar admin bisa melihat kerjaannya
         $latestNews = News::latest()->take(5)->get();
 
         return view('admin.dashboard', compact('totalNews', 'totalAnnouncements', 'totalUsers', 'latestNews'));
     })->name('dashboard');
     
 
-    // CRUD Berita
+    // B. CRUD BERITA (Create, Read, Update, Delete)
     Route::resource('news', NewsController::class);
 
-    // CRUD Pengumuman
+    // C. CRUD PENGUMUMAN
     Route::resource('announcements', AnnouncementController::class);
 
-    // Profil User
+    // D. PENGATURAN PROFIL ADMIN (Bawaan Laravel Breeze)
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 
-// --- 3. AUTHENTICATION ---
+// =========================================================================
+// 3. AUTHENTICATION ROUTES (Login, Logout, Reset Password)
+// =========================================================================
 require __DIR__.'/auth.php';

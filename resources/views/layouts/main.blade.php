@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lapas Kelas 2B Jombang</title>
-    <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('img/logo-2024.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom Navy Colors */
