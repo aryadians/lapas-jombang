@@ -1,71 +1,92 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Lapas Kelas 2B Jombang</title>
-    <link rel="icon" href="{{ asset('img/logo-2024.png') }}" type="image/png">
+
+    <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
-        /* Custom Navy Colors */
-        .bg-navy-dark { background-color: #0f172a; } /* Slate 900 */
-        .bg-navy-light { background-color: #1e293b; } /* Slate 800 */
-        .text-gold { color: #fbbf24; } /* Aksen Emas agar elegan */
+        body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="bg-gray-50 flex flex-col min-h-screen">
+<body class="font-sans antialiased text-slate-800 bg-white">
 
-    <nav class="bg-navy-dark text-white shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="/" class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-navy-dark font-bold">L</div>
-                <div>
-                    <h1 class="text-xl font-bold tracking-wide">LAPAS JOMBANG</h1>
-                    <p class="text-xs text-gray-300">Kelas 2B - Kanwil Jawa Timur</p>
+    <nav class="bg-slate-900/95 backdrop-blur-md fixed w-full z-50 shadow-lg border-b border-slate-800 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <a href="{{ url('/') }}" class="flex items-center gap-3 group">
+                        <img class="h-10 w-auto group-hover:scale-105 transition-transform duration-300" 
+                             src="{{ asset('img/logo.png') }}" 
+                             alt="Logo Lapas">
+                        
+                        <div class="flex flex-col">
+                            <span class="font-bold text-white text-lg tracking-wide group-hover:text-yellow-400 transition">LAPAS KELAS 2B JOMBANG</span>
+                            <span class="text-[10px] text-yellow-500 uppercase tracking-wider font-semibold">Kementerian Imigrasi dan Pemasyarakatan RI</span>
+                        </div>
+                    </a>
                 </div>
-            </a>
-            <div class="hidden md:flex space-x-8 font-medium">
-                <a href="/" class="hover:text-gold transition">Beranda</a>
-                <a href="#profil" class="hover:text-gold transition">Profil</a>
-                <a href="#berita" class="hover:text-gold transition">Berita</a>
-                <a href="#pengumuman" class="hover:text-gold transition">Pengumuman</a>
+
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-sm font-medium transition-all">Beranda</a>
+                    <a href="#profil" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-sm font-medium transition-all">Profil</a>
+                    <a href="#berita" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-sm font-medium transition-all">Berita</a>
+                    <a href="#pengumuman" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-sm font-medium transition-all">Pengumuman</a>
+                </div>
+
+                <div class="hidden md:flex items-center">
+                    @if (Route::has('login'))
+                        @auth
+                            <a href="{{ url('/dashboard') }}" class="text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded-full transition shadow-lg hover:shadow-blue-500/30">
+                                Dashboard
+                            </a>
+                        @else
+                            <a href="{{ route('login') }}" class="text-sm font-bold text-slate-900 bg-yellow-500 hover:bg-yellow-400 px-5 py-2.5 rounded-full transition shadow-lg hover:shadow-yellow-500/30 transform hover:-translate-y-0.5">
+                                Login Petugas
+                            </a>
+                        @endauth
+                    @endif
+                </div>
+
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none transition">
+                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
             </div>
-            <div>
-                <a href="/login" class="bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded text-sm font-semibold transition">Login Admin</a>
+        </div>
+
+        <div class="hidden md:hidden bg-slate-800 border-t border-slate-700" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-slate-700">Beranda</a>
+                <a href="#profil" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700">Profil</a>
+                <a href="#berita" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700">Berita</a>
+                
+                @if (Route::has('login'))
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="block w-full text-center mt-4 px-5 py-3 rounded-md font-bold text-white bg-blue-600">Dashboard</a>
+                    @else
+                        <a href="{{ route('login') }}" class="block w-full text-center mt-4 px-5 py-3 rounded-md font-bold text-slate-900 bg-yellow-500">Login Petugas</a>
+                    @endauth
+                @endif
             </div>
         </div>
     </nav>
 
-    <main class="flex-grow">
+    <div class="pt-20"> 
         @yield('content')
-    </main>
-
-    <footer class="bg-navy-dark text-gray-300 py-10 mt-10">
-        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-                <h3 class="text-white text-lg font-bold mb-4 border-b border-gray-600 pb-2">Lapas Kelas 2B Jombang</h3>
-                <p class="text-sm">Mewujudkan pelayanan pemasyarakatan yang PASTI (Profesional, Akuntabel, Sinergi, Transparan, Inovatif).</p>
-            </div>
-            <div>
-                <h3 class="text-white text-lg font-bold mb-4 border-b border-gray-600 pb-2">Hubungi Kami</h3>
-                <ul class="text-sm space-y-2">
-                    <li>📍 Jl. KH. Wahid Hasyim, Jombang</li>
-                    <li>📞 (0321) 123456</li>
-                    <li>📧 humas@lapasjombang.go.id</li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="text-white text-lg font-bold mb-4 border-b border-gray-600 pb-2">Tautan Terkait</h3>
-                <ul class="text-sm space-y-2">
-                    <li><a href="#" class="hover:text-white">Ditjen Pas</a></li>
-                    <li><a href="#" class="hover:text-white">Kemenkumham Jatim</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="text-center text-xs mt-10 border-t border-gray-700 pt-4">
-            &copy; 2025 Lapas Kelas 2B Jombang. All rights reserved.
-        </div>
-    </footer>
+    </div>
 
 </body>
 </html>
