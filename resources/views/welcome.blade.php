@@ -4,18 +4,18 @@
 
 <section class="relative bg-slate-900 text-white min-h-[600px] flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0 z-0">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Kantor_Wilayah_Kementerian_Hukum_dan_HAM_Republik_Indonesia_Jawa_Tengah.jpg/1200px-Kantor_Wilayah_Kementerian_Hukum_dan_HAM_Republik_Indonesia_Jawa_Tengah.jpg" 
-             alt="Background Lapas" 
-             class="w-full h-full object-cover opacity-30">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Kantor_Wilayah_Kementerian_Hukum_dan_HAM_Republik_Indonesia_Jawa_Tengah.jpg/1200px-Kantor_Wilayah_Kementerian_Hukum_dan_HAM_Republik_Indonesia_Jawa_Tengah.jpg"
+            alt="Background Lapas"
+            class="w-full h-full object-cover opacity-30">
         <div class="absolute inset-0 bg-gradient-to-b from-slate-900/80 to-slate-900/90"></div>
     </div>
 
     <div class="container mx-auto px-6 text-center relative z-10">
         <div class="mb-6 flex justify-center">
-            <img src="{{ asset('img/logo.png') }}" 
-                 alt="Logo Lapas" 
-                 class="h-24 md:h-32 w-auto drop-shadow-2xl animate-fade-in-down"
-                 onerror="this.style.display='none'">
+            <img src="{{ asset('img/logo.png') }}"
+                alt="Logo Lapas"
+                class="h-24 md:h-32 w-auto drop-shadow-2xl animate-fade-in-down"
+                onerror="this.style.display='none'">
         </div>
 
         <h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight">
@@ -24,7 +24,7 @@
         <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto font-light">
             Mewujudkan pelayanan pemasyarakatan yang PASTI (Profesional, Akuntabel, Sinergi, Transparan, dan Inovatif).
         </p>
-        
+
         <div class="flex justify-center gap-4">
             <a href="#berita" class="bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1">
                 Berita Terbaru
@@ -50,9 +50,9 @@
 
 <section id="berita" class="py-20 bg-slate-50 border-t border-gray-200">
     <div class="container mx-auto px-6">
-        
+
         <div class="flex flex-col md:flex-row gap-12">
-            
+
             <div class="md:w-2/3">
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-3xl font-bold text-slate-800 border-l-4 border-yellow-500 pl-4">Berita Terkini</h2>
@@ -64,11 +64,13 @@
                     <div class="bg-white rounded-xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden group border border-gray-100">
                         <div class="relative h-48 overflow-hidden">
                             @if($item->image)
-                                <img src="{{ $item->image }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <img src="{{ $item->image }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                             @else
-                                <div class="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400">
-                                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                </div>
+                            <div class="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400">
+                                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
                             @endif
                             <div class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
                                 {{ $item->created_at->format('d M Y') }}
@@ -136,10 +138,6 @@
     </div>
 </section>
 
-<footer class="bg-slate-950 text-white py-8 border-t border-slate-900">
-    <div class="container mx-auto px-6 text-center">
-        <p class="text-sm text-gray-500">&copy; {{ date('Y') }} Lembaga Pemasyarakatan Kelas 2B Jombang. All rights reserved.</p>
-    </div>
-</footer>
+
 
 @endsection

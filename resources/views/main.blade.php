@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +9,24 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom Navy Colors */
-        .bg-navy-dark { background-color: #0f172a; } /* Slate 900 */
-        .bg-navy-light { background-color: #1e293b; } /* Slate 800 */
-        .text-gold { color: #fbbf24; } /* Aksen Emas agar elegan */
+        .bg-navy-dark {
+            background-color: #0f172a;
+        }
+
+        /* Slate 900 */
+        .bg-navy-light {
+            background-color: #1e293b;
+        }
+
+        /* Slate 800 */
+        .text-gold {
+            color: #fbbf24;
+        }
+
+        /* Aksen Emas agar elegan */
     </style>
 </head>
+
 <body class="bg-gray-50 flex flex-col min-h-screen">
 
     <nav class="bg-navy-dark text-white shadow-lg sticky top-0 z-50">
@@ -68,4 +82,5 @@
     </footer>
 
 </body>
+
 </html>

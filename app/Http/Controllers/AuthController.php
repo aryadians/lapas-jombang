@@ -7,34 +7,62 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function showLogin() {
+    /**
+     * Menampilkan halaman login.
+     */
+    public function showLogin()
+    {
         return view('auth.login');
     }
 
-    public function login(Request $request) {
+    /**
+     * Proses autentikasi login.
+     */
+    public function login(Request $request)
+    {
+        // 1. Validasi input
         $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        // 2. Cek status "Ingat Saya" (Remember Me)
+        // name="remember" diambil dari input checkbox di view login
+        $remember = $request->boolean('remember');
+
+        // 3. Proses Login
+        if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
+            // CATATAN: Pengecekan role dihapus karena kolom 'role' tidak ada di database Anda.
+            // Jika nanti Anda menambahkan kolom role, Anda bisa uncomment kode di bawah ini:
+            /*
             if (Auth::user()->role == 'admin') {
                 return redirect()->intended('admin/dashboard');
             }
-            return redirect()->intended('/');
+            */
+
+            // Redirect default ke dashboard
+            return redirect()->intended('dashboard');
         }
 
+        // 4. Jika login gagal, kembalikan ke halaman login dengan error
         return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ]);
+            'email' => 'Email atau kata sandi yang Anda masukkan salah.',
+        ])->onlyInput('email');
     }
 
-    public function logout(Request $request) {
+    /**
+     * Proses logout.
+     */
+    public function logout(Request $request)
+    {
         Auth::logout();
+
         $request->session()->invalidate();
+
         $request->session()->regenerateToken();
+
         return redirect('/login');
     }
 }
