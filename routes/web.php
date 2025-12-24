@@ -28,19 +28,19 @@ Route::get('/', function () {
     // Urutkan: Terbaru
     // Jumlah: Ambil 4 berita
     $news = News::where('status', 'published')
-                ->latest()
-                ->take(4)
-                ->get();
+        ->latest()
+        ->take(4)
+        ->get();
 
     // B. AMBIL PENGUMUMAN
     // Syarat: Status harus 'published' (Pastikan kolom status sudah ada di tabel announcements)
     // Urutkan: Berdasarkan tanggal kegiatan (date)
     // Jumlah: Ambil 5 pengumuman
     $announcements = Announcement::where('status', 'published')
-                                 ->orderBy('date', 'desc')
-                                 ->take(5)
-                                 ->get();
-    
+        ->orderBy('date', 'desc')
+        ->take(5)
+        ->get();
+
     // Kirim data ke view 'welcome.blade.php'
     return view('welcome', compact('news', 'announcements'));
 });
@@ -50,7 +50,7 @@ Route::get('/', function () {
 // 2. HALAMAN ADMIN (WAJIB LOGIN)
 // =========================================================================
 Route::middleware(['auth', 'verified'])->group(function () {
-    
+
     // A. DASHBOARD ADMIN
     Route::get('/dashboard', function () {
         // 1. Hitung Total Data (Semua data, termasuk Draft)
@@ -64,7 +64,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         return view('admin.dashboard', compact('totalNews', 'totalAnnouncements', 'totalUsers', 'latestNews'));
     })->name('dashboard');
-    
+
 
     // B. CRUD BERITA (Create, Read, Update, Delete)
     Route::resource('news', NewsController::class);
@@ -78,8 +78,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/kunjungan/daftar', function () {
+    return view('kunjungan.create');
+})->name('kunjungan.create');
+Route::get('/kunjungan/daftar', function () {
+    return view('guest.kunjungan.create');
+})->name('kunjungan.create');
+
+
 
 // =========================================================================
 // 3. AUTHENTICATION ROUTES (Login, Logout, Reset Password)
 // =========================================================================
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
