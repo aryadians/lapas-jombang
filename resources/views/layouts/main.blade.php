@@ -420,7 +420,7 @@
             {{-- Copyright Bawah --}}
             <div class="mt-12 pt-8 border-t border-slate-800 text-center text-slate-500 text-sm">
                 <p>© {{ date('Y') }} Lapas Kelas 2B Jombang. All rights reserved.</p>
-                <p class="mt-2 text-xs">Developed with ❤️ by Tim TI</p>
+                <p class="mt-2 text-xs">Developed by Tim IT</p>
             </div>
         </div>
     </footer>
