@@ -2,142 +2,222 @@
 
 @section('content')
 
-    <div class="relative bg-gradient-to-r from-slate-900 to-blue-900 rounded-2xl p-8 mb-8 text-white shadow-xl overflow-hidden">
-        <div class="relative z-10 flex justify-between items-center">
-            <div>
-                <h1 class="text-3xl font-bold mb-2">Selamat Datang, {{ Auth::user()->name }}! 👋</h1>
-                <p class="text-slate-300">Berikut adalah ringkasan aktivitas di Lembaga Pemasyarakatan Kelas 2B Jombang.</p>
-            </div>
-            <div class="hidden md:block text-right">
-                <p class="text-3xl font-mono font-bold text-yellow-500">{{ now()->format('H:i') }}</p>
-                <p class="text-sm text-slate-300">{{ now()->translatedFormat('l, d F Y') }}</p>
-            </div>
-        </div>
-        <div class="absolute right-0 top-0 h-full w-1/3 bg-yellow-500 opacity-10 transform skew-x-12 translate-x-12"></div>
-    </div>
+{{-- 1. HERO SECTION & JAM REALTIME --}}
+<div class="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 rounded-3xl p-8 mb-10 text-white shadow-2xl overflow-hidden border border-slate-700">
+    {{-- Background Accents --}}
+    <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-yellow-500 opacity-10 blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-60 h-60 rounded-full bg-blue-500 opacity-10 blur-3xl"></div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        
-        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center hover:-translate-y-1 transition duration-300">
-            <div class="p-4 bg-blue-50 text-blue-600 rounded-xl mr-4">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
-            </div>
-            <div>
-                <p class="text-gray-500 text-sm font-medium">Total Berita</p>
-                <h3 class="text-3xl font-bold text-slate-800">{{ $totalNews }}</h3>
-                <a href="{{ route('news.index') }}" class="text-xs text-blue-600 hover:underline">Lihat semua &rarr;</a>
-            </div>
+    <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div>
+            <span class="bg-blue-500/20 text-blue-200 text-xs font-bold px-3 py-1 rounded-full border border-blue-500/30 mb-2 inline-block">
+                Dashboard Admin
+            </span>
+            <h1 class="text-3xl md:text-4xl font-extrabold mb-2 tracking-tight">
+                Halo, {{ Auth::user()->name }}! 👋
+            </h1>
+            <p class="text-slate-300 text-sm md:text-base max-w-lg">
+                Selamat datang kembali di panel kontrol Sistem Informasi Lapas Kelas 2B Jombang.
+            </p>
         </div>
 
-        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center hover:-translate-y-1 transition duration-300">
-            <div class="p-4 bg-yellow-50 text-yellow-600 rounded-xl mr-4">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
-            </div>
-            <div>
-                <p class="text-gray-500 text-sm font-medium">Pengumuman</p>
-                <h3 class="text-3xl font-bold text-slate-800">{{ $totalAnnouncements }}</h3>
-                <a href="{{ route('announcements.index') }}" class="text-xs text-yellow-600 hover:underline">Lihat semua &rarr;</a>
-            </div>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center hover:-translate-y-1 transition duration-300">
-            <div class="p-4 bg-green-50 text-green-600 rounded-xl mr-4">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-            </div>
-            <div>
-                <p class="text-gray-500 text-sm font-medium">Petugas Admin</p>
-                <h3 class="text-3xl font-bold text-slate-800">{{ $totalUsers }}</h3>
-                <span class="text-xs text-green-600">Akun Terdaftar</span>
-            </div>
+        {{-- Jam Realtime --}}
+        <div class="text-center md:text-right bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-sm">
+            <p id="realtime-clock" class="text-4xl font-mono font-bold text-yellow-400 tracking-wider drop-shadow-md">
+                {{ now()->format('H:i:s') }}
+            </p>
+            <p id="realtime-date" class="text-xs font-semibold text-slate-300 uppercase tracking-widest mt-1">
+                {{ now()->translatedFormat('l, d F Y') }}
+            </p>
         </div>
     </div>
+</div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
-                <h3 class="text-lg font-bold text-slate-800">Berita Terbaru</h3>
-                <a href="{{ route('news.create') }}" class="text-sm bg-slate-900 text-white px-3 py-1.5 rounded-lg hover:bg-slate-700 transition">+ Tulis Baru</a>
+{{-- Script Jam Realtime --}}
+<script>
+    function updateClock() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('id-ID', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        }).replace(/\./g, ':');
+        const dateString = now.toLocaleDateString('id-ID', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        document.getElementById('realtime-clock').textContent = timeString;
+        document.getElementById('realtime-date').textContent = dateString;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+</script>
+
+{{-- 2. STATISTIK CARDS --}}
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+
+    {{-- Card Berita --}}
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition duration-300 group">
+        <div class="flex justify-between items-start">
+            <div>
+                <p class="text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">Total Berita</p>
+                <h3 class="text-3xl font-extrabold text-slate-800">{{ $totalNews }}</h3>
             </div>
-            
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left">
-                    <thead class="bg-gray-50 text-gray-500 uppercase text-xs">
-                        <tr>
-                            <th class="px-6 py-3">Judul</th>
-                            <th class="px-6 py-3">Status</th>
-                            <th class="px-6 py-3 text-right">Tanggal</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        @forelse($latestNews as $item)
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 font-medium text-slate-800">
-                                {{ Str::limit($item->title, 40) }}
-                            </td>
-                            <td class="px-6 py-4">
-                                @if($item->status == 'published')
-                                    <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full font-bold">Tayang</span>
-                                @else
-                                    <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full font-bold">Draft</span>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 text-right text-gray-500">
-                                {{ $item->created_at->diffForHumans() }}
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="3" class="px-6 py-8 text-center text-gray-400 italic">
-                                Belum ada berita yang ditambahkan.
-                            </td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+            <div class="p-3 bg-blue-50 text-blue-600 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition">
+                <i class="fa-regular fa-newspaper text-xl"></i>
             </div>
         </div>
-
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <h3 class="text-lg font-bold text-slate-800 mb-4">Akses Cepat</h3>
-            <div class="space-y-3">
-                <a href="{{ route('news.create') }}" class="block p-3 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-200 transition group">
-                    <div class="flex items-center">
-                        <div class="bg-blue-100 text-blue-600 p-2 rounded-lg mr-3 group-hover:bg-blue-600 group-hover:text-white transition">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block font-bold text-slate-700">Tulis Berita</span>
-                            <span class="text-xs text-gray-500">Publikasikan kegiatan terbaru</span>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="{{ route('announcements.create') }}" class="block p-3 border border-gray-200 rounded-lg hover:bg-yellow-50 hover:border-yellow-200 transition group">
-                    <div class="flex items-center">
-                        <div class="bg-yellow-100 text-yellow-600 p-2 rounded-lg mr-3 group-hover:bg-yellow-500 group-hover:text-white transition">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block font-bold text-slate-700">Buat Pengumuman</span>
-                            <span class="text-xs text-gray-500">Informasi penting layanan</span>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="{{ route('profile.edit') }}" class="block p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition group">
-                    <div class="flex items-center">
-                        <div class="bg-gray-100 text-gray-600 p-2 rounded-lg mr-3 group-hover:bg-gray-800 group-hover:text-white transition">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block font-bold text-slate-700">Profil Saya</span>
-                            <span class="text-xs text-gray-500">Edit akun & password</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
+        <div class="mt-4 pt-4 border-t border-slate-50">
+            <a href="{{ route('news.index') }}" class="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                Kelola Berita <i class="fa-solid fa-arrow-right"></i>
+            </a>
         </div>
     </div>
+
+    {{-- Card Pengumuman --}}
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition duration-300 group">
+        <div class="flex justify-between items-start">
+            <div>
+                <p class="text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">Pengumuman</p>
+                <h3 class="text-3xl font-extrabold text-slate-800">{{ $totalAnnouncements }}</h3>
+            </div>
+            <div class="p-3 bg-yellow-50 text-yellow-600 rounded-xl group-hover:bg-yellow-500 group-hover:text-white transition">
+                <i class="fa-solid fa-bullhorn text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-slate-50">
+            <a href="{{ route('announcements.index') }}" class="text-xs font-bold text-yellow-600 hover:text-yellow-800 flex items-center gap-1">
+                Kelola Pengumuman <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    {{-- Card Petugas --}}
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition duration-300 group">
+        <div class="flex justify-between items-start">
+            <div>
+                <p class="text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">Petugas Admin</p>
+                <h3 class="text-3xl font-extrabold text-slate-800">{{ $totalUsers }}</h3>
+            </div>
+            <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl group-hover:bg-emerald-600 group-hover:text-white transition">
+                <i class="fa-solid fa-users-gear text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-slate-50">
+            <span class="text-xs font-medium text-emerald-600 flex items-center gap-1">
+                <i class="fa-solid fa-circle-check"></i> Akun Aktif
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+    {{-- 3. TABEL BERITA TERBARU --}}
+    <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col">
+        <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+            <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-list-check text-slate-400"></i> Publikasi Terbaru
+            </h3>
+            <a href="{{ route('news.create') }}" class="text-xs font-bold bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-700 transition shadow-lg shadow-slate-300/50">
+                <i class="fa-solid fa-plus mr-1"></i> Tulis Baru
+            </a>
+        </div>
+
+        <div class="overflow-x-auto flex-grow">
+            <table class="w-full text-sm text-left">
+                <thead class="bg-slate-50 text-slate-500 uppercase text-xs font-bold tracking-wider">
+                    <tr>
+                        <th class="px-6 py-4">Judul Artikel</th>
+                        <th class="px-6 py-4 text-center">Status</th>
+                        <th class="px-6 py-4 text-right">Tanggal</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @forelse($latestNews as $item)
+                    <tr class="hover:bg-slate-50/80 transition duration-150">
+                        <td class="px-6 py-4 font-semibold text-slate-800">
+                            {{ Str::limit($item->title, 50) }}
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            @if($item->status == 'published')
+                            <span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 text-[10px] uppercase font-bold px-2 py-1 rounded-full border border-emerald-200">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Tayang
+                            </span>
+                            @else
+                            <span class="inline-flex items-center gap-1 bg-slate-100 text-slate-600 text-[10px] uppercase font-bold px-2 py-1 rounded-full border border-slate-200">
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Draft
+                            </span>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 text-right text-slate-500 text-xs">
+                            {{ $item->created_at->diffForHumans() }}
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="3" class="px-6 py-12 text-center">
+                            <div class="flex flex-col items-center justify-center text-slate-400">
+                                <div class="bg-slate-50 p-4 rounded-full mb-3">
+                                    <i class="fa-regular fa-folder-open text-3xl"></i>
+                                </div>
+                                <p class="font-medium">Belum ada berita yang ditambahkan.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {{-- 4. AKSES CEPAT (Quick Actions) --}}
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 h-fit">
+        <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+            <i class="fa-solid fa-bolt text-yellow-500"></i> Akses Cepat
+        </h3>
+        <div class="space-y-4">
+            {{-- Tombol Tulis Berita --}}
+            <a href="{{ route('news.create') }}" class="flex items-center p-4 border border-slate-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 hover:shadow-md transition group cursor-pointer">
+                <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mr-4 group-hover:bg-blue-600 group-hover:text-white transition">
+                    <i class="fa-solid fa-pen-nib"></i>
+                </div>
+                <div>
+                    <span class="block font-bold text-slate-800 group-hover:text-blue-700">Tulis Berita</span>
+                    <span class="text-xs text-slate-500">Publikasi kegiatan terbaru</span>
+                </div>
+            </a>
+
+            {{-- Tombol Buat Pengumuman --}}
+            <a href="{{ route('announcements.create') }}" class="flex items-center p-4 border border-slate-200 rounded-xl hover:border-yellow-500 hover:bg-yellow-50 hover:shadow-md transition group cursor-pointer">
+                <div class="w-10 h-10 bg-yellow-100 text-yellow-600 rounded-lg flex items-center justify-center mr-4 group-hover:bg-yellow-500 group-hover:text-white transition">
+                    <i class="fa-solid fa-bullhorn"></i>
+                </div>
+                <div>
+                    <span class="block font-bold text-slate-800 group-hover:text-yellow-700">Buat Pengumuman</span>
+                    <span class="text-xs text-slate-500">Info penting layanan</span>
+                </div>
+            </a>
+
+            {{-- Tombol Profil --}}
+            <a href="{{ route('profile.edit') }}" class="flex items-center p-4 border border-slate-200 rounded-xl hover:border-slate-500 hover:bg-slate-50 hover:shadow-md transition group cursor-pointer">
+                <div class="w-10 h-10 bg-slate-100 text-slate-600 rounded-lg flex items-center justify-center mr-4 group-hover:bg-slate-800 group-hover:text-white transition">
+                    <i class="fa-solid fa-user-gear"></i>
+                </div>
+                <div>
+                    <span class="block font-bold text-slate-800">Profil Saya</span>
+                    <span class="text-xs text-slate-500">Edit akun & password</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+{{-- 5. WIDGET AKSESIBILITAS --}}
+{{-- Ini akan memunculkan tombol kursi roda di pojok kiri bawah Dashboard Admin --}}
+<x-aksesibilitas />
 
 @endsection

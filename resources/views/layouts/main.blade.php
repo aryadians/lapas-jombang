@@ -13,21 +13,50 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    {{-- Font Khusus Disleksia --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/opendyslexic@latest/open-dyslexic.min.css">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.tailwindcss.com"></script>
 
-    {{-- WAJIB: Script Alpine.js untuk fitur popup survei --}}
+    {{-- WAJIB: Script Alpine.js --}}
     <script src="//unpkg.com/alpinejs" defer></script>
 
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            transition: filter 0.3s ease, font-size 0.3s ease;
+        }
+
+        /* Class untuk fitur aksesibilitas */
+        .acc-grayscale {
+            filter: grayscale(100%);
+        }
+
+        .acc-contrast {
+            filter: invert(100%) hue-rotate(180deg);
+        }
+
+        .acc-dyslexia * {
+            font-family: 'OpenDyslexic', sans-serif !important;
+        }
+
+        .acc-cursor,
+        .acc-cursor a,
+        .acc-cursor button {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="%23EAB308" stroke="%23000" stroke-width="2"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg>'), auto !important;
         }
     </style>
 </head>
 
-<body class="font-sans antialiased text-slate-800 bg-white">
+<body class="font-sans antialiased text-slate-800 bg-white"
+    x-data="accessibilityHandler()"
+    :class="{ 
+          'acc-grayscale': grayscale, 
+          'acc-contrast': contrast, 
+          'acc-dyslexia': dyslexia,
+          'acc-cursor': bigCursor 
+      }">
 
     {{-- NAVBAR --}}
     <nav class="bg-slate-900/95 backdrop-blur-md fixed w-full z-50 shadow-lg border-b border-slate-800 transition-all duration-300">
@@ -122,8 +151,97 @@
         @yield('content')
     </div>
 
+    {{-- ================================================================= --}}
+    {{-- WIDGET DISABILITAS / AKSESIBILITAS (POJOK KIRI BAWAH) --}}
+    {{-- ================================================================= --}}
+    <div x-data="{ openAccess: false }" class="fixed bottom-6 left-6 z-50 print:hidden">
+
+        {{-- Tombol Pemicu Disabilitas (Warna Tema: Slate 900 & Yellow 500) --}}
+        <button @click="openAccess = !openAccess"
+            class="flex items-center justify-center w-14 h-14 bg-slate-900 hover:bg-slate-800 text-yellow-500 rounded-full shadow-2xl border-2 border-yellow-500 transition transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            aria-label="Menu Aksesibilitas">
+            <i class="fa-solid fa-universal-access text-2xl"></i>
+        </button>
+
+        {{-- Pop Up Menu --}}
+        <div x-show="openAccess"
+            style="display: none;"
+            @click.away="openAccess = false"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-4 scale-90"
+            x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+            x-transition:leave-end="opacity-0 translate-y-4 scale-90"
+            class="absolute bottom-16 left-0 w-72 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden">
+
+            {{-- Header Pop Up (Warna Tema) --}}
+            <div class="bg-slate-900 p-4 flex justify-between items-center text-white border-b border-slate-800">
+                <h3 class="font-bold flex items-center gap-2 text-yellow-500">
+                    <i class="fa-solid fa-universal-access"></i> Aksesibilitas
+                </h3>
+                <button @click="openAccess = false" class="hover:text-yellow-500 transition"><i class="fa-solid fa-times"></i></button>
+            </div>
+
+            {{-- Body Pop Up --}}
+            <div class="p-4 space-y-5">
+
+                {{-- Fitur 1: Pembaca Suara (TTS) --}}
+                <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                    <p class="text-xs font-bold text-slate-500 uppercase mb-2">Pembaca Suara (TTS)</p>
+                    <div class="flex gap-2">
+                        {{-- Tombol Play --}}
+                        <button @click="speak()" :disabled="isSpeaking" :class="isSpeaking ? 'opacity-50 cursor-not-allowed' : 'hover:bg-yellow-400 hover:text-slate-900'" class="flex-1 bg-slate-200 text-slate-700 py-2 rounded text-xs font-bold border border-slate-300 transition flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-play"></i> Baca
+                        </button>
+                        {{-- Tombol Stop --}}
+                        <button @click="stopSpeaking()" class="flex-1 bg-red-100 text-red-600 hover:bg-red-200 py-2 rounded text-xs font-bold border border-red-200 transition flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-stop"></i> Stop
+                        </button>
+                    </div>
+                    <p class="text-[10px] text-slate-400 mt-1 italic leading-tight">*Blok teks yang ingin dibaca, lalu klik Baca.</p>
+                </div>
+
+                {{-- Fitur 2: Ukuran Font --}}
+                <div>
+                    <p class="text-xs font-bold text-slate-500 uppercase mb-2">Ukuran Teks</p>
+                    <div class="flex gap-2">
+                        <button @click="changeFontSize(-10)" class="flex-1 bg-slate-100 hover:bg-slate-200 py-2 rounded text-sm font-bold border border-slate-300 text-slate-700">A-</button>
+                        <button @click="resetFontSize()" class="flex-1 bg-slate-100 hover:bg-slate-200 py-2 rounded text-sm font-bold border border-slate-300 text-slate-700">Normal</button>
+                        <button @click="changeFontSize(10)" class="flex-1 bg-slate-100 hover:bg-slate-200 py-2 rounded text-sm font-bold border border-slate-300 text-slate-700">A+</button>
+                    </div>
+                </div>
+
+                {{-- Fitur 3: Tampilan Visual --}}
+                <div>
+                    <p class="text-xs font-bold text-slate-500 uppercase mb-2">Tampilan Visual</p>
+                    <div class="grid grid-cols-2 gap-2">
+                        {{-- Tombol Toggle dengan Logika Warna Tema --}}
+                        <button @click="grayscale = !grayscale" :class="grayscale ? 'bg-yellow-500 text-slate-900 border-yellow-600' : 'bg-slate-100 text-slate-600 border-slate-200'" class="py-2 px-3 rounded text-xs font-semibold border transition flex flex-col items-center gap-1">
+                            <i class="fa-solid fa-eye-slash"></i> Grayscale
+                        </button>
+                        <button @click="contrast = !contrast" :class="contrast ? 'bg-yellow-500 text-slate-900 border-yellow-600' : 'bg-slate-100 text-slate-600 border-slate-200'" class="py-2 px-3 rounded text-xs font-semibold border transition flex flex-col items-center gap-1">
+                            <i class="fa-solid fa-circle-half-stroke"></i> Kontras
+                        </button>
+                        <button @click="dyslexia = !dyslexia" :class="dyslexia ? 'bg-yellow-500 text-slate-900 border-yellow-600' : 'bg-slate-100 text-slate-600 border-slate-200'" class="py-2 px-3 rounded text-xs font-semibold border transition flex flex-col items-center gap-1">
+                            <i class="fa-solid fa-font"></i> Disleksia
+                        </button>
+                        <button @click="bigCursor = !bigCursor" :class="bigCursor ? 'bg-yellow-500 text-slate-900 border-yellow-600' : 'bg-slate-100 text-slate-600 border-slate-200'" class="py-2 px-3 rounded text-xs font-semibold border transition flex flex-col items-center gap-1">
+                            <i class="fa-solid fa-arrow-pointer"></i> Kursor
+                        </button>
+                    </div>
+                </div>
+
+                {{-- Reset --}}
+                <button @click="resetAll()" class="w-full py-2 bg-red-50 text-red-600 text-xs font-bold rounded border border-red-200 hover:bg-red-100 transition">
+                    <i class="fa-solid fa-rotate-left mr-1"></i> Reset Semua Pengaturan
+                </button>
+            </div>
+        </div>
+    </div>
+
     {{-- ========================================== --}}
-    {{-- WIDGET SURVEI KEPUASAN (FLOATING) --}}
+    {{-- WIDGET SURVEI KEPUASAN (FLOATING KANAN) --}}
     {{-- ========================================== --}}
     <div x-data="{ openSurvey: false }" class="fixed bottom-6 right-6 z-40 print:hidden">
 
@@ -206,119 +324,183 @@
         </div>
     </div>
 
+    {{-- FOOTER --}}
+    <footer class="bg-slate-900 text-white pt-16 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-start">
+
+                {{-- KOLOM KIRI: Google Maps --}}
+                <div class="w-full h-64 md:h-80 rounded-2xl overflow-hidden shadow-2xl border border-slate-700 relative group">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.149599388365!2d112.23126867575233!3d-7.558661674643537!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78401e71277a3d%3A0x6a2c9c9c9c9c9c9c!2sLapas%20Kelas%20IIB%20Jombang!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid"
+                        class="w-full h-full border-0 filter grayscale group-hover:grayscale-0 transition duration-500"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                    <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur text-slate-900 px-4 py-2 rounded-lg text-xs font-bold shadow-lg">
+                        📍 Lokasi Lapas
+                    </div>
+                </div>
+
+                {{-- KOLOM KANAN: Informasi Kontak --}}
+                <div class="flex flex-col justify-center space-y-8">
+
+                    {{-- Logo & Judul --}}
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <img src="{{ asset('img/logo.png') }}" alt="Logo" class="h-12 w-auto">
+                            <div>
+                                <h3 class="text-xl font-bold text-white tracking-wide">KEMENTERIAN IMIGRASI DAN PEMASYARAKATAN</h3>
+                                <p class="text-xs text-yellow-500 font-semibold tracking-wider uppercase">Republik Indonesia</p>
+                            </div>
+                        </div>
+                        <p class="text-slate-400 text-sm leading-relaxed max-w-md">
+                            Melayani dengan sepenuh hati, mewujudkan pemasyarakatan yang PASTI (Profesional, Akuntabel, Sinergi, Transparan, dan Inovatif).
+                        </p>
+                    </div>
+
+                    {{-- Detail Kontak --}}
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4 group">
+                            <div class="bg-slate-800 p-3 rounded-lg text-yellow-500 group-hover:bg-yellow-500 group-hover:text-slate-900 transition">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-bold uppercase mb-1">Alamat Kantor</p>
+                                <p class="text-white font-medium leading-snug">
+                                    Jl. KH. Wahid Hasyim No.155<br>
+                                    Jombang, Jawa Timur 61419
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 group">
+                            <div class="bg-slate-800 p-3 rounded-lg text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-bold uppercase mb-1">Telepon & Fax</p>
+                                <p class="text-white font-medium hover:text-yellow-400 transition cursor-pointer">
+                                    +62 321 861205
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Social Media Icons --}}
+                    <div class="mt-4">
+                        <p class="text-xs text-slate-400 font-bold uppercase mb-4">Ikuti Media Sosial Kami</p>
+                        <div class="flex flex-wrap gap-3">
+                            <a href="https://www.facebook.com/humaslapasjombang/" aria-label="Facebook" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-[#1877F2] hover:text-white border border-slate-700 hover:border-[#1877F2] transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
+                                <i class="fab fa-facebook-f text-lg"></i>
+                            </a>
+                            <a href="https://www.facebook.com/humaslapasjombang/" aria-label="Twitter" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-[#1DA1F2] hover:text-white border border-slate-700 hover:border-[#1DA1F2] transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
+                                <i class="fab fa-twitter text-lg"></i>
+                            </a>
+                            <a href="https://www.instagram.com/lapas_jombang/" aria-label="Instagram" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-gradient-to-tr hover:from-yellow-500 hover:via-red-500 hover:to-purple-500 hover:text-white border border-slate-700 hover:border-pink-500 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
+                                <i class="fab fa-instagram text-lg"></i>
+                            </a>
+                            <a href="https://www.youtube.com/@humaslapasjombang" aria-label="YouTube" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-[#FF0000] hover:text-white border border-slate-700 hover:border-[#FF0000] transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
+                                <i class="fab fa-youtube text-lg"></i>
+                            </a>
+                            <a href="https://www.tiktok.com/@lapas_jombang" aria-label="TikTok" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-black hover:text-white border border-slate-700 hover:border-slate-500 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
+                                <i class="fab fa-tiktok text-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Copyright Bawah --}}
+            <div class="mt-12 pt-8 border-t border-slate-800 text-center text-slate-500 text-sm">
+                <p>© {{ date('Y') }} Lapas Kelas 2B Jombang. All rights reserved.</p>
+                <p class="mt-2 text-xs">Developed with ❤️ by Tim TI</p>
+            </div>
+        </div>
+    </footer>
+
+    {{-- Script Logic Aksesibilitas dengan TTS --}}
+    <script>
+        function accessibilityHandler() {
+            return {
+                grayscale: false,
+                contrast: false,
+                dyslexia: false,
+                bigCursor: false,
+                fontSize: 100,
+                isSpeaking: false,
+                synth: window.speechSynthesis,
+                utterance: null,
+
+                changeFontSize(amount) {
+                    this.fontSize += amount;
+                    if (this.fontSize < 80) this.fontSize = 80;
+                    if (this.fontSize > 130) this.fontSize = 130;
+                    document.documentElement.style.fontSize = this.fontSize + '%';
+                },
+
+                resetFontSize() {
+                    this.fontSize = 100;
+                    document.documentElement.style.fontSize = '100%';
+                },
+
+                resetAll() {
+                    this.grayscale = false;
+                    this.contrast = false;
+                    this.dyslexia = false;
+                    this.bigCursor = false;
+                    this.resetFontSize();
+                    this.stopSpeaking();
+                },
+
+                // Logic Text to Speech (TTS)
+                speak() {
+                    // Hentikan suara sebelumnya jika ada
+                    this.stopSpeaking();
+
+                    // Ambil teks yang diblok (selected)
+                    let text = window.getSelection().toString();
+
+                    // Jika tidak ada yang diblok, ambil seluruh teks di body (opsional, bisa diganti alert)
+                    if (!text) {
+                        text = document.body.innerText;
+                    }
+
+                    if (text) {
+                        // Inisialisasi Utterance
+                        this.utterance = new SpeechSynthesisUtterance(text);
+                        this.utterance.lang = 'id-ID'; // Set bahasa Indonesia
+                        this.utterance.rate = 1; // Kecepatan normal
+
+                        // Event saat selesai bicara
+                        this.utterance.onend = () => {
+                            this.isSpeaking = false;
+                        };
+
+                        // Mulai bicara
+                        this.synth.speak(this.utterance);
+                        this.isSpeaking = true;
+                    } else {
+                        alert("Silakan blok teks yang ingin dibaca terlebih dahulu.");
+                    }
+                },
+
+                stopSpeaking() {
+                    if (this.synth.speaking) {
+                        this.synth.cancel();
+                        this.isSpeaking = false;
+                    }
+                }
+            }
+        }
+    </script>
+
 </body>
-{{-- FOOTER --}}
-<footer class="bg-slate-900 text-white pt-16 pb-8 border-t border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-start">
-
-            {{-- KOLOM KIRI: Google Maps --}}
-            <div class="w-full h-64 md:h-80 rounded-2xl overflow-hidden shadow-2xl border border-slate-700 relative group">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.149599388365!2d112.23126867575233!3d-7.558661674643537!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78401e71277a3d%3A0x6a2c9c9c9c9c9c9c!2sLapas%20Kelas%20IIB%20Jombang!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid"
-                    class="w-full h-full border-0 filter grayscale group-hover:grayscale-0 transition duration-500"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-                <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur text-slate-900 px-4 py-2 rounded-lg text-xs font-bold shadow-lg">
-                    📍 Lokasi Lapas
-                </div>
-            </div>
-
-            {{-- KOLOM KANAN: Informasi Kontak --}}
-            <div class="flex flex-col justify-center space-y-8">
-
-                {{-- Logo & Judul --}}
-                <div>
-                    <div class="flex items-center gap-3 mb-4">
-                        <img src="{{ asset('img/logo.png') }}" alt="Logo" class="h-12 w-auto">
-                        <div>
-                            <h3 class="text-xl font-bold text-white tracking-wide">KEMENTERIAN IMIGRASI DAN PEMASYARAKATAN</h3>
-                            <p class="text-xs text-yellow-500 font-semibold tracking-wider uppercase">Republik Indonesia</p>
-                        </div>
-                    </div>
-                    <p class="text-slate-400 text-sm leading-relaxed max-w-md">
-                        Melayani dengan sepenuh hati, mewujudkan pemasyarakatan yang PASTI (Profesional, Akuntabel, Sinergi, Transparan, dan Inovatif).
-                    </p>
-                </div>
-
-                {{-- Detail Kontak --}}
-                <div class="space-y-4">
-                    {{-- Alamat --}}
-                    <div class="flex items-start gap-4 group">
-                        <div class="bg-slate-800 p-3 rounded-lg text-yellow-500 group-hover:bg-yellow-500 group-hover:text-slate-900 transition">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="text-xs text-slate-400 font-bold uppercase mb-1">Alamat Kantor</p>
-                            <p class="text-white font-medium leading-snug">
-                                Jl. KH. Wahid Hasyim No.155<br>
-                                Jombang, Jawa Timur 61419
-                            </p>
-                        </div>
-                    </div>
-
-                    {{-- Telepon --}}
-                    <div class="flex items-start gap-4 group">
-                        <div class="bg-slate-800 p-3 rounded-lg text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="text-xs text-slate-400 font-bold uppercase mb-1">Telepon & Fax</p>
-                            <p class="text-white font-medium hover:text-yellow-400 transition cursor-pointer">
-                                +62 321 861205
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Social Media Icons (Update: Twitter Fix + TikTok) --}}
-                <div class="mt-4">
-                    <p class="text-xs text-slate-400 font-bold uppercase mb-4">Ikuti Media Sosial Kami</p>
-
-                    <div class="flex flex-wrap gap-3">
-                        <a href="#" aria-label="Facebook"
-                            class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-[#1877F2] hover:text-white border border-slate-700 hover:border-[#1877F2] transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
-                            <i class="fab fa-facebook-f text-lg"></i>
-                        </a>
-
-                        <a href="#" aria-label="Twitter"
-                            class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-[#1DA1F2] hover:text-white border border-slate-700 hover:border-[#1DA1F2] transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
-                            <i class="fab fa-twitter text-lg"></i>
-                        </a>
-
-                        <a href="#" aria-label="Instagram"
-                            class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-gradient-to-tr hover:from-yellow-500 hover:via-red-500 hover:to-purple-500 hover:text-white border border-slate-700 hover:border-pink-500 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
-                            <i class="fab fa-instagram text-lg"></i>
-                        </a>
-
-                        <a href="#" aria-label="YouTube"
-                            class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-[#FF0000] hover:text-white border border-slate-700 hover:border-[#FF0000] transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
-                            <i class="fab fa-youtube text-lg"></i>
-                        </a>
-
-                        <a href="#" aria-label="TikTok"
-                            class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-black hover:text-white border border-slate-700 hover:border-slate-500 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
-                            <i class="fab fa-tiktok text-lg"></i>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        {{-- Copyright Bawah --}}
-        <div class="mt-12 pt-8 border-t border-slate-800 text-center text-slate-500 text-sm">
-            <p>© {{ date('Y') }} Lapas Kelas 2B Jombang. All rights reserved.</p>
-            <p class="mt-2 text-xs">Developed with ❤️ by Tim TI</p>
-        </div>
-    </div>
-</footer>
 
 </html>
