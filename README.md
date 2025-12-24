@@ -1,29 +1,52 @@
-# Laravel Test MSJ 2025 — Recruitment System
+# 🏛️ Sistem Informasi Lapas Kelas 2B Jombang
+> **Laravel Test MSJ 2025 — Recruitment System Project**
 
-Aplikasi **Sistem Penerimaan Magang** sederhana yang dibangun menggunakan **Laravel 10**.  
-Mendukung proses rekrutmen mulai dari posting lowongan, pendaftaran pelamar, hingga seleksi oleh admin.
+![Laravel](https://img.shields.io/badge/Laravel-10-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![AlpineJS](https://img.shields.io/badge/Alpine.js-8BC0D0?style=for-the-badge&logo=alpine.js&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-000000?style=for-the-badge&logo=mysql&logoColor=white)
 
----
-
-## Fitur Utama
-
-### 👥 Guest / Pelamar
-- Melihat daftar lowongan aktif.
-- Melamar posisi magang.
-- Upload CV (PDF).
-
-### 🔐 Admin
-- Login ke Dashboard Admin.
-- CRUD Lowongan (buat, edit, hapus).
-- Melihat daftar pelamar.
-- Approve / Reject kandidat.
-- Melihat report jumlah pendaftar.
+Aplikasi berbasis web modern yang dirancang untuk memfasilitasi layanan publik dan manajemen internal di **Lapas Kelas 2B Jombang**. Aplikasi ini mencakup pendaftaran kunjungan tatap muka secara online, portal berita, pengumuman, serta fitur aksesibilitas ramah disabilitas.
 
 ---
 
-##  Cara Instalasi & Menjalankan Aplikasi
+## ✨ Fitur Unggulan
 
-### 1. **Clone Repository**
-```bash
-git clone https://gitlab.com/mylyyyyy/87899726950.git
-cd 87899726950
+### 🌍 Halaman Publik (Guest)
+* **📝 Pendaftaran Kunjungan Online:** Formulir pendaftaran tatap muka dengan validasi jadwal (Senin-Kamis) dan kuota harian otomatis.
+* **♿ Widget Aksesibilitas Canggih:**
+    * 🔊 *Text-to-Speech* (Pembaca Layar).
+    * 👁️ Mode Kontras Tinggi & Grayscale.
+    * 🔤 Font khusus Disleksia & *Zoom Text*.
+    * 🖱️ Kursor Besar.
+* **📰 Portal Informasi:** Menampilkan berita terbaru dan pengumuman resmi Lapas.
+* **📱 Desain Responsif:** Tampilan optimal di Mobile, Tablet, dan Desktop.
+
+### 🔐 Panel Admin
+* **📊 Dashboard Realtime:** Statistik ringkas, jam digital live, dan tabel aktivitas terbaru.
+* **📢 Manajemen Konten (CMS):** CRUD (Create, Read, Update, Delete) untuk Berita dan Pengumuman.
+* **🛡️ Autentikasi Aman:** Login petugas dengan keamanan enkripsi password standar Laravel.
+
+---
+
+## 📸 Antarmuka Aplikasi
+
+| Halaman Depan | Formulir Kunjungan |
+| :---: | :---: |
+| <img src="https://via.placeholder.com/400x200?text=Landing+Page" alt="Landing Page"> | <img src="https://via.placeholder.com/400x200?text=Form+Kunjungan" alt="Form Kunjungan"> |
+
+| Dashboard Admin | Fitur Aksesibilitas |
+| :---: | :---: |
+| <img src="https://via.placeholder.com/400x200?text=Dashboard+Admin" alt="Dashboard Admin"> | <img src="https://via.placeholder.com/400x200?text=Widget+Aksesibilitas" alt="Aksesibilitas"> |
+
+---
+
+## 🛠️ Persyaratan Sistem
+
+Pastikan server lokal Anda memenuhi spesifikasi berikut:
+* **PHP** >= 8.1
+* **Composer**
+* **MySQL / MariaDB**
+* **Node.js & NPM** (Untuk compile aset CSS/JS)
+
+---
