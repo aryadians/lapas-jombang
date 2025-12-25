@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\AuthController; // <--- TAMBAHKAN INI (PENTING)
 use App\Http\Controllers\KunjunganController;
 use App\Http\Controllers\Admin\KunjunganController as AdminKunjunganController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Models\News;
 use App\Models\Announcement;
 use App\Models\User;
@@ -81,7 +82,10 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::patch('kunjungan/{kunjungan}', [AdminKunjunganController::class, 'update'])->name('admin.kunjungan.update');
     Route::delete('kunjungan/{kunjungan}', [AdminKunjunganController::class, 'destroy'])->name('admin.kunjungan.destroy');
 
-    // E. PROFIL ADMIN
+    // E. CRUD PENGGUNA
+    Route::resource('users', AdminUserController::class)->except(['create', 'store', 'show'])->names('admin.users');
+
+    // F. PROFIL ADMIN
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
