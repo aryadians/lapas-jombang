@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\AuthController; // <--- TAMBAHKAN INI (PENTING)
+use App\Http\Controllers\KunjunganController;
+use App\Http\Controllers\Admin\KunjunganController as AdminKunjunganController;
 use App\Models\News;
 use App\Models\Announcement;
 use App\Models\User;
@@ -32,10 +34,8 @@ Route::get('/', function () {
 // =========================================================================
 // 2. HALAMAN PENDAFTARAN KUNJUNGAN (GUEST)
 // =========================================================================
-// Saya hapus duplikatnya, pastikan view ini ada di folder resources/views/guest/kunjungan/create.blade.php
-Route::get('/kunjungan/daftar', function () {
-    return view('guest.kunjungan.create');
-})->name('kunjungan.create');
+Route::get('/kunjungan/daftar', [KunjunganController::class, 'create'])->name('kunjungan.create');
+Route::post('/kunjungan/daftar', [KunjunganController::class, 'store'])->name('kunjungan.store');
 
 
 // =========================================================================
@@ -58,7 +58,7 @@ Route::post('logout', [AuthController::class, 'logout'])
 // =========================================================================
 // 4. HALAMAN ADMIN (WAJIB LOGIN)
 // =========================================================================
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 
     // A. DASHBOARD ADMIN
     Route::get('/dashboard', function () {
@@ -76,7 +76,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // C. CRUD PENGUMUMAN
     Route::resource('announcements', AnnouncementController::class);
 
-    // D. PROFIL ADMIN
+    // D. CRUD KUNJUNGAN
+    Route::get('kunjungan', [AdminKunjunganController::class, 'index'])->name('admin.kunjungan.index');
+    Route::patch('kunjungan/{kunjungan}', [AdminKunjunganController::class, 'update'])->name('admin.kunjungan.update');
+    Route::delete('kunjungan/{kunjungan}', [AdminKunjunganController::class, 'destroy'])->name('admin.kunjungan.destroy');
+
+    // E. PROFIL ADMIN
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

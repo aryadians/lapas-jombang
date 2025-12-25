@@ -308,7 +308,16 @@
             </div>
 
             <div class="p-10"> {{-- Padding diperbesar agar lebih lega --}}
-                <form method="POST" action="#" class="space-y-8">
+
+                {{-- PESAN SUKSES --}}
+                @if (session('success'))
+                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg mb-8" role="alert">
+                        <p class="font-bold">Berhasil!</p>
+                        <p>{{ session('success') }}</p>
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('kunjungan.store') }}" class="space-y-8">
                     @csrf
 
                     {{-- Data Pengunjung --}}
@@ -318,20 +327,32 @@
                         </h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">Nama Lengkap (Sesuai KTP)</label>
-                                <input type="text" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3" placeholder="Contoh: Budi Santoso">
+                                <label for="nama_pengunjung" class="block text-sm font-semibold text-slate-700 mb-2">Nama Lengkap (Sesuai KTP)</label>
+                                <input type="text" id="nama_pengunjung" name="nama_pengunjung" value="{{ old('nama_pengunjung') }}" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 @error('nama_pengunjung') border-red-500 @enderror" placeholder="Contoh: Budi Santoso">
+                                @error('nama_pengunjung')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">NIK (Nomor Induk Kependudukan)</label>
-                                <input type="number" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3" placeholder="16 Digit Angka">
+                                <label for="nik_pengunjung" class="block text-sm font-semibold text-slate-700 mb-2">NIK (Nomor Induk Kependudukan)</label>
+                                <input type="text" id="nik_pengunjung" name="nik_pengunjung" value="{{ old('nik_pengunjung') }}" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 @error('nik_pengunjung') border-red-500 @enderror" placeholder="16 Digit Angka" maxlength="16">
+                                @error('nik_pengunjung')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">Nomor WhatsApp Aktif</label>
-                                <input type="number" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3" placeholder="08xxxxxxxxxx">
+                                <label for="no_wa_pengunjung" class="block text-sm font-semibold text-slate-700 mb-2">Nomor WhatsApp Aktif</label>
+                                <input type="text" id="no_wa_pengunjung" name="no_wa_pengunjung" value="{{ old('no_wa_pengunjung') }}" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 @error('no_wa_pengunjung') border-red-500 @enderror" placeholder="08xxxxxxxxxx">
+                                @error('no_wa_pengunjung')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">Alamat Lengkap</label>
-                                <input type="text" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3" placeholder="Desa, Kecamatan, Kota">
+                                <label for="alamat_pengunjung" class="block text-sm font-semibold text-slate-700 mb-2">Alamat Lengkap</label>
+                                <input type="text" id="alamat_pengunjung" name="alamat_pengunjung" value="{{ old('alamat_pengunjung') }}" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 @error('alamat_pengunjung') border-red-500 @enderror" placeholder="Desa, Kecamatan, Kota">
+                                @error('alamat_pengunjung')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -343,24 +364,33 @@
                         </h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">Nama Warga Binaan (WBP)</label>
-                                <input type="text" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3" placeholder="Siapa yang ingin dikunjungi?">
+                                <label for="nama_wbp" class="block text-sm font-semibold text-slate-700 mb-2">Nama Warga Binaan (WBP)</label>
+                                <input type="text" id="nama_wbp" name="nama_wbp" value="{{ old('nama_wbp') }}" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 @error('nama_wbp') border-red-500 @enderror" placeholder="Siapa yang ingin dikunjungi?">
+                                @error('nama_wbp')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">Hubungan</label>
-                                <select class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 bg-white">
+                                <label for="hubungan" class="block text-sm font-semibold text-slate-700 mb-2">Hubungan</label>
+                                <select id="hubungan" name="hubungan" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 bg-white @error('hubungan') border-red-500 @enderror">
                                     <option value="" disabled selected>Pilih Hubungan...</option>
-                                    <option>Orang Tua</option>
-                                    <option>Suami / Istri</option>
-                                    <option>Anak</option>
-                                    <option>Saudara</option>
-                                    <option>Teman</option>
-                                    <option>Lainnya</option>
+                                    <option value="Orang Tua" @if(old('hubungan') == 'Orang Tua') selected @endif>Orang Tua</option>
+                                    <option value="Suami / Istri" @if(old('hubungan') == 'Suami / Istri') selected @endif>Suami / Istri</option>
+                                    <option value="Anak" @if(old('hubungan') == 'Anak') selected @endif>Anak</option>
+                                    <option value="Saudara" @if(old('hubungan') == 'Saudara') selected @endif>Saudara</option>
+                                    <option value="Teman" @if(old('hubungan') == 'Teman') selected @endif>Teman</option>
+                                    <option value="Lainnya" @if(old('hubungan') == 'Lainnya') selected @endif>Lainnya</option>
                                 </select>
+                                @error('hubungan')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="md:col-span-2">
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">Rencana Tanggal Kunjungan</label>
-                                <input type="date" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3">
+                                <label for="tanggal_kunjungan" class="block text-sm font-semibold text-slate-700 mb-2">Rencana Tanggal Kunjungan</label>
+                                <input type="date" id="tanggal_kunjungan" name="tanggal_kunjungan" value="{{ old('tanggal_kunjungan') }}" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 @error('tanggal_kunjungan') border-red-500 @enderror">
+                                @error('tanggal_kunjungan')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                                 <p class="text-xs text-slate-500 mt-2 bg-yellow-50 p-3 rounded-lg border border-yellow-100 inline-block w-full">
                                     <i class="fa-solid fa-circle-info text-yellow-600 mr-1"></i>
                                     Pastikan tanggal sesuai jadwal: <strong>Senin/Rabu (Napi)</strong>, <strong>Selasa/Kamis (Tahanan)</strong>.

@@ -34,16 +34,14 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
-            // CATATAN: Pengecekan role dihapus karena kolom 'role' tidak ada di database Anda.
-            // Jika nanti Anda menambahkan kolom role, Anda bisa uncomment kode di bawah ini:
-            /*
-            if (Auth::user()->role == 'admin') {
-                return redirect()->intended('admin/dashboard');
+            // Cek role setelah login berhasil
+            if (Auth::user()->role === 'admin') {
+                // Jika admin, redirect ke dashboard admin
+                return redirect()->intended(route('dashboard'));
             }
-            */
 
-            // Redirect default ke dashboard
-            return redirect()->intended('dashboard');
+            // Jika user biasa, redirect ke halaman utama
+            return redirect()->intended('/');
         }
 
         // 4. Jika login gagal, kembalikan ke halaman login dengan error

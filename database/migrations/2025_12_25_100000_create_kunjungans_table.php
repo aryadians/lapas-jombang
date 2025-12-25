@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('kunjungans', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_pengunjung');
+            $table->string('nik_pengunjung', 16);
+            $table->string('no_wa_pengunjung');
+            $table->text('alamat_pengunjung');
+            $table->string('nama_wbp');
+            $table->string('hubungan');
+            $table->date('tanggal_kunjungan');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('kunjungans');
+    }
+};
