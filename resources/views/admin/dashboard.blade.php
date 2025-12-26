@@ -58,33 +58,67 @@
 
 {{-- KUOTA HARI INI --}}
 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 mb-10">
-    <div class="flex flex-col md:flex-row justify-between md:items-center gap-4">
-        <div>
-            <h3 class="text-lg font-bold text-slate-800">Pantauan Kuota Kunjungan Hari Ini</h3>
-            <p class="text-sm text-slate-500">{{ \Carbon\Carbon::today()->translatedFormat('l, d F Y') }}</p>
-        </div>
-        @if ($kuotaHariIni > 0)
-            @php
-                $persentase = ($pendaftarHariIni / $kuotaHariIni) * 100;
-                $colorClass = 'bg-emerald-500';
-                if ($persentase > 70) $colorClass = 'bg-yellow-500';
-                if ($persentase >= 100) $colorClass = 'bg-red-500';
-            @endphp
-            <div class="w-full md:w-1/2">
+    <div>
+        <h3 class="text-lg font-bold text-slate-800">Pantauan Kuota Kunjungan Hari Ini</h3>
+        <p class="text-sm text-slate-500 mb-4">{{ \Carbon\Carbon::today()->translatedFormat('l, d F Y') }}</p>
+    </div>
+    
+    @if ($isMonday)
+        <div class="space-y-4">
+            {{-- Kuota Sesi Pagi --}}
+            <div>
+                @php
+                    $persentasePagi = ($kuotaPagi > 0) ? ($pendaftarPagi / $kuotaPagi) * 100 : 0;
+                    $colorPagi = 'bg-emerald-500';
+                    if ($persentasePagi > 70) $colorPagi = 'bg-yellow-500';
+                    if ($persentasePagi >= 100) $colorPagi = 'bg-red-500';
+                @endphp
                 <div class="flex justify-between items-center mb-1">
-                    <span class="text-sm font-bold text-slate-700">{{ $pendaftarHariIni }} / {{ $kuotaHariIni }} Pendaftar</span>
-                    <span class="text-sm font-bold text-slate-500">{{ number_format($persentase, 1) }}%</span>
+                    <span class="text-sm font-bold text-slate-700">Sesi Pagi: {{ $pendaftarPagi }} / {{ $kuotaPagi }}</span>
+                    <span class="text-sm font-bold text-slate-500">{{ number_format($persentasePagi, 1) }}%</span>
                 </div>
                 <div class="w-full bg-slate-200 rounded-full h-2.5">
-                    <div class="{{ $colorClass }} h-2.5 rounded-full transition-all duration-500" style="width: {{ $persentase }}%"></div>
+                    <div class="{{ $colorPagi }} h-2.5 rounded-full transition-all duration-500" style="width: {{ $persentasePagi }}%"></div>
                 </div>
             </div>
-        @else
-            <div class="bg-red-50 text-red-700 font-bold text-center p-4 rounded-lg border border-red-200 w-full md:w-auto">
-                Layanan Kunjungan Hari Ini Tutup
+            {{-- Kuota Sesi Siang --}}
+            <div>
+                @php
+                    $persentaseSiang = ($kuotaSiang > 0) ? ($pendaftarSiang / $kuotaSiang) * 100 : 0;
+                    $colorSiang = 'bg-emerald-500';
+                    if ($persentaseSiang > 70) $colorSiang = 'bg-yellow-500';
+                    if ($persentaseSiang >= 100) $colorSiang = 'bg-red-500';
+                @endphp
+                <div class="flex justify-between items-center mb-1">
+                    <span class="text-sm font-bold text-slate-700">Sesi Siang: {{ $pendaftarSiang }} / {{ $kuotaSiang }}</span>
+                    <span class="text-sm font-bold text-slate-500">{{ number_format($persentaseSiang, 1) }}%</span>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-2.5">
+                    <div class="{{ $colorSiang }} h-2.5 rounded-full transition-all duration-500" style="width: {{ $persentaseSiang }}%"></div>
+                </div>
             </div>
-        @endif
-    </div>
+        </div>
+    @elseif ($isVisitingDay)
+        <div>
+            @php
+                $persentaseBiasa = ($kuotaBiasa > 0) ? ($pendaftarBiasa / $kuotaBiasa) * 100 : 0;
+                $colorBiasa = 'bg-emerald-500';
+                if ($persentaseBiasa > 70) $colorBiasa = 'bg-yellow-500';
+                if ($persentaseBiasa >= 100) $colorBiasa = 'bg-red-500';
+            @endphp
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-sm font-bold text-slate-700">Total Pendaftar: {{ $pendaftarBiasa }} / {{ $kuotaBiasa }}</span>
+                <span class="text-sm font-bold text-slate-500">{{ number_format($persentaseBiasa, 1) }}%</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-2.5">
+                <div class="{{ $colorBiasa }} h-2.5 rounded-full transition-all duration-500" style="width: {{ $persentaseBiasa }}%"></div>
+            </div>
+        </div>
+    @else
+        <div class="bg-blue-50 text-blue-800 font-bold text-center p-4 rounded-lg border border-blue-200 w-full">
+            Layanan Kunjungan Tidak Tersedia Hari Ini
+        </div>
+    @endif
 </div>
 
 {{-- 2. STATISTIK CARDS --}}

@@ -12,7 +12,38 @@ class KunjunganController extends Controller
      */
     public function create()
     {
-        return view('guest.kunjungan.create');
+        $datesByDay = [
+            'Senin' => [],
+            'Selasa' => [],
+            'Rabu' => [],
+            'Kamis' => [],
+        ];
+
+        $date = \Carbon\Carbon::today();
+        $dayMapping = [
+            1 => 'Senin',
+            2 => 'Selasa',
+            3 => 'Rabu',
+            4 => 'Kamis',
+        ];
+
+        for ($i = 0; $i < 60; $i++) { // Search up to 60 days in the future
+            $currentDate = $date->copy()->addDays($i);
+            $dayOfWeek = $currentDate->dayOfWeek;
+
+            if (array_key_exists($dayOfWeek, $dayMapping)) {
+                $dayName = $dayMapping[$dayOfWeek];
+                // Add up to 3 upcoming dates for each valid day
+                if (count($datesByDay[$dayName]) < 3) {
+                    $datesByDay[$dayName][] = [
+                        'value' => $currentDate->format('Y-m-d'),
+                        'label' => $currentDate->translatedFormat('d F Y'),
+                    ];
+                }
+            }
+        }
+
+        return view('guest.kunjungan.create', ['datesByDay' => $datesByDay]);
     }
 
     /**
@@ -37,14 +68,12 @@ class KunjunganController extends Controller
         $sesi = $request->input('sesi');
 
         // 2. Validasi Hari & Sesi
-        // Cek apakah hari libur (Jumat, Sabtu, Minggu)
         if ($tanggalKunjungan->isFriday() || $tanggalKunjungan->isSaturday() || $tanggalKunjungan->isSunday()) {
             throw \Illuminate\Validation\ValidationException::withMessages([
                 'tanggal_kunjungan' => 'Pendaftaran tidak bisa dilakukan pada hari Jumat, Sabtu, atau Minggu.',
             ]);
         }
 
-        // Jika hari senin, sesi wajib diisi
         if ($tanggalKunjungan->isMonday() && !$sesi) {
             throw \Illuminate\Validation\ValidationException::withMessages([
                 'sesi' => 'Untuk hari Senin, Anda wajib memilih sesi kunjungan.',
@@ -52,45 +81,47 @@ class KunjunganController extends Controller
         }
 
         // 3. Validasi Kuota
-        $kuotaPagiSenin = 120;
-        $kuotaSiangSenin = 40;
-        $kuotaHariBiasa = 150;
-
         $query = Kunjungan::where('tanggal_kunjungan', $tanggalKunjungan->format('Y-m-d'));
         
         if ($tanggalKunjungan->isMonday()) {
+            $kuota = ($sesi == 'pagi') ? config('kunjungan.quota_senin_pagi') : config('kunjungan.quota_senin_siang');
             $jumlahPendaftar = (clone $query)->where('sesi', $sesi)->count();
-            $kuota = ($sesi == 'pagi') ? $kuotaPagiSenin : $kuotaSiangSenin;
-            $namaSesi = ($sesi == 'pagi') ? 'Pagi' : 'Siang';
+            
             if ($jumlahPendaftar >= $kuota) {
+                $namaSesi = ($sesi == 'pagi') ? 'Pagi' : 'Siang';
                 throw \Illuminate\Validation\ValidationException::withMessages([
                     'sesi' => "Maaf, kuota untuk Sesi {$namaSesi} pada tanggal tersebut sudah penuh.",
                 ]);
             }
         } else {
+            $kuota = config('kunjungan.quota_hari_biasa');
             $jumlahPendaftar = (clone $query)->count();
-            if ($jumlahPendaftar >= $kuotaHariBiasa) {
+
+            if ($jumlahPendaftar >= $kuota) {
                  throw \Illuminate\Validation\ValidationException::withMessages([
                     'tanggal_kunjungan' => 'Maaf, kuota untuk tanggal tersebut sudah penuh.',
                 ]);
             }
         }
 
-        // 4. Proses Database (Nomor Antrian & Penyimpanan)
+        // 4. Proses Database
         $kunjunganBaru = null;
         \Illuminate\Support\Facades\DB::transaction(function () use ($validated, $tanggalKunjungan, &$kunjunganBaru) {
-            // Hitung nomor antrian untuk hari itu
             $nomorAntrian = Kunjungan::where('tanggal_kunjungan', $tanggalKunjungan->format('Y-m-d'))->count() + 1;
             
-            // Tambahkan data nomor antrian dan sesi ke data tervalidasi
             $validated['nomor_antrian_harian'] = $nomorAntrian;
-            $validated['sesi'] = $validated['sesi'] ?? null; // Pastikan sesi null jika bukan senin
+            $validated['status'] = 'pending';
 
-            // Simpan ke Database
             $kunjunganBaru = Kunjungan::create($validated);
         });
 
         // 5. Redirect dengan pesan sukses
-        return redirect()->route('kunjungan.create')->with('success', 'Pendaftaran kunjungan berhasil dikirim! Nomor antrian Anda untuk hari itu adalah ' . $kunjunganBaru->nomor_antrian_harian . '. Silakan tunggu konfirmasi dari petugas kami.');
+        $pesanSukses = "Pendaftaran berhasil! Nomor antrian Anda: {$kunjunganBaru->nomor_antrian_harian}.";
+        if ($kunjunganBaru->sesi) {
+            $pesanSukses .= " Anda terdaftar untuk Sesi " . ucfirst($kunjunganBaru->sesi) . ".";
+        }
+        $pesanSukses .= " Mohon tunggu konfirmasi dari petugas.";
+
+        return redirect()->route('kunjungan.create')->with('success', $pesanSukses);
     }
 }

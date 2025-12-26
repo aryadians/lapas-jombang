@@ -75,14 +75,21 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
         $totalPendingKunjungans = Kunjungan::where('status', 'pending')->count();
         $pendingKunjungans = Kunjungan::where('status', 'pending')->latest()->take(5)->get();
 
-        // Data Kuota Harian
+        // Data Kuota Harian untuk Tampilan Dashboard
         $today = Carbon::today();
-        $pendaftarHariIni = Kunjungan::whereDate('tanggal_kunjungan', $today)->count();
-        $kuotaHariIni = 0;
-        if ($today->isMonday()) {
-            $kuotaHariIni = 120 + 40; // Pagi + Siang
-        } elseif ($today->isTuesday() || $today->isWednesday() || $today->isThursday()) {
-            $kuotaHariIni = 150;
+        $isMonday = $today->isMonday();
+        $isVisitingDay = $today->isTuesday() || $today->isWednesday() || $today->isThursday();
+
+        $pendaftarPagi = $kuotaPagi = $pendaftarSiang = $kuotaSiang = $pendaftarBiasa = $kuotaBiasa = null;
+
+        if ($isMonday) {
+            $pendaftarPagi = Kunjungan::whereDate('tanggal_kunjungan', $today)->where('sesi', 'pagi')->count();
+            $kuotaPagi = config('kunjungan.quota_senin_pagi');
+            $pendaftarSiang = Kunjungan::whereDate('tanggal_kunjungan', $today)->where('sesi', 'siang')->count();
+            $kuotaSiang = config('kunjungan.quota_senin_siang');
+        } elseif ($isVisitingDay) {
+            $pendaftarBiasa = Kunjungan::whereDate('tanggal_kunjungan', $today)->count();
+            $kuotaBiasa = config('kunjungan.quota_hari_biasa');
         }
 
         return view('admin.dashboard', compact(
@@ -92,8 +99,14 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
             'latestNews',
             'totalPendingKunjungans',
             'pendingKunjungans',
-            'pendaftarHariIni',
-            'kuotaHariIni'
+            'isMonday',
+            'isVisitingDay',
+            'pendaftarPagi',
+            'kuotaPagi',
+            'pendaftarSiang',
+            'kuotaSiang',
+            'pendaftarBiasa',
+            'kuotaBiasa'
         ));
     })->name('dashboard');
 

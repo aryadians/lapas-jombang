@@ -2,7 +2,7 @@
 
 @section('content')
 {{-- WRAPPER UTAMA DENGAN STATE ALPINE JS --}}
-<div x-data="{ showForm: {{ session('errors') && $errors->any() ? 'true' : 'false' }}, isMonday: {{ old('tanggal_kunjungan') && \Carbon\Carbon::parse(old('tanggal_kunjungan'))->isMonday() ? 'true' : 'false' }} }" class="bg-slate-50 min-h-screen pb-20">
+<div x-data="{ showForm: {{ session('errors') && $errors->any() ? 'true' : 'false' }} }" class="bg-slate-50 min-h-screen pb-20">
 
     {{-- ============================================================== --}}
     {{-- BAGIAN 1: INFORMASI & TATA TERTIB (Muncul Awal) --}}
@@ -369,7 +369,30 @@
                         <h3 class="text-lg font-bold text-slate-800 border-b border-slate-200 pb-3 mb-6 flex items-center gap-2">
                             <span class="bg-yellow-500 text-slate-900 text-xs font-extrabold px-2.5 py-1 rounded-full">2</span> Data Tujuan Kunjungan
                         </h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div 
+                            class="grid grid-cols-1 md:grid-cols-2 gap-6"
+                            x-data="{
+                                datesByDay: {{ json_encode($datesByDay) }},
+                                selectedDay: '{{ old('selected_day', '') }}',
+                                selectedDate: '{{ old('tanggal_kunjungan', '') }}',
+                                availableDates: [],
+                                isMonday: false,
+
+                                init() {
+                                    if (this.selectedDay) {
+                                        this.availableDates = this.datesByDay[this.selectedDay] || [];
+                                        this.isMonday = (this.selectedDay === 'Senin');
+                                    }
+                                },
+
+                                handleDayChange() {
+                                    this.availableDates = this.datesByDay[this.selectedDay] || [];
+                                    this.selectedDate = ''; // Reset date selection
+                                    this.isMonday = (this.selectedDay === 'Senin');
+                                }
+                            }"
+                        >
+                            {{-- NAMA WBP --}}
                             <div>
                                 <label for="nama_wbp" class="block text-sm font-semibold text-slate-700 mb-2">Nama Warga Binaan (WBP)</label>
                                 <input type="text" id="nama_wbp" name="nama_wbp" value="{{ old('nama_wbp') }}" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 @error('nama_wbp') border-red-500 @enderror" placeholder="Siapa yang ingin dikunjungi?">
@@ -377,6 +400,8 @@
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
+
+                            {{-- HUBUNGAN --}}
                             <div>
                                 <label for="hubungan" class="block text-sm font-semibold text-slate-700 mb-2">Hubungan</label>
                                 <select id="hubungan" name="hubungan" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 bg-white @error('hubungan') border-red-500 @enderror">
@@ -392,20 +417,32 @@
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="md:col-span-2">
-                                <label for="tanggal_kunjungan" class="block text-sm font-semibold text-slate-700 mb-2">Rencana Tanggal Kunjungan</label>
-                                <input type="date" id="tanggal_kunjungan" name="tanggal_kunjungan" value="{{ old('tanggal_kunjungan') }}"
-                                       @change="isMonday = new Date($event.target.value).getUTCDay() === 1"
-                                       class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 @error('tanggal_kunjungan') border-red-500 @enderror">
+
+                            {{-- HARI --}}
+                            <div>
+                                <label for="hari" class="block text-sm font-semibold text-slate-700 mb-2">Pilih Hari</label>
+                                <select id="hari" name="selected_day" @change="handleDayChange()" x-model="selectedDay" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 bg-white">
+                                    <option value="" disabled>Pilih Hari Kunjungan...</option>
+                                    @foreach (array_keys($datesByDay) as $day)
+                                        <option value="{{ $day }}">{{ $day }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            {{-- TANGGAL --}}
+                            <div>
+                                <label for="tanggal_kunjungan" class="block text-sm font-semibold text-slate-700 mb-2">Pilih Tanggal</label>
+                                <select id="tanggal_kunjungan" name="tanggal_kunjungan" x-model="selectedDate" :disabled="!selectedDay || availableDates.length === 0" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 bg-white disabled:bg-slate-50 disabled:cursor-not-allowed">
+                                    <option value="" disabled>-- Pilih Hari Dulu --</option>
+                                    <template x-for="date in availableDates" :key="date.value">
+                                        <option :value="date.value" x-text="date.label"></option>
+                                    </template>
+                                </select>
                                 @error('tanggal_kunjungan')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
-                                <p class="text-xs text-slate-500 mt-2 bg-yellow-50 p-3 rounded-lg border border-yellow-100 inline-block w-full">
-                                    <i class="fa-solid fa-circle-info text-yellow-600 mr-1"></i>
-                                    Pastikan tanggal sesuai jadwal: <strong>Senin/Rabu (Napi)</strong>, <strong>Selasa/Kamis (Tahanan)</strong>.
-                                </p>
                             </div>
-                            
+
                             {{-- Dropdown Sesi Dinamis --}}
                             <div x-show="isMonday" x-transition class="md:col-span-2">
                                 <label for="sesi" class="block text-sm font-semibold text-slate-700 mb-2">Sesi Kunjungan (Khusus Senin)</label>
