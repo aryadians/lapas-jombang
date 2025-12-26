@@ -30,6 +30,14 @@
                 <textarea name="content" rows="6" class="w-full rounded-lg border-gray-300 focus:ring-slate-900 focus:border-slate-900" required>{{ old('content', $announcement->content) }}</textarea>
             </div>
 
+            <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Status</label>
+                <select name="status" class="w-full rounded-lg border-gray-300 focus:ring-slate-900 focus:border-slate-900" required>
+                    <option value="published" {{ old('status', $announcement->status) == 'published' ? 'selected' : '' }}>Published (Terbitkan)</option>
+                    <option value="draft" {{ old('status', $announcement->status) == 'draft' ? 'selected' : '' }}>Draft (Simpan Konsep)</option>
+                </select>
+            </div>
+
             <div class="flex justify-end pt-4 border-t border-gray-100">
                 <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition">
                     Update Pengumuman

@@ -36,8 +36,8 @@ class NewsController extends Controller
         $request->validate([
             'title'   => 'required|max:255',
             'content' => 'required',
-            'image'   => 'nullable|image|file|max:2048' // Maks 2MB
-            
+            'image'   => 'nullable|image|file|max:2048', // Maks 2MB
+            'status'  => 'required|in:published,draft',
         ]);
 
         // 2. Siapkan data dasar
@@ -90,7 +90,8 @@ class NewsController extends Controller
         $request->validate([
             'title'   => 'required|max:255',
             'content' => 'required',
-            'image'   => 'nullable|image|file|max:2048'
+            'image'   => 'nullable|image|file|max:2048',
+            'status'  => 'required|in:published,draft',
         ]);
 
         // 2. Siapkan data update

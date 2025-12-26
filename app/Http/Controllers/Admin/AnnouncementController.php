@@ -29,6 +29,7 @@ class AnnouncementController extends Controller
             'title'   => 'required|max:255',
             'date'    => 'required|date',
             'content' => 'required',
+            'status'  => 'required|in:published,draft',
         ]);
 
         Announcement::create($request->all());
@@ -49,6 +50,7 @@ class AnnouncementController extends Controller
             'title'   => 'required|max:255',
             'date'    => 'required|date',
             'content' => 'required',
+            'status'  => 'required|in:published,draft',
         ]);
 
         $announcement->update($request->all());

@@ -30,6 +30,14 @@
                 <textarea name="content" rows="6" class="w-full rounded-lg border-gray-300 focus:ring-slate-900 focus:border-slate-900" placeholder="Rincian pengumuman..." required></textarea>
             </div>
 
+            <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Status</label>
+                <select name="status" class="w-full rounded-lg border-gray-300 focus:ring-slate-900 focus:border-slate-900" required>
+                    <option value="published" selected>Published (Terbitkan)</option>
+                    <option value="draft">Draft (Simpan Konsep)</option>
+                </select>
+            </div>
+
             <div class="flex justify-end pt-4 border-t border-gray-100">
                 <button type="submit" class="bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition">
                     Terbitkan Pengumuman

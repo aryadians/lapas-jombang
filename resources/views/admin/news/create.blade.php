@@ -53,8 +53,8 @@
             <div class="mb-4">
     <label class="block text-sm font-semibold text-slate-700 mb-2">Status Publikasi</label>
     <select name="status" class="w-full rounded-lg border-gray-300 focus:border-slate-900 focus:ring-slate-900 shadow-sm transition">
-        <option value="published">Published (Tayang)</option>
-        <option value="draft" selected>Draft (Simpan Saja)</option>
+        <option value="published" selected>Published (Tayang)</option>
+        <option value="draft">Draft (Simpan Saja)</option>
     </select>
 </div>
 

@@ -15,6 +15,7 @@ class Announcement extends Model
         'title',
         'content',
         'date', // Penting untuk pengumuman
+        'status',
     ];
 
     // Agar otomatis jadi format tanggal (Carbon) saat dipanggil
