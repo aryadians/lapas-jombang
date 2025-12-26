@@ -118,6 +118,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 
     // D. CRUD KUNJUNGAN
     Route::get('kunjungan', [AdminKunjunganController::class, 'index'])->name('admin.kunjungan.index');
+    Route::get('kunjungan/{kunjungan}', [AdminKunjunganController::class, 'show'])->name('admin.kunjungan.show');
     Route::patch('kunjungan/{kunjungan}', [AdminKunjunganController::class, 'update'])->name('admin.kunjungan.update');
     Route::delete('kunjungan/{kunjungan}', [AdminKunjunganController::class, 'destroy'])->name('admin.kunjungan.destroy');
 

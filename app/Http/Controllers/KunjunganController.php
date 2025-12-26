@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Kunjungan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\KunjunganConfirmationMail;
 
 class KunjunganController extends Controller
 {
@@ -114,6 +116,9 @@ class KunjunganController extends Controller
 
             $kunjunganBaru = Kunjungan::create($validated);
         });
+
+        // Send confirmation email
+        Mail::to($kunjunganBaru->email_pengunjung)->send(new KunjunganConfirmationMail($kunjunganBaru));
 
         // 5. Redirect dengan pesan sukses
         $pesanSukses = "Pendaftaran berhasil! Nomor antrian Anda: {$kunjunganBaru->nomor_antrian_harian}.";

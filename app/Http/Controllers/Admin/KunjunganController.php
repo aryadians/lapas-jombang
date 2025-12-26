@@ -69,4 +69,12 @@ class KunjunganController extends Controller
         // Redirect kembali dengan pesan sukses
         return redirect()->route('admin.kunjungan.index')->with('success', 'Data pendaftaran kunjungan berhasil dihapus.');
     }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Kunjungan $kunjungan)
+    {
+        return view('admin.kunjungan.show', compact('kunjungan'));
+    }
 }
