@@ -15,17 +15,22 @@ Selamat! Pendaftaran kunjungan Anda telah disetujui oleh petugas kami. Mohon per
 @component('mail::panel')
 ### Detail Kunjungan
 **Nomor Pendaftaran:** #{{ $kunjungan->id }} <br>
+**Nomor Antrian Harian:** **#{{ $kunjungan->nomor_antrian_harian }}** <br>
 **Nama Pengunjung:** {{ $kunjungan->nama_pengunjung }} <br>
 **NIK Pengunjung:** {{ $kunjungan->nik_pengunjung }} <br>
+**Alamat:** {{ $kunjungan->alamat_pengunjung }} <br>
 **Nama Warga Binaan:** {{ $kunjungan->nama_wbp }} <br>
 **Hubungan:** {{ $kunjungan->hubungan }} <br>
 **Tanggal Kunjungan:** {{ \Carbon\Carbon::parse($kunjungan->tanggal_kunjungan)->translatedFormat('l, d F Y') }}
+@if($kunjungan->sesi)
+<br> **Sesi Kunjungan:** **{{ ucfirst($kunjungan->sesi) }}**
+@endif
 @endcomponent
 
 **PENTING:**
-*   Silakan datang sesuai dengan tanggal dan sesi kunjungan yang berlaku.
 *   Patuhi semua tata tertib dan aturan barang bawaan yang telah dijelaskan di website.
 *   Pendaftaran ini berlaku untuk satu orang.
+*   Harap tiba di lokasi sesuai dengan tanggal dan sesi kunjungan Anda.
 
 @component('mail::button', ['url' => url('/')])
 Kunjungi Website

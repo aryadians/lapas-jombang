@@ -45,9 +45,11 @@
             <table class="w-full text-sm text-left">
                 <thead class="text-xs text-slate-500 uppercase bg-slate-50 border-b border-gray-100">
                     <tr>
-                        <th class="px-6 py-4 font-bold">Pemohon</th>
-                        <th class="px-6 py-4 font-bold">Tujuan (WBP)</th>
-                        <th class="px-6 py-4 font-bold">Tanggal Kunjungan</th>
+                        <th class="px-6 py-4 font-bold">Data Pemohon</th>
+                        <th class="px-6 py-4 font-bold">Kontak</th>
+                        <th class="px-6 py-4 font-bold">Tujuan Kunjungan</th>
+                        <th class="px-6 py-4 font-bold">Jadwal Kunjungan</th>
+                        <th class="px-6 py-4 font-bold">Tgl. Daftar</th>
                         <th class="px-6 py-4 font-bold">Status</th>
                         <th class="px-6 py-4 font-bold text-center">Aksi</th>
                     </tr>
@@ -55,18 +57,37 @@
                 <tbody class="divide-y divide-gray-100">
                     @forelse ($kunjungans as $kunjungan)
                     <tr class="hover:bg-slate-50 transition duration-150">
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 align-top">
                             <span class="font-semibold text-slate-800 block">{{ $kunjungan->nama_pengunjung }}</span>
                             <span class="text-xs text-gray-500">NIK: {{ $kunjungan->nik_pengunjung }}</span>
                         </td>
-                        <td class="px-6 py-4">
-                            <span class="font-semibold text-slate-800 block">{{ $kunjungan->nama_wbp }}</span>
-                            <span class="text-xs text-gray-500">{{ $kunjungan->hubungan }}</span>
+                        <td class="px-6 py-4 align-top text-xs text-gray-600">
+                            <div class="flex items-center gap-1.5 mb-1">
+                                <i class="fa-solid fa-envelope w-3 text-center text-slate-400"></i>
+                                <span>{{ $kunjungan->email_pengunjung ?? '-' }}</span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <i class="fa-brands fa-whatsapp w-3 text-center text-slate-400"></i>
+                                <span>{{ $kunjungan->no_wa_pengunjung ?? '-' }}</span>
+                            </div>
                         </td>
-                        <td class="px-6 py-4 text-gray-600">
-                            {{ \Carbon\Carbon::parse($kunjungan->tanggal_kunjungan)->translatedFormat('d F Y') }}
+                        <td class="px-6 py-4 align-top">
+                             <span class="font-semibold text-slate-800 block">{{ $kunjungan->nama_wbp }}</span>
+                            <span class="text-xs text-gray-500">Hubungan: {{ $kunjungan->hubungan }}</span>
                         </td>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 align-top text-gray-600">
+                            <span class="font-semibold text-slate-800">{{ \Carbon\Carbon::parse($kunjungan->tanggal_kunjungan)->translatedFormat('d F Y') }}</span>
+                            @if($kunjungan->nomor_antrian_harian)
+                                <span class="block text-xs mt-1">No. Antrian: <strong class="text-slate-900">#{{ $kunjungan->nomor_antrian_harian }}</strong></span>
+                            @endif
+                            @if($kunjungan->sesi)
+                                <span class="block text-xs capitalize">Sesi: <strong class="text-slate-900">{{ $kunjungan->sesi }}</strong></span>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 align-top text-gray-500 text-xs">
+                            {{ $kunjungan->created_at->diffForHumans() }}
+                        </td>
+                        <td class="px-6 py-4 align-top">
                             @if($kunjungan->status == 'approved')
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">Disetujui</span>
                             @elseif($kunjungan->status == 'rejected')
@@ -75,7 +96,7 @@
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 border border-yellow-200">Menunggu</span>
                             @endif
                         </td>
-                        <td class="px-6 py-4 text-center">
+                        <td class="px-6 py-4 text-center align-top">
                             <div class="flex justify-center items-center gap-2">
                                 @if($kunjungan->status == 'pending')
                                 <form action="{{ route('admin.kunjungan.update', $kunjungan->id) }}" method="POST">
@@ -107,7 +128,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="5" class="px-6 py-10 text-center text-gray-500">
+                        <td colspan="7" class="px-6 py-10 text-center text-gray-500">
                             <div class="flex flex-col items-center justify-center">
                                 <svg class="w-12 h-12 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
                                 <p>Tidak ada data pendaftaran kunjungan.</p>

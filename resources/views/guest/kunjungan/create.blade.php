@@ -2,7 +2,7 @@
 
 @section('content')
 {{-- WRAPPER UTAMA DENGAN STATE ALPINE JS --}}
-<div x-data="{ showForm: false }" class="bg-slate-50 min-h-screen pb-20">
+<div x-data="{ showForm: {{ session('errors') && $errors->any() ? 'true' : 'false' }}, isMonday: {{ old('tanggal_kunjungan') && \Carbon\Carbon::parse(old('tanggal_kunjungan'))->isMonday() ? 'true' : 'false' }} }" class="bg-slate-50 min-h-screen pb-20">
 
     {{-- ============================================================== --}}
     {{-- BAGIAN 1: INFORMASI & TATA TERTIB (Muncul Awal) --}}
@@ -394,7 +394,9 @@
                             </div>
                             <div class="md:col-span-2">
                                 <label for="tanggal_kunjungan" class="block text-sm font-semibold text-slate-700 mb-2">Rencana Tanggal Kunjungan</label>
-                                <input type="date" id="tanggal_kunjungan" name="tanggal_kunjungan" value="{{ old('tanggal_kunjungan') }}" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 @error('tanggal_kunjungan') border-red-500 @enderror">
+                                <input type="date" id="tanggal_kunjungan" name="tanggal_kunjungan" value="{{ old('tanggal_kunjungan') }}"
+                                       @change="isMonday = new Date($event.target.value).getUTCDay() === 1"
+                                       class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 @error('tanggal_kunjungan') border-red-500 @enderror">
                                 @error('tanggal_kunjungan')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -402,6 +404,19 @@
                                     <i class="fa-solid fa-circle-info text-yellow-600 mr-1"></i>
                                     Pastikan tanggal sesuai jadwal: <strong>Senin/Rabu (Napi)</strong>, <strong>Selasa/Kamis (Tahanan)</strong>.
                                 </p>
+                            </div>
+                            
+                            {{-- Dropdown Sesi Dinamis --}}
+                            <div x-show="isMonday" x-transition class="md:col-span-2">
+                                <label for="sesi" class="block text-sm font-semibold text-slate-700 mb-2">Sesi Kunjungan (Khusus Senin)</label>
+                                <select id="sesi" name="sesi" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 bg-white @error('sesi') border-red-500 @enderror">
+                                    <option value="" disabled selected>Pilih Sesi...</option>
+                                    <option value="pagi" @if(old('sesi') == 'pagi') selected @endif>Sesi Pagi (08:30 - 10:00)</option>
+                                    <option value="siang" @if(old('sesi') == 'siang') selected @endif>Sesi Siang (13:30 - 14:30)</option>
+                                </select>
+                                @error('sesi')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>

@@ -11,6 +11,7 @@ use App\Models\News;
 use App\Models\Announcement;
 use App\Models\Kunjungan;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,12 +65,25 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 
     // A. DASHBOARD ADMIN
     Route::get('/dashboard', function () {
+        // Data Statistik Umum
         $totalNews = News::count();
         $totalAnnouncements = Announcement::count();
         $totalUsers = User::count();
         $latestNews = News::latest()->take(5)->get();
+        
+        // Data Kunjungan Pending
         $totalPendingKunjungans = Kunjungan::where('status', 'pending')->count();
         $pendingKunjungans = Kunjungan::where('status', 'pending')->latest()->take(5)->get();
+
+        // Data Kuota Harian
+        $today = Carbon::today();
+        $pendaftarHariIni = Kunjungan::whereDate('tanggal_kunjungan', $today)->count();
+        $kuotaHariIni = 0;
+        if ($today->isMonday()) {
+            $kuotaHariIni = 120 + 40; // Pagi + Siang
+        } elseif ($today->isTuesday() || $today->isWednesday() || $today->isThursday()) {
+            $kuotaHariIni = 150;
+        }
 
         return view('admin.dashboard', compact(
             'totalNews', 
@@ -77,7 +91,9 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
             'totalUsers', 
             'latestNews',
             'totalPendingKunjungans',
-            'pendingKunjungans'
+            'pendingKunjungans',
+            'pendaftarHariIni',
+            'kuotaHariIni'
         ));
     })->name('dashboard');
 

@@ -56,6 +56,37 @@
     updateClock();
 </script>
 
+{{-- KUOTA HARI INI --}}
+<div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 mb-10">
+    <div class="flex flex-col md:flex-row justify-between md:items-center gap-4">
+        <div>
+            <h3 class="text-lg font-bold text-slate-800">Pantauan Kuota Kunjungan Hari Ini</h3>
+            <p class="text-sm text-slate-500">{{ \Carbon\Carbon::today()->translatedFormat('l, d F Y') }}</p>
+        </div>
+        @if ($kuotaHariIni > 0)
+            @php
+                $persentase = ($pendaftarHariIni / $kuotaHariIni) * 100;
+                $colorClass = 'bg-emerald-500';
+                if ($persentase > 70) $colorClass = 'bg-yellow-500';
+                if ($persentase >= 100) $colorClass = 'bg-red-500';
+            @endphp
+            <div class="w-full md:w-1/2">
+                <div class="flex justify-between items-center mb-1">
+                    <span class="text-sm font-bold text-slate-700">{{ $pendaftarHariIni }} / {{ $kuotaHariIni }} Pendaftar</span>
+                    <span class="text-sm font-bold text-slate-500">{{ number_format($persentase, 1) }}%</span>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-2.5">
+                    <div class="{{ $colorClass }} h-2.5 rounded-full transition-all duration-500" style="width: {{ $persentase }}%"></div>
+                </div>
+            </div>
+        @else
+            <div class="bg-red-50 text-red-700 font-bold text-center p-4 rounded-lg border border-red-200 w-full md:w-auto">
+                Layanan Kunjungan Hari Ini Tutup
+            </div>
+        @endif
+    </div>
+</div>
+
 {{-- 2. STATISTIK CARDS --}}
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
 
