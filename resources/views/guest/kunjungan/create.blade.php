@@ -348,6 +348,13 @@
                                 @enderror
                             </div>
                             <div>
+                                <label for="email_pengunjung" class="block text-sm font-semibold text-slate-700 mb-2">Alamat Email Aktif</label>
+                                <input type="email" id="email_pengunjung" name="email_pengunjung" value="{{ old('email_pengunjung') }}" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 @error('email_pengunjung') border-red-500 @enderror" placeholder="nama@email.com" required>
+                                @error('email_pengunjung')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div>
                                 <label for="alamat_pengunjung" class="block text-sm font-semibold text-slate-700 mb-2">Alamat Lengkap</label>
                                 <input type="text" id="alamat_pengunjung" name="alamat_pengunjung" value="{{ old('alamat_pengunjung') }}" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 @error('alamat_pengunjung') border-red-500 @enderror" placeholder="Desa, Kecamatan, Kota">
                                 @error('alamat_pengunjung')

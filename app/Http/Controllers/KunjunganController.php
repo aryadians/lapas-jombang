@@ -25,6 +25,7 @@ class KunjunganController extends Controller
             'nama_pengunjung'    => 'required|string|max:255',
             'nik_pengunjung'     => 'required|string|size:16',
             'no_wa_pengunjung'   => 'required|string|max:15',
+            'email_pengunjung'   => 'required|email|max:255',
             'alamat_pengunjung'  => 'required|string',
             'nama_wbp'           => 'required|string|max:255',
             'hubungan'           => 'required|string|max:100',

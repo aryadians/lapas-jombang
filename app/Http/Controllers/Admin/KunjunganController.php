@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Kunjungan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\KunjunganStatusMail;
 
 class KunjunganController extends Controller
 {
@@ -40,6 +42,17 @@ class KunjunganController extends Controller
 
         // Update status kunjungan
         $kunjungan->update(['status' => $request->status]);
+
+        // Kirim email notifikasi ke pengunjung
+        try {
+            if ($kunjungan->email_pengunjung) {
+                Mail::to($kunjungan->email_pengunjung)->send(new KunjunganStatusMail($kunjungan));
+            }
+        } catch (\Exception $e) {
+            // Jika email gagal dikirim, jangan hentikan proses.
+            // Admin tetap melihat sukses, tapi error email bisa di-log.
+            \Log::error("Gagal mengirim email status kunjungan ke {$kunjungan->email_pengunjung}: " . $e->getMessage());
+        }
 
         // Redirect kembali dengan pesan sukses
         return redirect()->route('admin.kunjungan.index')->with('success', 'Status kunjungan berhasil diperbarui.');

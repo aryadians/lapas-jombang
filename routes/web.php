@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\KunjunganController as AdminKunjunganController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Models\News;
 use App\Models\Announcement;
+use App\Models\Kunjungan;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -67,8 +68,17 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
         $totalAnnouncements = Announcement::count();
         $totalUsers = User::count();
         $latestNews = News::latest()->take(5)->get();
+        $totalPendingKunjungans = Kunjungan::where('status', 'pending')->count();
+        $pendingKunjungans = Kunjungan::where('status', 'pending')->latest()->take(5)->get();
 
-        return view('admin.dashboard', compact('totalNews', 'totalAnnouncements', 'totalUsers', 'latestNews'));
+        return view('admin.dashboard', compact(
+            'totalNews', 
+            'totalAnnouncements', 
+            'totalUsers', 
+            'latestNews',
+            'totalPendingKunjungans',
+            'pendingKunjungans'
+        ));
     })->name('dashboard');
 
     // B. CRUD BERITA
