@@ -71,15 +71,18 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
         $totalUsers = User::count();
         $latestNews = News::latest()->take(5)->get();
         
-        // Data Kunjungan Pending
+        // Data Kunjungan
         $totalPendingKunjungans = Kunjungan::where('status', 'pending')->count();
+        $totalApprovedToday = Kunjungan::where('status', 'approved')->whereDate('updated_at', Carbon::today())->count();
+        $totalRejectedKunjungans = Kunjungan::where('status', 'rejected')->count();
+        $totalKunjungans = Kunjungan::count();
         $pendingKunjungans = Kunjungan::where('status', 'pending')->latest()->take(5)->get();
 
         // Data Kuota Harian untuk Tampilan Dashboard
         $today = Carbon::today();
         $isMonday = $today->isMonday();
         $isVisitingDay = $today->isTuesday() || $today->isWednesday() || $today->isThursday();
-
+        
         $pendaftarPagi = $kuotaPagi = $pendaftarSiang = $kuotaSiang = $pendaftarBiasa = $kuotaBiasa = null;
 
         if ($isMonday) {
@@ -98,6 +101,9 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
             'totalUsers', 
             'latestNews',
             'totalPendingKunjungans',
+            'totalApprovedToday',
+            'totalRejectedKunjungans',
+            'totalKunjungans',
             'pendingKunjungans',
             'isMonday',
             'isVisitingDay',
