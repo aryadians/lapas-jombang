@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController; // <--- TAMBAHKAN INI (PENTING)
 use App\Http\Controllers\KunjunganController;
 use App\Http\Controllers\Admin\KunjunganController as AdminKunjunganController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Models\News;
 use App\Models\Announcement;
 use App\Models\Kunjungan;
@@ -68,70 +69,7 @@ Route::post('logout', [AuthController::class, 'logout'])
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 
     // A. DASHBOARD ADMIN
-    Route::get('/dashboard', function () {
-        // Data Statistik Umum
-        $totalNews = News::count();
-        $totalAnnouncements = Announcement::count();
-        $totalUsers = User::count();
-        $latestNews = News::latest()->take(5)->get();
-        
-        // Data Kunjungan
-        $totalPendingKunjungans = Kunjungan::where('status', 'pending')->count();
-        $totalApprovedToday = Kunjungan::where('status', 'approved')->whereDate('updated_at', Carbon::today())->count();
-        $totalRejectedKunjungans = Kunjungan::where('status', 'rejected')->count();
-        $totalKunjungans = Kunjungan::count();
-        $pendingKunjungans = Kunjungan::where('status', 'pending')->latest()->take(5)->get();
-
-        // Data Kuota Harian untuk Tampilan Dashboard
-        $today = Carbon::today();
-        $isMonday = $today->isMonday();
-        $isVisitingDay = $today->isTuesday() || $today->isWednesday() || $today->isThursday();
-        
-        $pendaftarPagi = $kuotaPagi = $pendaftarSiang = $kuotaSiang = $pendaftarBiasa = $kuotaBiasa = null;
-
-        if ($isMonday) {
-            $pendaftarPagi = Kunjungan::whereDate('tanggal_kunjungan', $today)->where('sesi', 'pagi')->count();
-            $kuotaPagi = config('kunjungan.quota_senin_pagi');
-            $pendaftarSiang = Kunjungan::whereDate('tanggal_kunjungan', $today)->where('sesi', 'siang')->count();
-            $kuotaSiang = config('kunjungan.quota_senin_siang');
-        } elseif ($isVisitingDay) {
-            $pendaftarBiasa = Kunjungan::whereDate('tanggal_kunjungan', $today)->count();
-            $kuotaBiasa = config('kunjungan.quota_hari_biasa');
-        }
-
-        // Data untuk Chart Kunjungan 7 Hari Terakhir
-        $chartLabels = [];
-        $chartData = [];
-        for ($i = 6; $i >= 0; $i--) {
-            $date = Carbon::today()->subDays($i);
-            $chartLabels[] = $date->translatedFormat('D, j M'); // Format: Sen, 22 Des
-            $chartData[] = Kunjungan::where('status', 'approved')
-                                      ->whereDate('updated_at', $date)
-                                      ->count();
-        }
-
-        return view('admin.dashboard', compact(
-            'totalNews', 
-            'totalAnnouncements', 
-            'totalUsers', 
-            'latestNews',
-            'totalPendingKunjungans',
-            'totalApprovedToday',
-            'totalRejectedKunjungans',
-            'totalKunjungans',
-            'pendingKunjungans',
-            'isMonday',
-            'isVisitingDay',
-            'pendaftarPagi',
-            'kuotaPagi',
-            'pendaftarSiang',
-            'kuotaSiang',
-            'pendaftarBiasa',
-            'kuotaBiasa',
-            'chartLabels',
-            'chartData'
-        ));
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // B. CRUD BERITA
     Route::resource('news', NewsController::class);
