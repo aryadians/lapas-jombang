@@ -137,4 +137,46 @@ class KunjunganController extends Controller
     {
         return view('guest.kunjungan.status', compact('kunjungan'));
     }
+
+    /**
+     * Display a verification page for the specified resource.
+     */
+    public function verify(Kunjungan $kunjungan)
+    {
+        return view('guest.kunjungan.verify', compact('kunjungan'));
+    }
+
+    /**
+     * Get the status of a Kunjungan for API calls.
+     */
+    public function getStatusApi(Kunjungan $kunjungan)
+    {
+        return response()->json(['status' => $kunjungan->status]);
+    }
+
+    /**
+     * Show the form for checking visit history.
+     */
+    public function showHistoryForm()
+    {
+        return view('guest.kunjungan.history');
+    }
+
+    /**
+     * Show the visit history results based on NIK.
+     */
+    public function showHistoryResults(Request $request)
+    {
+        $validated = $request->validate([
+            'nik' => 'required|string|digits:16',
+        ]);
+
+        $kunjungans = Kunjungan::where('nik_pengunjung', $validated['nik'])
+                                ->orderBy('tanggal_kunjungan', 'desc')
+                                ->paginate(10);
+        
+        $nik = $validated['nik'];
+
+        return view('guest.kunjungan.history-results', compact('kunjungans', 'nik'));
+    }
 }

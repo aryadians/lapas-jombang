@@ -197,7 +197,15 @@
     </div>
 </div>
 
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+{{-- CHART KUNJUNGAN --}}
+<div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 mb-10">
+    <h3 class="text-lg font-bold text-slate-800 mb-4">Grafik Kunjungan Disetujui (7 Hari Terakhir)</h3>
+    <div class="h-80">
+        <canvas id="visitsChart"></canvas>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
 
     {{-- 3. TABEL BERITA TERBARU --}}
     <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col">
@@ -355,4 +363,52 @@
 {{-- Ini akan memunculkan tombol kursi roda di pojok kiri bawah Dashboard Admin --}}
 <x-aksesibilitas />
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ctx = document.getElementById('visitsChart');
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: @json($chartLabels),
+                    datasets: [{
+                        label: 'Jumlah Kunjungan',
+                        data: @json($chartData),
+                        backgroundColor: 'rgba(30, 64, 175, 0.5)',
+                        borderColor: 'rgba(30, 64, 175, 1)',
+                        borderWidth: 2,
+                        borderRadius: 5,
+                        hoverBackgroundColor: 'rgba(30, 64, 175, 0.7)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                // Force integer steps only
+                                callback: function(value) {if (value % 1 === 0) {return value;}}
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ' ' + context.parsed.y + ' Kunjungan';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>
 @endsection

@@ -40,6 +40,10 @@ Route::get('/', function () {
 Route::get('/kunjungan/daftar', [KunjunganController::class, 'create'])->name('kunjungan.create');
 Route::post('/kunjungan/daftar', [KunjunganController::class, 'store'])->name('kunjungan.store');
 Route::get('/kunjungan/status/{kunjungan}', [KunjunganController::class, 'status'])->name('kunjungan.status');
+Route::get('/kunjungan/verify/{kunjungan}', [KunjunganController::class, 'verify'])->name('kunjungan.verify');
+Route::get('/kunjungan/riwayat', [KunjunganController::class, 'showHistoryForm'])->name('kunjungan.history');
+Route::post('/kunjungan/riwayat', [KunjunganController::class, 'showHistoryResults'])->name('kunjungan.history.results');
+Route::get('/api/kunjungan/{kunjungan}/status', [KunjunganController::class, 'getStatusApi'])->name('kunjungan.status.api');
 
 
 // =========================================================================
@@ -96,6 +100,17 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
             $kuotaBiasa = config('kunjungan.quota_hari_biasa');
         }
 
+        // Data untuk Chart Kunjungan 7 Hari Terakhir
+        $chartLabels = [];
+        $chartData = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $date = Carbon::today()->subDays($i);
+            $chartLabels[] = $date->translatedFormat('D, j M'); // Format: Sen, 22 Des
+            $chartData[] = Kunjungan::where('status', 'approved')
+                                      ->whereDate('tanggal_kunjungan', $date)
+                                      ->count();
+        }
+
         return view('admin.dashboard', compact(
             'totalNews', 
             'totalAnnouncements', 
@@ -113,7 +128,9 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
             'pendaftarSiang',
             'kuotaSiang',
             'pendaftarBiasa',
-            'kuotaBiasa'
+            'kuotaBiasa',
+            'chartLabels',
+            'chartData'
         ));
     })->name('dashboard');
 

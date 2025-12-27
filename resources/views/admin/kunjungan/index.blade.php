@@ -19,26 +19,50 @@
     </div>
     @endif
 
-    {{-- TABS FILTER --}}
-    <div class="border-b border-gray-200">
-        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-            <a href="{{ route('admin.kunjungan.index') }}"
-               class="{{ !request('status') ? 'border-slate-800 text-slate-800' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                Semua
-            </a>
-            <a href="{{ route('admin.kunjungan.index', ['status' => 'pending']) }}"
-               class="{{ request('status') == 'pending' ? 'border-slate-800 text-slate-800' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                Menunggu
-            </a>
-            <a href="{{ route('admin.kunjungan.index', ['status' => 'approved']) }}"
-               class="{{ request('status') == 'approved' ? 'border-slate-800 text-slate-800' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                Disetujui
-            </a>
-            <a href="{{ route('admin.kunjungan.index', ['status' => 'rejected']) }}"
-               class="{{ request('status') == 'rejected' ? 'border-slate-800 text-slate-800' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                Ditolak
-            </a>
-        </nav>
+    {{-- SEARCH AND FILTER FORM --}}
+    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+        <form action="{{ route('admin.kunjungan.index') }}" method="GET">
+            <div class="flex flex-col md:flex-row gap-4">
+                {{-- Search Input --}}
+                <div class="flex-grow">
+                    <label for="search" class="sr-only">Cari</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                        <input type="text" name="search" id="search" value="{{ request('search') }}" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-slate-500 focus:border-slate-500 sm:text-sm" placeholder="Cari nama/NIK pengunjung atau WBP...">
+                    </div>
+                </div>
+
+                {{-- Tanggal Input --}}
+                <div>
+                    <label for="tanggal" class="sr-only">Tanggal</label>
+                    <input type="date" name="tanggal" id="tanggal" value="{{ request('tanggal') }}" class="block w-full py-2 border border-gray-300 rounded-lg leading-5 bg-white focus:outline-none focus:ring-1 focus:ring-slate-500 focus:border-slate-500 sm:text-sm">
+                </div>
+
+                {{-- Status Select --}}
+                <div>
+                    <label for="status" class="sr-only">Status</label>
+                    <select name="status" id="status" class="block w-full py-2 pl-3 pr-10 border border-gray-300 rounded-lg leading-5 bg-white focus:outline-none focus:ring-1 focus:ring-slate-500 focus:border-slate-500 sm:text-sm">
+                        <option value="">Semua Status</option>
+                        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Menunggu</option>
+                        <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Disetujui</option>
+                        <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Ditolak</option>
+                    </select>
+                </div>
+
+                {{-- Action Buttons --}}
+                <div class="flex items-center space-x-2">
+                    <button type="submit" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-slate-800 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
+                        <svg class="w-5 h-5 mr-2 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        Filter
+                    </button>
+                    <a href="{{ route('admin.kunjungan.index') }}" class="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
+                        Reset
+                    </a>
+                </div>
+            </div>
+        </form>
     </div>
 
     {{-- DATA TABLE --}}

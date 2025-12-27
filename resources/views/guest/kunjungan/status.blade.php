@@ -46,6 +46,17 @@
                 @endif
             </div>
 
+            {{-- QR CODE SECTION (if approved) --}}
+            @if ($kunjungan->status == 'approved')
+            <div class="text-center px-6 pb-6 border-b border-gray-100">
+                <h3 class="text-base font-semibold text-slate-700 mb-2">Tunjukkan QR Code ini kepada petugas saat check-in</h3>
+                <div class="flex justify-center p-4 bg-slate-50 rounded-lg">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data={{ urlencode(route('kunjungan.verify', $kunjungan)) }}" alt="QR Code Verifikasi" class="border-4 border-white rounded-lg shadow-lg">
+                </div>
+                <p class="text-xs text-slate-500 mt-3">QR code ini berisi data kunjungan Anda untuk diverifikasi oleh petugas.</p>
+            </div>
+            @endif
+
             {{-- Alasan Penolakan --}}
             @if ($kunjungan->status == 'rejected' && $kunjungan->rejection_reason)
             <div class="px-6 pb-6">
@@ -126,4 +137,39 @@
 
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const initialStatus = @json($kunjungan->status);
+        const checkUrl = @json(route('kunjungan.status.api', $kunjungan));
+
+        if (initialStatus === 'pending') {
+            const intervalId = setInterval(function () {
+                fetch(checkUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.status !== 'pending') {
+                            clearInterval(intervalId);
+                            // Add a small delay before reloading to ensure server has processed everything
+                            // and to make the transition feel less abrupt.
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 500);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error checking status:', error);
+                        // Stop polling if there's a network error or parsing error
+                        // to avoid spamming the console.
+                        clearInterval(intervalId);
+                    });
+            }, 5000); // Check every 5 seconds
+        }
+    });
+</script>
 @endsection

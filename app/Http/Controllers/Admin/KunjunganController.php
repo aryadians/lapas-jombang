@@ -23,6 +23,21 @@ class KunjunganController extends Controller
             $query->where('status', $request->status);
         }
 
+        // Filter berdasarkan tanggal kunjungan
+        if ($request->has('tanggal') && $request->tanggal != '') {
+            $query->whereDate('tanggal_kunjungan', $request->tanggal);
+        }
+
+        // Filter berdasarkan kata kunci pencarian
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama_pengunjung', 'like', '%' . $search . '%')
+                  ->orWhere('nama_wbp', 'like', '%' . $search . '%')
+                  ->orWhere('nik_pengunjung', 'like', '%' . $search . '%');
+            });
+        }
+
         // Urutkan dari yang terbaru dan lakukan paginasi
         $kunjungans = $query->latest()->paginate(15)->withQueryString();
 
