@@ -41,8 +41,7 @@ Route::get('/kunjungan/daftar', [KunjunganController::class, 'create'])->name('k
 Route::post('/kunjungan/daftar', [KunjunganController::class, 'store'])->name('kunjungan.store');
 Route::get('/kunjungan/status/{kunjungan}', [KunjunganController::class, 'status'])->name('kunjungan.status');
 Route::get('/kunjungan/verify/{kunjungan}', [KunjunganController::class, 'verify'])->name('kunjungan.verify');
-Route::get('/kunjungan/riwayat', [KunjunganController::class, 'showHistoryForm'])->name('kunjungan.history');
-Route::post('/kunjungan/riwayat', [KunjunganController::class, 'showHistoryResults'])->name('kunjungan.history.results');
+
 Route::get('/api/kunjungan/{kunjungan}/status', [KunjunganController::class, 'getStatusApi'])->name('kunjungan.status.api');
 
 
@@ -107,7 +106,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
             $date = Carbon::today()->subDays($i);
             $chartLabels[] = $date->translatedFormat('D, j M'); // Format: Sen, 22 Des
             $chartData[] = Kunjungan::where('status', 'approved')
-                                      ->whereDate('tanggal_kunjungan', $date)
+                                      ->whereDate('updated_at', $date)
                                       ->count();
         }
 

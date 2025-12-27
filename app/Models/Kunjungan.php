@@ -10,9 +10,18 @@ class Kunjungan extends Model
     use HasFactory;
 
     /**
-     * The attributes that aren't mass assignable.
+     * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
-    protected $guarded = [];
+    protected $fillable = [
+        'nama_pengunjung',
+        'nik_pengunjung',
+        'no_wa_pengunjung',
+        'email_pengunjung',
+        'alamat_pengunjung',
+        'nama_wbp',
+        'hubungan',
+        'tanggal_kunjungan',
+    ];
 }
