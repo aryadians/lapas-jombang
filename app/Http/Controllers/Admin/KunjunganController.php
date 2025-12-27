@@ -23,9 +23,19 @@ class KunjunganController extends Controller
             $query->where('status', $request->status);
         }
 
-        // Filter berdasarkan tanggal kunjungan
-        if ($request->has('tanggal') && $request->tanggal != '') {
-            $query->whereDate('tanggal_kunjungan', $request->tanggal);
+        // Filter berdasarkan rentang tanggal kunjungan
+        $tanggalMulai = $request->input('tanggal_mulai');
+        $tanggalSelesai = $request->input('tanggal_selesai');
+
+        if ($tanggalMulai && $tanggalSelesai) {
+            // Jika kedua tanggal ada, gunakan whereBetween
+            $query->whereBetween('tanggal_kunjungan', [$tanggalMulai, $tanggalSelesai]);
+        } elseif ($tanggalMulai) {
+            // Jika hanya tanggal mulai
+            $query->whereDate('tanggal_kunjungan', '>=', $tanggalMulai);
+        } elseif ($tanggalSelesai) {
+            // Jika hanya tanggal selesai
+            $query->whereDate('tanggal_kunjungan', '<=', $tanggalSelesai);
         }
 
         // Filter berdasarkan kata kunci pencarian

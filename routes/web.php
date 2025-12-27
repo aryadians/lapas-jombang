@@ -61,7 +61,7 @@ Route::post('logout', [AuthController::class, 'logout'])
     ->middleware('auth');
 
 // Note: Jika butuh fitur Lupa Password, uncomment baris bawah ini (tapi pakai controller bawaan Breeze)
-// require __DIR__ . '/auth.php'; 
+require __DIR__ . '/auth.php'; 
 
 
 // =========================================================================
