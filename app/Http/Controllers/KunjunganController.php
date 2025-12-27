@@ -146,13 +146,100 @@ class KunjunganController extends Controller
         return view('guest.kunjungan.verify', compact('kunjungan'));
     }
 
-    /**
-     * Get the status of a Kunjungan for API calls.
-     */
-    public function getStatusApi(Kunjungan $kunjungan)
-    {
-        return response()->json(['status' => $kunjungan->status]);
+        /**
+
+         * Get the status of a Kunjungan for API calls.
+
+         */
+
+        public function getStatusApi(Kunjungan $kunjungan)
+
+        {
+
+            return response()->json(['status' => $kunjungan->status]);
+
+        }
+
+    
+
+        /**
+
+         * Get quota status for a given date and session for API calls.
+
+         */
+
+        public function getQuotaStatus(Request $request)
+
+        {
+
+            $validated = $request->validate([
+
+                'tanggal_kunjungan' => 'required|date_format:Y-m-d',
+
+                'sesi'              => 'nullable|string|in:pagi,siang',
+
+            ]);
+
+    
+
+            $tanggalKunjungan = \Carbon\Carbon::parse($validated['tanggal_kunjungan']);
+
+            $sesi = $validated['sesi'] ?? null;
+
+    
+
+            if ($tanggalKunjungan->isFriday() || $tanggalKunjungan->isSaturday() || $tanggalKunjungan->isSunday()) {
+
+                return response()->json(['error' => 'Kunjungan tidak tersedia pada hari Jumat, Sabtu, atau Minggu.'], 422);
+
+            }
+
+    
+
+            $query = Kunjungan::where('tanggal_kunjungan', $tanggalKunjungan->format('Y-m-d'));
+
+            $jumlahPendaftar = 0;
+
+            $totalKuota = 0;
+
+    
+
+            if ($tanggalKunjungan->isMonday()) {
+
+                if (!$sesi) {
+
+                    return response()->json(['error' => 'Sesi harus dipilih untuk hari Senin.'], 422);
+
+                }
+
+                $totalKuota = ($sesi == 'pagi') ? config('kunjungan.quota_senin_pagi') : config('kunjungan.quota_senin_siang');
+
+                $jumlahPendaftar = (clone $query)->where('sesi', $sesi)->count();
+
+            } else {
+
+                $totalKuota = config('kunjungan.quota_hari_biasa');
+
+                $jumlahPendaftar = (clone $query)->count();
+
+            }
+
+    
+
+            $sisaKuota = $totalKuota - $jumlahPendaftar;
+
+    
+
+            return response()->json([
+
+                'total_kuota' => $totalKuota,
+
+                'jumlah_pendaftar' => $jumlahPendaftar,
+
+                'sisa_kuota' => $sisaKuota,
+
+            ]);
+
+        }
+
     }
-
-
-}

@@ -39,11 +39,12 @@ Route::get('/', function () {
 // 2. HALAMAN PENDAFTARAN KUNJUNGAN (GUEST)
 // =========================================================================
 Route::get('/kunjungan/daftar', [KunjunganController::class, 'create'])->name('kunjungan.create');
-Route::post('/kunjungan/daftar', [KunjunganController::class, 'store'])->name('kunjungan.store');
+Route::post('/kunjungan/daftar', [KunjunganController::class, 'store'])->name('kunjungan.store')->middleware('throttle:10,1');
 Route::get('/kunjungan/status/{kunjungan}', [KunjunganController::class, 'status'])->name('kunjungan.status');
 Route::get('/kunjungan/verify/{kunjungan}', [KunjunganController::class, 'verify'])->name('kunjungan.verify');
 
 Route::get('/api/kunjungan/{kunjungan}/status', [KunjunganController::class, 'getStatusApi'])->name('kunjungan.status.api');
+Route::get('/api/kunjungan/quota', [KunjunganController::class, 'getQuotaStatus'])->name('kunjungan.quota.api');
 
 
 // =========================================================================
@@ -52,7 +53,7 @@ Route::get('/api/kunjungan/{kunjungan}/status', [KunjunganController::class, 'ge
 // Kita pakai AuthController custom agar logika cek role dimatikan sementara
 Route::middleware('guest')->group(function () {
     Route::get('login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('login', [AuthController::class, 'login']);
+    Route::post('login', [AuthController::class, 'login'])->middleware('throttle:5,1');
 });
 
 Route::post('logout', [AuthController::class, 'logout'])

@@ -372,23 +372,80 @@
                         <div 
                             class="grid grid-cols-1 md:grid-cols-2 gap-6"
                             x-data="{
+                                // Data & State
                                 datesByDay: {{ json_encode($datesByDay) }},
                                 selectedDay: '{{ old('selected_day', '') }}',
                                 selectedDate: '{{ old('tanggal_kunjungan', '') }}',
+                                selectedSesi: '{{ old('sesi', '') }}',
                                 availableDates: [],
                                 isMonday: false,
-
+                                quotaInfo: '',
+                                isLoading: false,
+                                
+                                // Methods
                                 init() {
+                                    // Initialize available dates if a day was already selected (e.g., due to validation error)
                                     if (this.selectedDay) {
-                                        this.availableDates = this.datesByDay[this.selectedDay] || [];
-                                        this.isMonday = (this.selectedDay === 'Senin');
+                                        this.updateAvailableDates();
                                     }
+                                    // If a date was already selected, fetch quota immediately
+                                    if (this.selectedDate) {
+                                        this.getQuota();
+                                    }
+
+                                    // Watch for changes and fetch quota
+                                    this.$watch('selectedDate', () => this.getQuota());
+                                    this.$watch('selectedSesi', () => this.getQuota());
                                 },
 
                                 handleDayChange() {
-                                    this.availableDates = this.datesByDay[this.selectedDay] || [];
+                                    this.updateAvailableDates();
                                     this.selectedDate = ''; // Reset date selection
+                                    this.quotaInfo = ''; // Reset quota info
+                                },
+
+                                updateAvailableDates() {
+                                    this.availableDates = this.datesByDay[this.selectedDay] || [];
                                     this.isMonday = (this.selectedDay === 'Senin');
+                                },
+                                
+                                async getQuota() {
+                                    // Don't fetch if date is not selected, or if it's Monday and session is not selected
+                                    if (!this.selectedDate || (this.isMonday && !this.selectedSesi)) {
+                                        this.quotaInfo = '';
+                                        return;
+                                    }
+
+                                    this.isLoading = true;
+                                    this.quotaInfo = 'Memeriksa kuota...';
+
+                                    try {
+                                        const params = new URLSearchParams({
+                                            tanggal_kunjungan: this.selectedDate,
+                                            sesi: this.isMonday ? this.selectedSesi : '',
+                                        });
+
+                                        const response = await fetch(`{{ route('kunjungan.quota.api') }}?${params}`);
+                                        
+                                        if (!response.ok) {
+                                            const errorData = await response.json();
+                                            throw new Error(errorData.message || 'Gagal mengambil data kuota.');
+                                        }
+
+                                        const data = await response.json();
+                                        
+                                        if (data.sisa_kuota > 0) {
+                                            this.quotaInfo = `<span class='text-green-600'><i class='fa-solid fa-check-circle mr-1'></i>Sisa Kuota: ${data.sisa_kuota}</span>`;
+                                        } else {
+                                            this.quotaInfo = `<span class='text-red-600'><i class='fa-solid fa-times-circle mr-1'></i>Kuota Penuh</span>`;
+                                        }
+
+                                    } catch (error) {
+                                        this.quotaInfo = `<span class='text-red-600'>Gagal memeriksa kuota.</span>`;
+                                        console.error('Quota Fetch Error:', error);
+                                    } finally {
+                                        this.isLoading = false;
+                                    }
                                 }
                             }"
                         >
@@ -441,13 +498,18 @@
                                 @error('tanggal_kunjungan')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
+                                <!-- Quota Info Display -->
+                                <div class="mt-2 text-sm font-semibold h-5">
+                                    <span x-show="isLoading" class="text-slate-500">Memeriksa kuota...</span>
+                                    <span x-show="!isLoading" x-html="quotaInfo"></span>
+                                </div>
                             </div>
 
                             {{-- Dropdown Sesi Dinamis --}}
                             <div x-show="isMonday" x-transition class="md:col-span-2">
                                 <label for="sesi" class="block text-sm font-semibold text-slate-700 mb-2">Sesi Kunjungan (Khusus Senin)</label>
-                                <select id="sesi" name="sesi" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 bg-white @error('sesi') border-red-500 @enderror">
-                                    <option value="" disabled selected>Pilih Sesi...</option>
+                                <select id="sesi" name="sesi" x-model="selectedSesi" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 bg-white @error('sesi') border-red-500 @enderror">
+                                    <option value="" disabled>Pilih Sesi...</option>
                                     <option value="pagi" @if(old('sesi') == 'pagi') selected @endif>Sesi Pagi (08:30 - 10:00)</option>
                                     <option value="siang" @if(old('sesi') == 'siang') selected @endif>Sesi Siang (13:30 - 14:30)</option>
                                 </select>
