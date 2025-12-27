@@ -19,24 +19,26 @@
     </div>
     @endif
 
-    {{-- FILTER FORM --}}
-    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-        <form action="{{ route('admin.kunjungan.index') }}" method="GET">
-            <div class="flex items-center gap-4">
-                <div class="w-full">
-                    <label for="status" class="text-sm font-medium text-gray-700">Filter berdasarkan Status:</label>
-                    <select name="status" id="status" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        <option value="">Semua Status</option>
-                        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Menunggu</option>
-                        <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Disetujui</option>
-                        <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Ditolak</option>
-                    </select>
-                </div>
-                <div class="pt-6">
-                    <button type="submit" class="bg-slate-800 hover:bg-slate-700 text-white px-6 py-2 rounded-lg">Filter</button>
-                </div>
-            </div>
-        </form>
+    {{-- TABS FILTER --}}
+    <div class="border-b border-gray-200">
+        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+            <a href="{{ route('admin.kunjungan.index') }}"
+               class="{{ !request('status') ? 'border-slate-800 text-slate-800' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                Semua
+            </a>
+            <a href="{{ route('admin.kunjungan.index', ['status' => 'pending']) }}"
+               class="{{ request('status') == 'pending' ? 'border-slate-800 text-slate-800' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                Menunggu
+            </a>
+            <a href="{{ route('admin.kunjungan.index', ['status' => 'approved']) }}"
+               class="{{ request('status') == 'approved' ? 'border-slate-800 text-slate-800' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                Disetujui
+            </a>
+            <a href="{{ route('admin.kunjungan.index', ['status' => 'rejected']) }}"
+               class="{{ request('status') == 'rejected' ? 'border-slate-800 text-slate-800' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                Ditolak
+            </a>
+        </nav>
     </div>
 
     {{-- DATA TABLE --}}
