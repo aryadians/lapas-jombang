@@ -1,5 +1,9 @@
 @component('mail::message')
 
+<div style="text-align: center; margin-bottom: 20px;">
+    <img src="{{ asset('img/logo.png') }}" alt="Lapas Jombang Logo" style="height: 80px; width: auto; display: inline-block;">
+</div>
+
 # Status Pendaftaran Kunjungan Anda
 
 Halo **{{ $kunjungan->nama_pengunjung }}**,
@@ -32,7 +36,7 @@ Selamat! Pendaftaran kunjungan Anda telah disetujui oleh petugas kami. Mohon per
 *   Pendaftaran ini berlaku untuk satu orang.
 *   Harap tiba di lokasi sesuai dengan tanggal dan sesi kunjungan Anda.
 
-@component('mail::button', ['url' => url('/')])
+@component('mail::button', ['url' => url('/'), 'color' => 'success'])
 Kunjungi Website
 @endcomponent
 
@@ -63,4 +67,11 @@ Terima kasih atas perhatian Anda.
 
 Hormat kami,<br>
 **Petugas Layanan Lapas Kelas IIB Jombang**
+
+@slot('subcopy')
+@component('mail::subcopy')
+Ini adalah email yang dibuat secara otomatis. Mohon tidak membalas email ini. Semua informasi kunjungan dapat diakses melalui website resmi kami.
+@endcomponent
+@endslot
+
 @endcomponent

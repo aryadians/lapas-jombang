@@ -1,5 +1,9 @@
 @component('mail::message')
 
+<div style="text-align: center; margin-bottom: 20px;">
+    <img src="{{ asset('img/logo.png') }}" alt="Lapas Jombang Logo" style="height: 80px; width: auto; display: inline-block;">
+</div>
+
 # Konfirmasi Pendaftaran Kunjungan Anda
 
 Halo **{{ $kunjungan->nama_pengunjung }}**,
@@ -27,18 +31,21 @@ Berikut adalah detail pendaftaran Anda:
 **Langkah Selanjutnya:**
 *   Petugas kami akan segera memverifikasi data pendaftaran Anda.
 *   Anda akan menerima email terpisah yang berisi informasi status pendaftaran Anda (Disetujui/Ditolak) dalam waktu maksimal 1x24 jam.
-*   Mohon siapkan dokumen yang diperlukan (misalnya KTP/identitas diri) saat kunjungan.
+*   Anda dapat memantau status pendaftaran Anda secara berkala melalui tombol di bawah ini.
 
-@component('mail::button', ['url' => route('kunjungan.status', $kunjungan->id), 'color' => 'success'])
+@component('mail::button', ['url' => route('kunjungan.status', $kunjungan->id)])
 Cek Status Pendaftaran Anda
-@endcomponent
-
-@component('mail::button', ['url' => url('/')])
-Kembali ke Halaman Utama
 @endcomponent
 
 Terima kasih atas perhatian Anda.
 
 Hormat kami,<br>
 **Petugas Layanan Lapas Kelas IIB Jombang**
+
+@slot('subcopy')
+@component('mail::subcopy')
+Ini adalah email yang dibuat secara otomatis. Mohon tidak membalas email ini. Semua informasi kunjungan dapat diakses melalui website resmi kami.
+@endcomponent
+@endslot
+
 @endcomponent

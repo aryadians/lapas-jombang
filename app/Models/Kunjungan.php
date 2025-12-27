@@ -23,5 +23,8 @@ class Kunjungan extends Model
         'nama_wbp',
         'hubungan',
         'tanggal_kunjungan',
+        'sesi',
+        'nomor_antrian_harian',
+        'status',
     ];
 }
