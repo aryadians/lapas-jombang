@@ -29,8 +29,12 @@ Berikut adalah detail pendaftaran Anda:
 *   Anda akan menerima email terpisah yang berisi informasi status pendaftaran Anda (Disetujui/Ditolak) dalam waktu maksimal 1x24 jam.
 *   Mohon siapkan dokumen yang diperlukan (misalnya KTP/identitas diri) saat kunjungan.
 
+@component('mail::button', ['url' => route('kunjungan.status', $kunjungan->id), 'color' => 'success'])
+Cek Status Pendaftaran Anda
+@endcomponent
+
 @component('mail::button', ['url' => url('/')])
-Kunjungi Website Lapas
+Kembali ke Halaman Utama
 @endcomponent
 
 Terima kasih atas perhatian Anda.

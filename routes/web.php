@@ -39,6 +39,7 @@ Route::get('/', function () {
 // =========================================================================
 Route::get('/kunjungan/daftar', [KunjunganController::class, 'create'])->name('kunjungan.create');
 Route::post('/kunjungan/daftar', [KunjunganController::class, 'store'])->name('kunjungan.store');
+Route::get('/kunjungan/status/{kunjungan}', [KunjunganController::class, 'status'])->name('kunjungan.status');
 
 
 // =========================================================================

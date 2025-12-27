@@ -127,6 +127,14 @@ class KunjunganController extends Controller
         }
         $pesanSukses .= " Mohon tunggu konfirmasi dari petugas.";
 
-        return redirect()->route('kunjungan.create')->with('success', $pesanSukses);
+        return redirect()->route('kunjungan.status', $kunjunganBaru)->with('success', $pesanSukses);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function status(Kunjungan $kunjungan)
+    {
+        return view('guest.kunjungan.status', compact('kunjungan'));
     }
 }
