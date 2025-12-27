@@ -79,6 +79,8 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::resource('announcements', AnnouncementController::class);
 
     // D. CRUD KUNJUNGAN
+    Route::get('kunjungan/verifikasi', [AdminKunjunganController::class, 'showVerificationForm'])->name('admin.kunjungan.verifikasi');
+    Route::post('kunjungan/verifikasi', [AdminKunjunganController::class, 'verifyQrCode'])->name('admin.kunjungan.verifikasi.submit');
     Route::get('kunjungan', [AdminKunjunganController::class, 'index'])->name('admin.kunjungan.index');
     Route::get('kunjungan/{kunjungan}', [AdminKunjunganController::class, 'show'])->name('admin.kunjungan.show');
     Route::patch('kunjungan/{kunjungan}', [AdminKunjunganController::class, 'update'])->name('admin.kunjungan.update');

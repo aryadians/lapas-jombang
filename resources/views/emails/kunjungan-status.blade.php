@@ -31,6 +31,15 @@ Selamat! Pendaftaran kunjungan Anda telah disetujui oleh petugas kami. Mohon per
 @endif
 @endcomponent
 
+@if($kunjungan->qr_token)
+### Kode QR Verifikasi
+Tunjukkan kode QR di bawah ini kepada petugas saat Anda tiba di lokasi untuk proses verifikasi yang lebih cepat.
+
+<div style="text-align: center; margin-top: 15px; margin-bottom: 15px;">
+    {!! QrCode::size(200)->generate($kunjungan->qr_token) !!}
+</div>
+@endif
+
 **PENTING:**
 *   Patuhi semua tata tertib dan aturan barang bawaan yang telah dijelaskan di website.
 *   Pendaftaran ini berlaku untuk satu orang.

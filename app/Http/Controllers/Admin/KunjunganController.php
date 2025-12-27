@@ -7,6 +7,7 @@ use App\Models\Kunjungan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\KunjunganStatusMail;
+use Illuminate\Support\Str;
 
 class KunjunganController extends Controller
 {
@@ -65,8 +66,19 @@ class KunjunganController extends Controller
             'status' => 'required|in:approved,rejected',
         ]);
 
-        // Update status kunjungan
-        $kunjungan->update(['status' => $request->status]);
+        $updateData = ['status' => $request->status];
+
+        // Jika status adalah "approved", buat token unik untuk QR code
+        // dan pastikan token belum ada.
+        if ($request->status === 'approved' && is_null($kunjungan->qr_token)) {
+            $updateData['qr_token'] = Str::random(40);
+        }
+
+        // Update status kunjungan (dan token jika ada)
+        $kunjungan->update($updateData);
+
+        // Refresh model untuk mendapatkan data terbaru (termasuk token)
+        $kunjungan->refresh();
 
         // Kirim email notifikasi ke pengunjung
         try {
@@ -101,5 +113,27 @@ class KunjunganController extends Controller
     public function show(Kunjungan $kunjungan)
     {
         return view('admin.kunjungan.show', compact('kunjungan'));
+    }
+
+    /**
+     * Show the form for verifying a QR code.
+     */
+    public function showVerificationForm()
+    {
+        return view('admin.kunjungan.verifikasi');
+    }
+
+    /**
+     * Verify the QR code token and display the visit details.
+     */
+    public function verifyQrCode(Request $request)
+    {
+        $request->validate([
+            'qr_token' => 'required|string',
+        ]);
+
+        $kunjungan = Kunjungan::where('qr_token', $request->qr_token)->first();
+
+        return view('admin.kunjungan.verifikasi', compact('kunjungan'));
     }
 }
