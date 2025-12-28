@@ -22,7 +22,7 @@
     <div class="container mx-auto px-6 max-w-5xl">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @forelse($allNews as $item)
-            <div class="bg-white rounded-xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden group border border-gray-100">
+            <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden group border border-gray-100 transform hover:-translate-y-1">
                 <div class="relative h-48 overflow-hidden">
                     @if($item->image)
                     <img src="{{ $item->image }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" loading="lazy">
@@ -33,8 +33,8 @@
                         </svg>
                     </div>
                     @endif
-                    <div class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
-                        {{ $item->created_at->format('d M Y') }}
+                    <div class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg opacity-90 group-hover:opacity-100 transition">
+                        {{ $item->created_at->translatedFormat('d M Y') }}
                     </div>
                 </div>
                 <div class="p-6">
@@ -44,7 +44,7 @@
                     <p class="text-gray-500 text-sm mb-4 line-clamp-3">
                         {{ Str::limit(strip_tags($item->content), 100) }}
                     </p>
-                    <a href="{{ route('news.public.show', $item->slug) }}" class="inline-block text-sm font-bold text-yellow-600 hover:text-yellow-700">
+                    <a href="{{ route('news.public.show', $item->slug) }}" class="inline-block text-sm font-bold text-blue-600 hover:text-blue-700 transition">
                         Baca Selengkapnya &rarr;
                     </a>
                 </div>
@@ -57,7 +57,7 @@
         </div>
 
         {{-- Pagination --}}
-        <div class="mt-12">
+        <div class="mt-12 flex justify-center">
             {{ $allNews->links() }}
         </div>
     </div>

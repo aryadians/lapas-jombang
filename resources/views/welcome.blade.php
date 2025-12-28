@@ -74,7 +74,7 @@
 
 <section class="py-20 bg-slate-100">
     <div class="container mx-auto px-6 text-center">
-        <h2 class="text-3xl font-bold text-slate-800 mb-2">Mengapa Memilih Kami?</h2>
+        <h2 class="text-3xl font-bold text-slate-800 mb-2">Komitmen Lapas Jombang</h2>
         <div class="h-1 w-20 bg-blue-500 mx-auto mb-12"></div>
         <p class="text-gray-600 leading-relaxed text-lg max-w-4xl mx-auto mb-12">
             Kami berkomitmen penuh untuk menyediakan layanan pemasyarakatan yang transparan, profesional, dan berorientasi pada kemanusiaan. Keamanan, pembinaan, dan reintegrasi sosial adalah prioritas utama kami.

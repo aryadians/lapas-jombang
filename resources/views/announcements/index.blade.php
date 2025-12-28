@@ -20,10 +20,10 @@
 
 <section class="py-16 bg-white">
     <div class="container mx-auto px-6 max-w-4xl">
-        <div class="space-y-8">
+        <div class="space-y-6">
             @forelse($allAnnouncements as $announcement)
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition flex items-start space-x-4">
-                <div class="flex-shrink-0 text-center bg-yellow-500 rounded p-3 text-white">
+            <div class="bg-white rounded-xl shadow-md border border-gray-100 p-6 hover:shadow-lg transition flex items-start space-x-4 transform hover:-translate-y-1">
+                <div class="flex-shrink-0 text-center bg-blue-500 rounded p-3 text-white">
                     <span class="block text-2xl font-bold">{{ $announcement->date->format('d') }}</span>
                     <span class="block text-xs uppercase">{{ $announcement->date->format('M') }}</span>
                 </div>
@@ -41,7 +41,7 @@
         </div>
 
         {{-- Pagination --}}
-        <div class="mt-12">
+        <div class="mt-12 flex justify-center">
             {{ $allAnnouncements->links() }}
         </div>
     </div>

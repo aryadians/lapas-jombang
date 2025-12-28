@@ -20,26 +20,60 @@
 
 <section class="py-16 bg-white">
     <div class="container mx-auto px-6 max-w-4xl">
-        <div class="space-y-8">
-            <div class="border-b pb-4">
-                <h3 class="text-xl font-semibold text-slate-800 mb-2">Apa itu Lapas Jombang?</h3>
-                <p class="text-gray-600">Lapas Jombang adalah lembaga pemasyarakatan Kelas IIB Jombang yang bertugas melaksanakan pembinaan terhadap narapidana dan tahanan.</p>
+        <div class="space-y-4">
+            {{-- FAQ Item 1 --}}
+            <div x-data="{ open: false }" class="border border-gray-200 rounded-lg shadow-sm bg-white">
+                <button @click="open = !open" class="flex justify-between items-center w-full px-6 py-4 text-left focus:outline-none">
+                    <span class="text-xl font-semibold text-slate-800">Apa itu Lapas Jombang?</span>
+                    <i class="fa-solid" :class="open ? 'fa-minus text-yellow-500' : 'fa-plus text-blue-500'"></i>
+                </button>
+                <div x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-y-0" x-transition:enter-end="opacity-100 scale-y-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-y-100" x-transition:leave-end="opacity-0 scale-y-0" class="px-6 pb-4 text-gray-600 border-t border-gray-100 origin-top">
+                    <p class="pt-4">Lapas Jombang adalah lembaga pemasyarakatan Kelas IIB Jombang yang bertugas melaksanakan pembinaan terhadap narapidana dan tahanan.</p>
+                </div>
             </div>
-            <div class="border-b pb-4">
-                <h3 class="text-xl font-semibold text-slate-800 mb-2">Bagaimana cara melakukan pendaftaran kunjungan?</h3>
-                <p class="text-gray-600">Pendaftaran kunjungan dapat dilakukan secara online melalui website ini pada menu "Pendaftaran Kunjungan". Ikuti langkah-langkah yang tertera pada formulir pendaftaran.</p>
+
+            {{-- FAQ Item 2 --}}
+            <div x-data="{ open: false }" class="border border-gray-200 rounded-lg shadow-sm bg-white">
+                <button @click="open = !open" class="flex justify-between items-center w-full px-6 py-4 text-left focus:outline-none">
+                    <span class="text-xl font-semibold text-slate-800">Bagaimana cara melakukan pendaftaran kunjungan?</span>
+                    <i class="fa-solid" :class="open ? 'fa-minus text-yellow-500' : 'fa-plus text-blue-500'"></i>
+                </button>
+                <div x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-y-0" x-transition:enter-end="opacity-100 scale-y-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-y-100" x-transition:leave-end="opacity-0 scale-y-0" class="px-6 pb-4 text-gray-600 border-t border-gray-100 origin-top">
+                    <p class="pt-4">Pendaftaran kunjungan dapat dilakukan secara online melalui website ini pada menu "Pendaftaran Kunjungan". Ikuti langkah-langkah yang tertera pada formulir pendaftaran.</p>
+                </div>
             </div>
-            <div class="border-b pb-4">
-                <h3 class="text-xl font-semibold text-slate-800 mb-2">Apa saja persyaratan untuk kunjungan?</h3>
-                <p class="text-gray-600">Persyaratan kunjungan meliputi kartu identitas yang berlaku, bukti hubungan keluarga, dan mematuhi tata tertib kunjungan yang telah ditetapkan. Detail lebih lanjut akan ditampilkan saat pendaftaran online.</p>
+
+            {{-- FAQ Item 3 --}}
+            <div x-data="{ open: false }" class="border border-gray-200 rounded-lg shadow-sm bg-white">
+                <button @click="open = !open" class="flex justify-between items-center w-full px-6 py-4 text-left focus:outline-none">
+                    <span class="text-xl font-semibold text-slate-800">Apa saja persyaratan untuk kunjungan?</span>
+                    <i class="fa-solid" :class="open ? 'fa-minus text-yellow-500' : 'fa-plus text-blue-500'"></i>
+                </button>
+                <div x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-y-0" x-transition:enter-end="opacity-100 scale-y-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-y-100" x-transition:leave-end="opacity-0 scale-y-0" class="px-6 pb-4 text-gray-600 border-t border-gray-100 origin-top">
+                    <p class="pt-4">Persyaratan kunjungan meliputi kartu identitas yang berlaku, bukti hubungan keluarga, dan mematuhi tata tertib kunjungan yang telah ditetapkan. Detail lebih lanjut akan ditampilkan saat pendaftaran online.</p>
+                </div>
             </div>
-            <div class="border-b pb-4">
-                <h3 class="text-xl font-semibold text-slate-800 mb-2">Apakah ada batasan jumlah pengunjung per narapidana?</h3>
-                <p class="text-gray-600">Ya, ada batasan jumlah pengunjung per narapidana untuk menjaga ketertiban dan keamanan. Informasi detail mengenai batasan ini akan diberikan pada saat pendaftaran atau dapat dilihat di pengumuman.</p>
+
+            {{-- FAQ Item 4 --}}
+            <div x-data="{ open: false }" class="border border-gray-200 rounded-lg shadow-sm bg-white">
+                <button @click="open = !open" class="flex justify-between items-center w-full px-6 py-4 text-left focus:outline-none">
+                    <span class="text-xl font-semibold text-slate-800">Apakah ada batasan jumlah pengunjung per narapidana?</span>
+                    <i class="fa-solid" :class="open ? 'fa-minus text-yellow-500' : 'fa-plus text-blue-500'"></i>
+                </button>
+                <div x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-y-0" x-transition:enter-end="opacity-100 scale-y-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-y-100" x-transition:leave-end="opacity-0 scale-y-0" class="px-6 pb-4 text-gray-600 border-t border-gray-100 origin-top">
+                    <p class="pt-4">Ya, ada batasan jumlah pengunjung per narapidana untuk menjaga ketertiban dan keamanan. Informasi detail mengenai batasan ini akan diberikan pada saat pendaftaran atau dapat dilihat di pengumuman.</p>
+                </div>
             </div>
-            <div class="pb-4">
-                <h3 class="text-xl font-semibold text-slate-800 mb-2">Bagaimana jika saya terlambat datang saat jadwal kunjungan?</h3>
-                <p class="text-gray-600">Pengunjung diharapkan datang tepat waktu sesuai jadwal yang telah ditentukan. Keterlambatan dapat mengakibatkan pembatalan kunjungan, tergantung pada kebijakan dan ketersediaan waktu.</p>
+
+            {{-- FAQ Item 5 --}}
+            <div x-data="{ open: false }" class="border border-gray-200 rounded-lg shadow-sm bg-white">
+                <button @click="open = !open" class="flex justify-between items-center w-full px-6 py-4 text-left focus:outline-none">
+                    <span class="text-xl font-semibold text-slate-800">Bagaimana jika saya terlambat datang saat jadwal kunjungan?</span>
+                    <i class="fa-solid" :class="open ? 'fa-minus text-yellow-500' : 'fa-plus text-blue-500'"></i>
+                </button>
+                <div x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-y-0" x-transition:enter-end="opacity-100 scale-y-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-y-100" x-transition:leave-end="opacity-0 scale-y-0" class="px-6 pb-4 text-gray-600 border-t border-gray-100 origin-top">
+                    <p class="pt-4">Pengunjung diharapkan datang tepat waktu sesuai jadwal yang telah ditentukan. Keterlambatan dapat mengakibatkan pembatalan kunjungan, tergantung pada kebijakan dan ketersediaan waktu.</p>
+                </div>
             </div>
         </div>
     </div>
