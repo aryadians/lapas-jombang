@@ -1,66 +1,163 @@
 @extends('layouts.main')
 
 @section('content')
-<section class="relative bg-slate-900 text-white min-h-[400px] flex items-center justify-center overflow-hidden">
-    <div class="absolute inset-0 z-0">
-        {{-- TODO: Implement dynamic background image selection for hero sections based on page context. --}}
-        <img src="https://images.unsplash.com/photo-1502920514313-52581002a659?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Background Lapas News"
-            class="w-full h-full object-cover opacity-30">
-        <div class="absolute inset-0 bg-gradient-to-b from-slate-900/80 to-slate-900/90"></div>
+
+{{-- Breadcrumb --}}
+<section class="bg-gray-50 py-4">
+    <div class="container mx-auto px-6">
+        <nav class="flex" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
+                        <svg class="w-3 h-3 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2A1 1 0 0 0 1 10h2v8a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-4a1 1 0 0 0 1-1v-1h2v1a1 1 0 0 0 1 1v4a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-8h2a1 1 0 0 0 .707-1.707Z"/>
+                        </svg>
+                        Beranda
+                    </a>
+                </li>
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <svg class="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                        </svg>
+                        <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2">Berita</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
     </div>
+</section>
+
+{{-- Hero Section --}}
+<section class="relative bg-gradient-to-br from-blue-900 via-slate-900 to-blue-900 text-white min-h-[350px] flex items-center justify-center overflow-hidden">
+    {{-- Background Pattern --}}
+    <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-blue-900/70 via-blue-900/80 to-blue-900/95"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-900/20 to-purple-900/20"></div>
+    </div>
+
+    {{-- Floating Elements --}}
+    <div class="absolute top-20 left-10 w-20 h-20 bg-blue-500/10 rounded-full blur-xl animate-pulse"></div>
+    <div class="absolute bottom-20 right-10 w-32 h-32 bg-yellow-500/10 rounded-full blur-xl animate-pulse" style="animation-delay: 1s;"></div>
+
     <div class="container mx-auto px-6 text-center relative z-10">
-        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight">
-            Berita Terbaru
+        <div class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-sm font-semibold mb-6">
+            <i class="fas fa-newspaper mr-2"></i>
+            Berita & Informasi
+        </div>
+        <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tight">
+            Berita <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">Terbaru</span>
         </h1>
-        <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto font-light">
-            Informasi terkini seputar Lapas Kelas IIB Jombang.
+        <p class="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+            Informasi terkini seputar kegiatan, program, dan pembangunan di Lembaga Pemasyarakatan Kelas 2B Jombang.
         </p>
     </div>
 </section>
 
-<section class="py-16 bg-white">
-    <div class="container mx-auto px-6 max-w-5xl">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+{{-- News Grid Section --}}
+<section class="py-20 bg-gradient-to-b from-gray-50 to-white">
+    <div class="container mx-auto px-6 max-w-7xl">
+        {{-- Section Header --}}
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-black text-slate-800 mb-4">
+                Semua Berita
+            </h2>
+            <div class="h-1 w-24 bg-gradient-to-r from-blue-500 to-yellow-500 mx-auto mb-6"></div>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Temukan informasi terbaru tentang program pembinaan, kegiatan positif, dan berita penting lainnya.
+            </p>
+        </div>
+
+        {{-- News Count --}}
+        <div class="flex justify-between items-center mb-8">
+            <p class="text-gray-600">
+                Menampilkan <span class="font-semibold text-blue-600">{{ $allNews->count() }}</span> dari <span class="font-semibold text-blue-600">{{ $allNews->total() }}</span> berita
+            </p>
+            <div class="flex items-center space-x-2 text-sm text-gray-500">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Diperbarui terakhir: {{ now()->translatedFormat('d F Y') }}</span>
+            </div>
+        </div>
+
+        {{-- News Grid --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             @forelse($allNews as $item)
-            <div x-data="inView" x-init="init()" :class="{'opacity-0 translate-y-4': !inView}" class="transition duration-700 bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden group border border-gray-100 transform hover:-translate-y-1" style="transition-delay: {{ $loop->index * 0.1 }}s;">
-                <div class="relative h-48 overflow-hidden">
-                    @if($item->image)
-                    <img src="{{ $item->image }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" loading="lazy">
+            <article x-data="inView" x-init="init()" :class="{'opacity-0 translate-y-8 scale-95': !inView}" class="transition-all duration-1000 bg-white rounded-2xl shadow-xl hover:shadow-2xl overflow-hidden group border border-gray-100 transform hover:-translate-y-3" style="transition-delay: {{ $loop->index * 0.1 }}s;">
+                <div class="relative h-56 overflow-hidden">
+                    @if(is_array($item->image) && count($item->image) > 0)
+                    <img src="{{ $item->image[0] }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-500" loading="lazy">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     @else
-                    <div class="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
+                    <div class="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                        <div class="text-center text-gray-400">
+                            <i class="fas fa-image text-4xl mb-2"></i>
+                            <p class="text-sm">Tidak ada gambar</p>
+                        </div>
                     </div>
                     @endif
-                    <div class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg opacity-90 group-hover:opacity-100 transition">
+                    <div class="absolute top-4 right-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
                         {{ $item->created_at->translatedFormat('d M Y') }}
+                    </div>
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                            Berita
+                        </span>
                     </div>
                 </div>
                 <div class="p-6">
-                    <h3 class="text-lg font-bold text-slate-800 mb-3 group-hover:text-blue-700 transition line-clamp-2">
+                    <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-blue-700 transition-colors line-clamp-2 leading-tight">
                         {{ $item->title }}
                     </h3>
-                    <p class="text-gray-500 text-sm mb-4 line-clamp-3">
-                        {{ Str::limit(strip_tags($item->content), 100) }}
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-3 leading-relaxed">
+                        {{ Str::limit(strip_tags($item->content), 120) }}
                     </p>
-                    <a href="{{ route('news.public.show', $item->slug) }}" class="inline-block text-sm font-bold text-blue-600 hover:text-blue-700 transition">
-                        Baca Selengkapnya &rarr;
-                    </a>
+                    <div class="flex items-center justify-between">
+                        <a href="{{ route('news.public.show', $item->slug) }}" class="inline-flex items-center text-sm font-bold text-blue-600 hover:text-blue-700 group-hover:text-blue-800 transition-colors">
+                            <span>Baca Selengkapnya</span>
+                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <div class="flex items-center text-xs text-gray-400">
+                            <i class="fas fa-clock mr-1"></i>
+                            <span>{{ $item->created_at->diffForHumans() }}</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </article>
             @empty
-            <div class="col-span-full text-center py-10 bg-slate-50 rounded-xl border border-dashed border-gray-300">
-                <p class="text-gray-500">Belum ada berita yang diterbitkan.</p>
+            <div class="col-span-full">
+                <div class="text-center py-20 bg-white rounded-2xl border-2 border-dashed border-gray-300 shadow-lg">
+                    <div class="max-w-md mx-auto">
+                        <i class="fas fa-newspaper text-6xl text-gray-300 mb-4"></i>
+                        <h3 class="text-2xl font-semibold text-gray-600 mb-2">Belum Ada Berita</h3>
+                        <p class="text-gray-500 mb-6">Informasi terbaru akan segera dipublikasikan di sini.</p>
+                        <a href="/" class="inline-flex items-center px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-full transition-colors">
+                            <i class="fas fa-home mr-2"></i>
+                            Kembali ke Beranda
+                        </a>
+                    </div>
+                </div>
             </div>
             @endforelse
         </div>
 
         {{-- Pagination --}}
-        <div class="mt-12 flex justify-center">
-            {{ $allNews->links() }}
+        @if($allNews->hasPages())
+        <div class="flex justify-center">
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-4">
+                {{ $allNews->appends(request()->query())->links() }}
+            </div>
+        </div>
+        @endif
+
+        {{-- Back to Home --}}
+        <div class="text-center mt-16">
+            <a href="/" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
+                <i class="fas fa-home mr-3"></i>
+                Kembali ke Beranda
+            </a>
         </div>
     </div>
 </section>
+
 @endsection

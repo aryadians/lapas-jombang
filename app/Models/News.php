@@ -35,5 +35,6 @@ class News extends Model
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'image' => 'array',
     ];
 }

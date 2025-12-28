@@ -59,19 +59,19 @@
       }">
 
     {{-- NAVBAR --}}
-    <nav class="bg-slate-900/95 backdrop-blur-md fixed w-full z-50 shadow-lg border-b border-slate-800 transition-all duration-300">
+    <nav class="bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950 backdrop-blur-md fixed w-full z-50 shadow-2xl border-b border-slate-800/50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
 
                 {{-- Logo Kiri --}}
                 <div class="flex-shrink-0 flex items-center gap-4">
                     <a href="{{ url('/') }}" class="flex items-center gap-4 group">
-                        <img class="h-12 w-auto group-hover:scale-105 transition-transform duration-300"
+                        <img class="h-12 w-auto group-hover:scale-105 transition-transform duration-300 drop-shadow-lg"
                             src="{{ asset('img/logo.png') }}"
                             alt="Logo Lapas">
 
                         <div class="flex flex-col">
-                            <span class="font-bold text-white text-xl tracking-wide group-hover:text-yellow-400 transition">LAPAS KELAS 2B JOMBANG</span>
+                            <span class="font-bold text-white text-xl tracking-wide group-hover:text-yellow-400 transition-colors duration-300">LAPAS KELAS 2B JOMBANG</span>
                             <span class="text-[11px] text-yellow-500 uppercase tracking-wider font-semibold">Kementerian Imigrasi dan Pemasyarakatan RI</span>
                         </div>
                     </a>
@@ -79,34 +79,34 @@
 
                 {{-- Menu Tengah --}}
                 <div class="hidden md:flex space-x-8 items-center">
-                    <a href="{{ url('/') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-semibold transition-all">Beranda</a>
-                    <a href="{{ url('/#profil') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-semibold transition-all">Profil</a>
-                    <a href="{{ route('news.public.index') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-semibold transition-all">Berita</a>
-                    <a href="{{ route('announcements.public.index') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-semibold transition-all">Pengumuman</a>
+                    <a href="{{ url('/') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-semibold transition-all duration-300">Beranda</a>
+                    <a href="{{ url('/#profil') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-semibold transition-all duration-300">Profil</a>
+                    <a href="{{ route('news.public.index') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-semibold transition-all duration-300">Berita</a>
+                    <a href="{{ route('announcements.public.index') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-semibold transition-all duration-300">Pengumuman</a>
                 </div>
 
                 {{-- Menu Kanan --}}
                 <div class="hidden md:flex items-center gap-4">
                     {{-- Button Pendaftaran --}}
                     <a href="{{ route('kunjungan.create') }}"
-                        class="text-base font-extrabold text-slate-900 bg-yellow-500 hover:bg-yellow-400 px-7 py-3 rounded-full transition shadow-lg hover:shadow-yellow-500/30 transform hover:-translate-y-1 whitespace-nowrap inline-flex items-center gap-2 group">
+                        class="text-base font-extrabold text-slate-900 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 px-7 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-yellow-500/30 transform hover:-translate-y-1 whitespace-nowrap inline-flex items-center gap-2 group">
                         Daftar Kunjungan <i class="fa-solid fa-arrow-right-long text-sm group-hover:translate-x-1 transition-transform"></i>
                     </a>
 
-                    <div class="h-6 w-px bg-slate-700 mx-1"></div>
+                    <div class="h-6 w-px bg-slate-700/50 mx-1"></div>
 
                     {{-- Icon Login --}}
                     @if (Route::has('login'))
                     @auth
                     <a href="{{ url('/dashboard') }}" title="Dashboard"
-                        class="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-full transition duration-300">
+                        class="p-2 text-slate-400 hover:text-yellow-400 hover:bg-slate-800/50 rounded-full transition-all duration-300 hover:scale-110">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
                         </svg>
                     </a>
                     @else
                     <a href="{{ route('login') }}" title="Login Petugas"
-                        class="group flex items-center gap-2 p-2 text-slate-400 hover:text-yellow-400 hover:bg-slate-800 rounded-full transition duration-300">
+                        class="group flex items-center gap-2 p-2 text-slate-400 hover:text-yellow-400 hover:bg-slate-800/50 rounded-full transition-all duration-300 hover:scale-110">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 group-hover:scale-110 transition-transform">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
                         </svg>
@@ -117,7 +117,7 @@
 
                 {{-- Mobile Toggle --}}
                 <div class="-mr-2 flex md:hidden">
-                    <button type="button" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none transition">
+                    <button type="button" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-slate-800/50 focus:outline-none transition-all duration-300 hover:scale-110">
                         <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
@@ -127,19 +127,19 @@
         </div>
 
         {{-- Mobile Menu --}}
-        <div class="hidden md:hidden bg-slate-800 border-t border-slate-700" id="mobile-menu">
+        <div class="hidden md:hidden bg-gradient-to-b from-slate-950 to-blue-950 border-t border-slate-700/50" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="{{ route('kunjungan.create') }}"
-                    class="block w-full text-center px-5 py-3 rounded-md text-base font-extrabold text-slate-900 bg-yellow-500 hover:bg-yellow-600 transition shadow-md">
+                    class="block w-full text-center px-5 py-3 rounded-md text-base font-extrabold text-slate-900 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 shadow-lg">
                     <i class="fa-solid fa-user-plus mr-2"></i> Pendaftaran Kunjungan
                 </a>
-                <a href="{{ url('/') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-white hover:bg-slate-700">Beranda</a>
-                <a href="{{ url('/#profil') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-300 hover:text-white hover:bg-slate-700">Profil</a>
-                <a href="{{ route('news.public.index') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-300 hover:text-white hover:bg-slate-700">Berita</a>
-                <a href="{{ route('announcements.public.index') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-300 hover:text-white hover:bg-slate-700">Pengumuman</a>
+                <a href="{{ url('/') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-white hover:bg-slate-800/50 transition-all duration-300">Beranda</a>
+                <a href="{{ url('/#profil') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-300 hover:text-white hover:bg-slate-800/50 transition-all duration-300">Profil</a>
+                <a href="{{ route('news.public.index') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-300 hover:text-white hover:bg-slate-800/50 transition-all duration-300">Berita</a>
+                <a href="{{ route('announcements.public.index') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-300 hover:text-white hover:bg-slate-800/50 transition-all duration-300">Pengumuman</a>
 
                 @if (Route::has('login'))
-                <a href="{{ route('login') }}" class="block px-3 py-2 mt-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-slate-700">
+                <a href="{{ route('login') }}" class="block px-3 py-2 mt-2 rounded-md text-base font-medium text-gray-400 hover:text-yellow-400 hover:bg-slate-800/50 transition-all duration-300">
                     @auth Dashboard @else Login Petugas @endauth
                 </a>
                 @endif
@@ -283,14 +283,14 @@
 
             {{-- Body Form --}}
             <div class="p-5">
-                <form action="#" method="POST">
+                <form action="{{ route('survey.store') }}" method="POST" id="surveyForm">
                     @csrf
 
                     <div class="mb-4 text-center">
                         <label class="block text-sm font-medium text-gray-700 mb-2">Bagaimana pelayanan kami?</label>
                         <div class="flex justify-center gap-3">
                             <label class="cursor-pointer group">
-                                <input type="radio" name="rating" value="1" class="hidden peer">
+                                <input type="radio" name="rating" value="1" class="hidden peer" required>
                                 <div class="text-3xl grayscale peer-checked:grayscale-0 group-hover:scale-125 transition">😡</div>
                                 <span class="text-[10px] text-gray-400 peer-checked:text-red-500 block">Buruk</span>
                             </label>
@@ -317,8 +317,15 @@
                         <textarea name="saran" rows="3" class="w-full text-sm rounded-lg border-gray-300 focus:border-yellow-500 focus:ring-yellow-500 shadow-sm" placeholder="Tulis masukan Anda disini..."></textarea>
                     </div>
 
-                    <button type="button" class="w-full bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-bold py-2 rounded-lg transition shadow-md">
-                        Kirim Penilaian
+                    <button type="submit" id="submitSurvey" class="w-full bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-bold py-2 rounded-lg transition shadow-md disabled:opacity-50 disabled:cursor-not-allowed">
+                        <span id="submitText">Kirim Penilaian</span>
+                        <span id="loadingText" class="hidden">
+                            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-slate-900 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Mengirim...
+                        </span>
                     </button>
                 </form>
             </div>
@@ -326,12 +333,21 @@
     </div>
 
     {{-- FOOTER --}}
-    <footer class="bg-slate-900 text-white pt-16 pb-8 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer class="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white pt-16 pb-8 border-t border-slate-800/50 relative overflow-hidden">
+        {{-- Background Pattern --}}
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.03"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+        </div>
+
+        {{-- Floating Elements --}}
+        <div class="absolute top-20 left-10 w-20 h-20 bg-blue-500/5 rounded-full blur-xl animate-pulse"></div>
+        <div class="absolute bottom-20 right-10 w-32 h-32 bg-yellow-500/5 rounded-full blur-xl animate-pulse" style="animation-delay: 1s;"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-start">
 
                 {{-- KOLOM KIRI: Google Maps --}}
-                <div class="w-full h-64 md:h-80 rounded-2xl overflow-hidden shadow-2xl border border-slate-700 relative group">
+                <div class="w-full h-64 md:h-80 rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50 relative group">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.149599388365!2d112.23126867575233!3d-7.558661674643537!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78401e71277a3d%3A0x6a2c9c9c9c9c9c9c!2sLapas%20Kelas%20IIB%20Jombang!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid"
                         class="w-full h-full border-0 filter grayscale group-hover:grayscale-0 transition duration-500"
@@ -340,7 +356,10 @@
                         referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
                     <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur text-slate-900 px-4 py-2 rounded-lg text-xs font-bold shadow-lg">
-                        📍 Lokasi Lapas
+                        📍 Lokasi Lapas Jombang
+                    </div>
+                    <div class="absolute top-4 right-4 bg-blue-600/90 backdrop-blur text-white px-3 py-1 rounded-lg text-xs font-semibold shadow-lg">
+                        <i class="fas fa-map-marker-alt mr-1"></i> -7.5587, 112.2313
                     </div>
                 </div>
 
@@ -350,7 +369,7 @@
                     {{-- Logo & Judul --}}
                     <div>
                         <div class="flex items-center gap-3 mb-4">
-                            <img src="{{ asset('img/logo.png') }}" alt="Logo" class="h-12 w-auto">
+                            <img src="{{ asset('img/logo.png') }}" alt="Logo" class="h-12 w-auto drop-shadow-lg">
                             <div>
                                 <h3 class="text-xl font-bold text-white tracking-wide">KEMENTERIAN IMIGRASI DAN PEMASYARAKATAN</h3>
                                 <p class="text-xs text-yellow-500 font-semibold tracking-wider uppercase">Republik Indonesia</p>
@@ -364,7 +383,7 @@
                     {{-- Detail Kontak --}}
                     <div class="space-y-4">
                         <div class="flex items-start gap-4 group">
-                            <div class="bg-slate-800 p-3 rounded-lg text-yellow-500 group-hover:bg-yellow-500 group-hover:text-slate-900 transition">
+                            <div class="bg-slate-800/50 p-3 rounded-lg text-yellow-500 group-hover:bg-yellow-500 group-hover:text-slate-900 transition-all duration-300 border border-slate-700/30">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -380,14 +399,14 @@
                         </div>
 
                         <div class="flex items-start gap-4 group">
-                            <div class="bg-slate-800 p-3 rounded-lg text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition">
+                            <div class="bg-slate-800/50 p-3 rounded-lg text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 border border-slate-700/30">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                                 </svg>
                             </div>
                             <div>
                                 <p class="text-xs text-slate-400 font-bold uppercase mb-1">Telepon & Fax</p>
-                                <p class="text-white font-medium hover:text-yellow-400 transition cursor-pointer">
+                                <p class="text-white font-medium hover:text-yellow-400 transition-colors duration-300 cursor-pointer">
                                     +62 321 861205
                                 </p>
                             </div>
@@ -398,19 +417,19 @@
                     <div class="mt-4">
                         <p class="text-sm text-slate-300 font-bold uppercase mb-4">Ikuti Media Sosial Kami</p>
                         <div class="flex flex-wrap gap-4">
-                            <a href="https://www.facebook.com/humaslapasjombang/" aria-label="Facebook" class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-[#1877F2] hover:text-white border border-slate-700 hover:border-[#1877F2] transition-all duration-300 transform hover:scale-110 shadow-lg">
+                            <a href="https://www.facebook.com/humaslapasjombang/" aria-label="Facebook" class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-800/50 text-slate-400 hover:bg-[#1877F2] hover:text-white border border-slate-700/30 hover:border-[#1877F2] transition-all duration-300 transform hover:scale-110 shadow-lg">
                                 <i class="fab fa-facebook-f text-xl"></i>
                             </a>
-                            <a href="https://twitter.com/lapas_jombang" aria-label="Twitter" class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-[#1DA1F2] hover:text-white border border-slate-700 hover:border-[#1DA1F2] transition-all duration-300 transform hover:scale-110 shadow-lg">
+                            <a href="https://twitter.com/lapas_jombang" aria-label="Twitter" class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-800/50 text-slate-400 hover:bg-[#1DA1F2] hover:text-white border border-slate-700/30 hover:border-[#1DA1F2] transition-all duration-300 transform hover:scale-110 shadow-lg">
                                 <i class="fab fa-twitter text-xl"></i>
                             </a>
-                            <a href="https://www.instagram.com/lapas_jombang/" aria-label="Instagram" class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-gradient-to-tr hover:from-yellow-500 hover:via-red-500 hover:to-purple-500 hover:text-white border border-slate-700 hover:border-pink-500 transition-all duration-300 transform hover:scale-110 shadow-lg">
+                            <a href="https://www.instagram.com/lapas_jombang/" aria-label="Instagram" class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-800/50 text-slate-400 hover:bg-gradient-to-tr hover:from-yellow-500 hover:via-red-500 hover:to-purple-500 hover:text-white border border-slate-700/30 hover:border-pink-500 transition-all duration-300 transform hover:scale-110 shadow-lg">
                                 <i class="fab fa-instagram text-xl"></i>
                             </a>
-                            <a href="https://www.youtube.com/@humaslapasjombang" aria-label="YouTube" class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-[#FF0000] hover:text-white border border-slate-700 hover:border-[#FF0000] transition-all duration-300 transform hover:scale-110 shadow-lg">
+                            <a href="https://www.youtube.com/@humaslapasjombang" aria-label="YouTube" class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-800/50 text-slate-400 hover:bg-[#FF0000] hover:text-white border border-slate-700/30 hover:border-[#FF0000] transition-all duration-300 transform hover:scale-110 shadow-lg">
                                 <i class="fab fa-youtube text-xl"></i>
                             </a>
-                            <a href="https://www.tiktok.com/@lapas_jombang" aria-label="TikTok" class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-black hover:text-white border border-slate-700 hover:border-slate-500 transition-all duration-300 transform hover:scale-110 shadow-lg">
+                            <a href="https://www.tiktok.com/@lapas_jombang" aria-label="TikTok" class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-800/50 text-slate-400 hover:bg-black hover:text-white border border-slate-700/30 hover:border-slate-500 transition-all duration-300 transform hover:scale-110 shadow-lg">
                                 <i class="fab fa-tiktok text-xl"></i>
                             </a>
                         </div>
@@ -419,7 +438,7 @@
             </div>
 
             {{-- Copyright Bawah --}}
-            <div class="mt-12 pt-8 border-t border-slate-800 text-center text-slate-500 text-sm">
+            <div class="mt-12 pt-8 border-t border-slate-800/50 text-center text-slate-500 text-sm">
                 <p>© {{ date('Y') }} Lapas Kelas 2B Jombang. All rights reserved.</p>
                 <p class="mt-2 text-xs">Developed by Tim IT</p>
             </div>
@@ -518,7 +537,110 @@
                 });
                 observer.observe(this.$el);
             }
-        }));
+        // Survey Form Submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const surveyForm = document.getElementById('surveyForm');
+            if (surveyForm) {
+                surveyForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const form = this;
+                    const submitBtn = document.getElementById('submitSurvey');
+                    const submitText = document.getElementById('submitText');
+                    const loadingText = document.getElementById('loadingText');
+
+                    // Show loading state
+                    submitBtn.disabled = true;
+                    submitText.classList.add('hidden');
+                    loadingText.classList.remove('hidden');
+
+                    // Prepare form data
+                    const formData = new FormData(form);
+
+                    // Send AJAX request
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Show success message
+                            showNotification('Terima kasih atas penilaian Anda!', 'success');
+
+                            // Reset form
+                            form.reset();
+
+                            // Close modal after delay
+                            setTimeout(() => {
+                                // Find the Alpine.js component and close it
+                                const surveyComponent = document.querySelector('[x-data*="{ openSurvey: false }"]');
+                                if (surveyComponent && surveyComponent.__x) {
+                                    surveyComponent.__x.$data.openSurvey = false;
+                                }
+                            }, 2000);
+                        } else {
+                            showNotification('Terjadi kesalahan. Silakan coba lagi.', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showNotification('Terjadi kesalahan. Silakan coba lagi.', 'error');
+                    })
+                    .finally(() => {
+                        // Reset loading state
+                        submitBtn.disabled = false;
+                        submitText.classList.remove('hidden');
+                        loadingText.classList.add('hidden');
+                    });
+                });
+            }
+        });
+
+        // Notification function
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transform transition-all duration-300 translate-x-full`;
+
+            if (type === 'success') {
+                notification.classList.add('bg-green-500', 'text-white');
+            } else if (type === 'error') {
+                notification.classList.add('bg-red-500', 'text-white');
+            } else {
+                notification.classList.add('bg-blue-500', 'text-white');
+            }
+
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <span>${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            `;
+
+            document.body.appendChild(notification);
+
+            // Animate in
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 5000);
+        }
     </script>
 
 </body>

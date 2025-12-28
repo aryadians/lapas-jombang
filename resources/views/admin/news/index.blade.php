@@ -40,8 +40,8 @@
                     <tr class="odd:bg-white even:bg-slate-50 hover:bg-slate-100 transition duration-150">
                         
                         <td class="px-6 py-4">
-                            @if($item->image)
-                                <img src="{{ $item->image }}" alt="Thumbnail" class="h-16 w-24 object-cover rounded-lg shadow-sm border border-gray-200">
+                            @if(is_array($item->image) && count($item->image) > 0)
+                                <img src="{{ $item->image[0] }}" alt="Thumbnail" class="h-16 w-24 object-cover rounded-lg shadow-sm border border-gray-200">
                             @else
                                 <div class="h-16 w-24 bg-gray-100 rounded-lg flex items-center justify-center text-xs text-gray-400">No Img</div>
                             @endif

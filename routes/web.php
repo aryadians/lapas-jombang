@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\FaqController;
+use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewsController; // Public News Controller
 use App\Http\Controllers\AnnouncementController; // Public Announcement Controller
@@ -38,6 +38,9 @@ Route::get('/', function () {
 });
 
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+
+// Survey Route
+Route::post('/survey', [SurveyController::class, 'store'])->name('survey.store');
 
 // Public News Routes
 Route::get('/berita', [NewsController::class, 'index'])->name('news.public.index');

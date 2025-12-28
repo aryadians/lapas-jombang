@@ -36,7 +36,7 @@ class NewsController extends Controller
         $request->validate([
             'title'   => 'required|max:255',
             'content' => 'required',
-            'image'   => 'nullable|image|file|max:2048', // Maks 2MB
+            'images.*'   => 'nullable|image|file|max:2048', // Validate each image in the array
             'status'  => 'required|in:published,draft',
         ]);
 
@@ -48,22 +48,23 @@ class NewsController extends Controller
     'status'  => $request->status,
         ];
 
-        // 3. Logika Upload Gambar ke Base64
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            
-            // Ambil path sementara file
-            $path = $file->getRealPath();
-            
-            // Ubah file jadi string binary
-            $image = file_get_contents($path);
-            
-            // Ubah jadi base64
-            $base64 = base64_encode($image);
-            
-            // Gabungkan header tipe data + kode base64
-            // Hasilnya: "data:image/jpeg;base64,/9j/4AAQSkZJRg..."
-            $data['image'] = 'data:' . $file->getMimeType() . ';base64,' . $base64;
+        // 3. Logika Upload Gambar ke Base64 (untuk banyak gambar)
+        $imagesData = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                // Ambil path sementara file
+                $path = $file->getRealPath();
+                
+                // Ubah file jadi string binary
+                $image = file_get_contents($path);
+                
+                // Ubah jadi base64
+                $base64 = base64_encode($image);
+                
+                // Gabungkan header tipe data + kode base64
+                $imagesData[] = 'data:' . $file->getMimeType() . ';base64,' . $base64;
+            }
+            $data['image'] = $imagesData;
         }
 
         // 4. Simpan ke Database
@@ -90,7 +91,7 @@ class NewsController extends Controller
         $request->validate([
             'title'   => 'required|max:255',
             'content' => 'required',
-            'image'   => 'nullable|image|file|max:2048',
+            'images.*'   => 'nullable|image|file|max:2048',
             'status'  => 'required|in:published,draft',
         ]);
 
@@ -103,14 +104,16 @@ class NewsController extends Controller
         ];
 
         // 3. Cek apakah user mengupload gambar baru?
-        if ($request->hasFile('image')) {
+        $imagesData = [];
+        if ($request->hasFile('images')) {
             // Jika ada gambar baru, proses Base64 lagi
-            $file = $request->file('image');
-            $path = $file->getRealPath();
-            $image = file_get_contents($path);
-            $base64 = base64_encode($image);
-            
-            $data['image'] = 'data:' . $file->getMimeType() . ';base64,' . $base64;
+            foreach ($request->file('images') as $file) {
+                $path = $file->getRealPath();
+                $image = file_get_contents($path);
+                $base64 = base64_encode($image);
+                $imagesData[] = 'data:' . $file->getMimeType() . ';base64,' . $base64;
+            }
+            $data['image'] = $imagesData;
         } 
         // Jika tidak ada gambar baru, $data['image'] tidak diset
         // sehingga gambar lama di database tidak akan tertimpa/hilang.
