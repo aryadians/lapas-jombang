@@ -26,17 +26,17 @@
         </p>
 
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="{{ route('kunjungan.create') }}" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 inline-flex items-center justify-center gap-2">
-                <i class="fa-solid fa-user-plus"></i> Daftar Kunjungan
+            <a href="{{ route('kunjungan.create') }}" class="bg-emerald-500 hover:bg-emerald-600 text-white text-base font-extrabold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 inline-flex items-center justify-center gap-2 group">
+                <i class="fa-solid fa-user-plus"></i> Daftar Kunjungan <i class="fa-solid fa-arrow-right-long text-sm group-hover:translate-x-1 transition-transform"></i>
             </a>
-            <a href="#berita" class="bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 inline-flex items-center justify-center gap-2">
-                <i class="fa-solid fa-newspaper"></i> Berita Terbaru
+            <a href="#berita" class="bg-yellow-500 hover:bg-yellow-400 text-slate-900 text-base font-extrabold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 inline-flex items-center justify-center gap-2 group">
+                <i class="fa-solid fa-newspaper"></i> Berita Terbaru <i class="fa-solid fa-arrow-right-long text-sm group-hover:translate-x-1 transition-transform"></i>
             </a>
-            <a href="{{ url('/#profil') }}" class="border-2 border-white hover:bg-white hover:text-slate-900 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 inline-flex items-center justify-center gap-2">
-                <i class="fa-solid fa-building-columns"></i> Profil Kami
+            <a href="{{ url('/#profil') }}" class="border-2 border-white hover:bg-white hover:text-slate-900 text-white text-base font-extrabold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 inline-flex items-center justify-center gap-2 group">
+                <i class="fa-solid fa-building-columns"></i> Profil Kami <i class="fa-solid fa-arrow-right-long text-sm group-hover:translate-x-1 transition-transform"></i>
             </a>
-            <a href="{{ route('faq.index') }}" class="border-2 border-white hover:bg-white hover:text-slate-900 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 inline-flex items-center justify-center gap-2">
-                <i class="fa-solid fa-circle-info"></i> Lainnya
+            <a href="{{ route('faq.index') }}" class="border-2 border-white hover:bg-white hover:text-slate-900 text-white text-base font-extrabold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 inline-flex items-center justify-center gap-2 group">
+                <i class="fa-solid fa-circle-info"></i> Lainnya <i class="fa-solid fa-arrow-right-long text-sm group-hover:translate-x-1 transition-transform"></i>
             </a>
         </div>
     </div>
@@ -52,17 +52,17 @@
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-                <div class="bg-blue-50 p-6 rounded-xl shadow-md border border-blue-100 flex flex-col items-center justify-center transform hover:-translate-y-1 transition duration-300">
+                <div x-data="inView" x-init="init()" :class="{'opacity-0 translate-y-4': !inView}" class="transition duration-700 bg-blue-50 p-6 rounded-xl shadow-md border border-blue-100 flex flex-col items-center justify-center transform hover:-translate-y-1 transition duration-300" style="transition-delay: 0s;">
                     <i class="fa-solid fa-users-line text-4xl text-blue-600 mb-4"></i>
                     <h3 class="text-4xl font-extrabold text-blue-800">450+</h3>
                     <p class="text-sm font-semibold text-blue-600 uppercase tracking-wide">Warga Binaan</p>
                 </div>
-                <div class="bg-emerald-50 p-6 rounded-xl shadow-md border border-emerald-100 flex flex-col items-center justify-center transform hover:-translate-y-1 transition duration-300">
+                <div x-data="inView" x-init="init()" :class="{'opacity-0 translate-y-4': !inView}" class="transition duration-700 bg-emerald-50 p-6 rounded-xl shadow-md border border-emerald-100 flex flex-col items-center justify-center transform hover:-translate-y-1 transition duration-300" style="transition-delay: 0.1s;">
                     <i class="fa-solid fa-handshake-angle text-4xl text-emerald-600 mb-4"></i>
                     <h3 class="text-4xl font-extrabold text-emerald-800">12+</h3>
                     <p class="text-sm font-semibold text-emerald-600 uppercase tracking-wide">Program Pembinaan</p>
                 </div>
-                <div class="bg-yellow-50 p-6 rounded-xl shadow-md border border-yellow-100 flex flex-col items-center justify-center transform hover:-translate-y-1 transition duration-300">
+                <div x-data="inView" x-init="init()" :class="{'opacity-0 translate-y-4': !inView}" class="transition duration-700 bg-yellow-50 p-6 rounded-xl shadow-md border border-yellow-100 flex flex-col items-center justify-center transform hover:-translate-y-1 transition duration-300" style="transition-delay: 0.2s;">
                     <i class="fa-solid fa-star text-4xl text-yellow-600 mb-4"></i>
                     <h3 class="text-4xl font-extrabold text-yellow-800">95%</h3>
                     <p class="text-sm font-semibold text-yellow-600 uppercase tracking-wide">Tingkat Keberhasilan</p>
@@ -81,21 +81,21 @@
         </p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 transform hover:-translate-y-2 transition duration-300 group">
+            <div x-data="inView" x-init="init()" :class="{'opacity-0 translate-y-4': !inView}" class="transition duration-700 bg-white p-8 rounded-xl shadow-xl border border-gray-100 transform hover:-translate-y-2 transition duration-300 group" style="transition-delay: 0s;">
                 <div class="w-16 h-16 flex items-center justify-center bg-blue-100 text-blue-600 rounded-full mx-auto mb-6 group-hover:bg-blue-600 group-hover:text-white transition">
                     <i class="fa-solid fa-shield-halved text-3xl"></i>
                 </div>
                 <h3 class="text-xl font-bold text-slate-800 mb-3">Keamanan Terjamin</h3>
                 <p class="text-gray-600 text-sm">Sistem keamanan berlapis untuk menjaga ketertiban dan kenyamanan bagi semua pihak.</p>
             </div>
-            <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 transform hover:-translate-y-2 transition duration-300 group">
+            <div x-data="inView" x-init="init()" :class="{'opacity-0 translate-y-4': !inView}" class="transition duration-700 bg-white p-8 rounded-xl shadow-xl border border-gray-100 transform hover:-translate-y-2 transition duration-300 group" style="transition-delay: 0.1s;">
                 <div class="w-16 h-16 flex items-center justify-center bg-emerald-100 text-emerald-600 rounded-full mx-auto mb-6 group-hover:bg-emerald-600 group-hover:text-white transition">
                     <i class="fa-solid fa-book-open-reader text-3xl"></i>
                 </div>
                 <h3 class="text-xl font-bold text-slate-800 mb-3">Pembinaan Holistik</h3>
                 <p class="text-gray-600 text-sm">Program pembinaan kepribadian dan kemandirian yang komprehensif untuk WBP.</p>
             </div>
-            <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 transform hover:-translate-y-2 transition duration-300 group">
+            <div x-data="inView" x-init="init()" :class="{'opacity-0 translate-y-4': !inView}" class="transition duration-700 bg-white p-8 rounded-xl shadow-xl border border-gray-100 transform hover:-translate-y-2 transition duration-300 group" style="transition-delay: 0.2s;">
                 <div class="w-16 h-16 flex items-center justify-center bg-yellow-100 text-yellow-600 rounded-full mx-auto mb-6 group-hover:bg-yellow-600 group-hover:text-white transition">
                     <i class="fa-solid fa-users-gear text-3xl"></i>
                 </div>
@@ -119,7 +119,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     @forelse($news as $item)
-                    <div class="bg-white rounded-xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden group border border-gray-100">
+                    <div x-data="inView" x-init="init()" :class="{'opacity-0 translate-y-4': !inView}" class="transition duration-700 bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden group border border-gray-100 transform hover:-translate-y-1" style="transition-delay: {{ $loop->index * 0.1 }}s;">
                         <div class="relative h-48 overflow-hidden">
                             @if($item->image)
                             <img src="{{ $item->image }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" loading="lazy">
@@ -155,7 +155,7 @@
             </div>
 
             <div class="md:w-1/3">
-                <div class="bg-slate-900 rounded-xl shadow-lg p-6 text-white sticky top-10">
+                <div x-data="inView" x-init="init()" :class="{'opacity-0 translate-y-4': !inView}" class="transition duration-700 bg-slate-900 rounded-xl shadow-lg p-6 text-white sticky top-10" style="transition-delay: 0.3s;">
                     <div class="flex items-center mb-6 pb-4 border-b border-slate-700">
                         <span class="text-2xl mr-2">📢</span>
                         <h3 class="text-xl font-bold text-yellow-500">Papan Pengumuman</h3>

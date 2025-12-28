@@ -3,8 +3,9 @@
 @section('content')
 <section class="relative bg-slate-900 text-white min-h-[400px] flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0 z-0">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Kantor_Wilayah_Kementerian_Hukum_dan_HAM_Republik_Indonesia_Jawa_Tengah.jpg/1200px-Kantor_Wilayah_Kementerian_Hukum_dan_HAM_Republik_Indonesia_Jawa_Tengah.jpg"
-            alt="Background Lapas"
+        {{-- TODO: Implement dynamic background image selection for hero sections based on page context. --}}
+        <img src="https://images.unsplash.com/photo-1549492193-fcd34ad9b304?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Background Lapas FAQ"
             class="w-full h-full object-cover opacity-30">
         <div class="absolute inset-0 bg-gradient-to-b from-slate-900/80 to-slate-900/90"></div>
     </div>
@@ -22,7 +23,7 @@
     <div class="container mx-auto px-6 max-w-4xl">
         <div class="space-y-4">
             {{-- FAQ Item 1 --}}
-            <div x-data="{ open: false }" class="border border-gray-200 rounded-lg shadow-sm bg-white">
+            <div x-data="{ open: false, ...inView() }" x-init="init()" :class="{'opacity-0 translate-y-4': !inView}" class="transition duration-700 border border-gray-200 rounded-lg shadow-sm bg-white" style="transition-delay: 0s;">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-6 py-4 text-left focus:outline-none">
                     <span class="text-xl font-semibold text-slate-800">Apa itu Lapas Jombang?</span>
                     <i class="fa-solid" :class="open ? 'fa-minus text-yellow-500' : 'fa-plus text-blue-500'"></i>
@@ -33,7 +34,7 @@
             </div>
 
             {{-- FAQ Item 2 --}}
-            <div x-data="{ open: false }" class="border border-gray-200 rounded-lg shadow-sm bg-white">
+            <div x-data="{ open: false, ...inView() }" x-init="init()" :class="{'opacity-0 translate-y-4': !inView}" class="transition duration-700 border border-gray-200 rounded-lg shadow-sm bg-white" style="transition-delay: 0.1s;">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-6 py-4 text-left focus:outline-none">
                     <span class="text-xl font-semibold text-slate-800">Bagaimana cara melakukan pendaftaran kunjungan?</span>
                     <i class="fa-solid" :class="open ? 'fa-minus text-yellow-500' : 'fa-plus text-blue-500'"></i>
@@ -44,7 +45,7 @@
             </div>
 
             {{-- FAQ Item 3 --}}
-            <div x-data="{ open: false }" class="border border-gray-200 rounded-lg shadow-sm bg-white">
+            <div x-data="{ open: false, ...inView() }" x-init="init()" :class="{'opacity-0 translate-y-4': !inView}" class="transition duration-700 border border-gray-200 rounded-lg shadow-sm bg-white" style="transition-delay: 0.2s;">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-6 py-4 text-left focus:outline-none">
                     <span class="text-xl font-semibold text-slate-800">Apa saja persyaratan untuk kunjungan?</span>
                     <i class="fa-solid" :class="open ? 'fa-minus text-yellow-500' : 'fa-plus text-blue-500'"></i>
@@ -55,7 +56,7 @@
             </div>
 
             {{-- FAQ Item 4 --}}
-            <div x-data="{ open: false }" class="border border-gray-200 rounded-lg shadow-sm bg-white">
+            <div x-data="{ open: false, ...inView() }" x-init="init()" :class="{'opacity-0 translate-y-4': !inView}" class="transition duration-700 border border-gray-200 rounded-lg shadow-sm bg-white" style="transition-delay: 0.3s;">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-6 py-4 text-left focus:outline-none">
                     <span class="text-xl font-semibold text-slate-800">Apakah ada batasan jumlah pengunjung per narapidana?</span>
                     <i class="fa-solid" :class="open ? 'fa-minus text-yellow-500' : 'fa-plus text-blue-500'"></i>
@@ -66,7 +67,7 @@
             </div>
 
             {{-- FAQ Item 5 --}}
-            <div x-data="{ open: false }" class="border border-gray-200 rounded-lg shadow-sm bg-white">
+            <div x-data="{ open: false, ...inView() }" x-init="init()" :class="{'opacity-0 translate-y-4': !inView}" class="transition duration-700 border border-gray-200 rounded-lg shadow-sm bg-white" style="transition-delay: 0.4s;">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-6 py-4 text-left focus:outline-none">
                     <span class="text-xl font-semibold text-slate-800">Bagaimana jika saya terlambat datang saat jadwal kunjungan?</span>
                     <i class="fa-solid" :class="open ? 'fa-minus text-yellow-500' : 'fa-plus text-blue-500'"></i>

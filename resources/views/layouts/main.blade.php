@@ -49,7 +49,7 @@
     </style>
 </head>
 
-<body class="font-sans antialiased text-slate-800 bg-white"
+<body class="font-sans antialiased text-slate-900 bg-white leading-relaxed"
     x-data="accessibilityHandler()"
     :class="{ 
           'acc-grayscale': grayscale, 
@@ -64,33 +64,33 @@
             <div class="flex justify-between items-center h-20">
 
                 {{-- Logo Kiri --}}
-                <div class="flex-shrink-0 flex items-center gap-3">
-                    <a href="{{ url('/') }}" class="flex items-center gap-3 group">
-                        <img class="h-10 w-auto group-hover:scale-105 transition-transform duration-300"
+                <div class="flex-shrink-0 flex items-center gap-4">
+                    <a href="{{ url('/') }}" class="flex items-center gap-4 group">
+                        <img class="h-12 w-auto group-hover:scale-105 transition-transform duration-300"
                             src="{{ asset('img/logo.png') }}"
                             alt="Logo Lapas">
 
                         <div class="flex flex-col">
-                            <span class="font-bold text-white text-lg tracking-wide group-hover:text-yellow-400 transition">LAPAS KELAS 2B JOMBANG</span>
-                            <span class="text-[10px] text-yellow-500 uppercase tracking-wider font-semibold">Kementerian Imigrasi dan Pemasyarakatan RI</span>
+                            <span class="font-bold text-white text-xl tracking-wide group-hover:text-yellow-400 transition">LAPAS KELAS 2B JOMBANG</span>
+                            <span class="text-[11px] text-yellow-500 uppercase tracking-wider font-semibold">Kementerian Imigrasi dan Pemasyarakatan RI</span>
                         </div>
                     </a>
                 </div>
 
                 {{-- Menu Tengah --}}
                 <div class="hidden md:flex space-x-8 items-center">
-                    <a href="{{ url('/') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-sm font-medium transition-all">Beranda</a>
-                    <a href="{{ url('/#profil') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-sm font-medium transition-all">Profil</a>
-                    <a href="{{ route('news.public.index') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-sm font-medium transition-all">Berita</a>
-                    <a href="{{ route('announcements.public.index') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-sm font-medium transition-all">Pengumuman</a>
+                    <a href="{{ url('/') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-semibold transition-all">Beranda</a>
+                    <a href="{{ url('/#profil') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-semibold transition-all">Profil</a>
+                    <a href="{{ route('news.public.index') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-semibold transition-all">Berita</a>
+                    <a href="{{ route('announcements.public.index') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-semibold transition-all">Pengumuman</a>
                 </div>
 
                 {{-- Menu Kanan --}}
                 <div class="hidden md:flex items-center gap-4">
                     {{-- Button Pendaftaran --}}
                     <a href="{{ route('kunjungan.create') }}"
-                        class="text-sm font-bold text-slate-900 bg-yellow-500 hover:bg-yellow-400 px-6 py-2.5 rounded-full transition shadow-lg hover:shadow-yellow-500/30 transform hover:-translate-y-0.5 whitespace-nowrap">
-                        Pendaftaran Kunjungan
+                        class="text-base font-extrabold text-slate-900 bg-yellow-500 hover:bg-yellow-400 px-7 py-3 rounded-full transition shadow-lg hover:shadow-yellow-500/30 transform hover:-translate-y-1 whitespace-nowrap inline-flex items-center gap-2 group">
+                        Daftar Kunjungan <i class="fa-solid fa-arrow-right-long text-sm group-hover:translate-x-1 transition-transform"></i>
                     </a>
 
                     <div class="h-6 w-px bg-slate-700 mx-1"></div>
@@ -130,13 +130,13 @@
         <div class="hidden md:hidden bg-slate-800 border-t border-slate-700" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="{{ route('kunjungan.create') }}"
-                    class="block w-full text-center px-5 py-3 rounded-md font-bold text-slate-900 bg-yellow-500 hover:bg-yellow-600 transition shadow-md">
-                    Pendaftaran Kunjungan
+                    class="block w-full text-center px-5 py-3 rounded-md text-base font-extrabold text-slate-900 bg-yellow-500 hover:bg-yellow-600 transition shadow-md">
+                    <i class="fa-solid fa-user-plus mr-2"></i> Pendaftaran Kunjungan
                 </a>
-                <a href="{{ url('/') }}" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-slate-700">Beranda</a>
-                <a href="{{ url('/#profil') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700">Profil</a>
-                <a href="{{ route('news.public.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700">Berita</a>
-                <a href="{{ route('announcements.public.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700">Pengumuman</a>
+                <a href="{{ url('/') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-white hover:bg-slate-700">Beranda</a>
+                <a href="{{ url('/#profil') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-300 hover:text-white hover:bg-slate-700">Profil</a>
+                <a href="{{ route('news.public.index') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-300 hover:text-white hover:bg-slate-700">Berita</a>
+                <a href="{{ route('announcements.public.index') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-300 hover:text-white hover:bg-slate-700">Pengumuman</a>
 
                 @if (Route::has('login'))
                 <a href="{{ route('login') }}" class="block px-3 py-2 mt-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-slate-700">
@@ -396,22 +396,22 @@
 
                     {{-- Social Media Icons --}}
                     <div class="mt-4">
-                        <p class="text-xs text-slate-400 font-bold uppercase mb-4">Ikuti Media Sosial Kami</p>
-                        <div class="flex flex-wrap gap-3">
-                            <a href="https://www.facebook.com/humaslapasjombang/" aria-label="Facebook" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-[#1877F2] hover:text-white border border-slate-700 hover:border-[#1877F2] transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
-                                <i class="fab fa-facebook-f text-lg"></i>
+                        <p class="text-sm text-slate-300 font-bold uppercase mb-4">Ikuti Media Sosial Kami</p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="https://www.facebook.com/humaslapasjombang/" aria-label="Facebook" class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-[#1877F2] hover:text-white border border-slate-700 hover:border-[#1877F2] transition-all duration-300 transform hover:scale-110 shadow-lg">
+                                <i class="fab fa-facebook-f text-xl"></i>
                             </a>
-                            <a href="https://www.facebook.com/humaslapasjombang/" aria-label="Twitter" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-[#1DA1F2] hover:text-white border border-slate-700 hover:border-[#1DA1F2] transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
-                                <i class="fab fa-twitter text-lg"></i>
+                            <a href="https://twitter.com/lapas_jombang" aria-label="Twitter" class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-[#1DA1F2] hover:text-white border border-slate-700 hover:border-[#1DA1F2] transition-all duration-300 transform hover:scale-110 shadow-lg">
+                                <i class="fab fa-twitter text-xl"></i>
                             </a>
-                            <a href="https://www.instagram.com/lapas_jombang/" aria-label="Instagram" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-gradient-to-tr hover:from-yellow-500 hover:via-red-500 hover:to-purple-500 hover:text-white border border-slate-700 hover:border-pink-500 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
-                                <i class="fab fa-instagram text-lg"></i>
+                            <a href="https://www.instagram.com/lapas_jombang/" aria-label="Instagram" class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-gradient-to-tr hover:from-yellow-500 hover:via-red-500 hover:to-purple-500 hover:text-white border border-slate-700 hover:border-pink-500 transition-all duration-300 transform hover:scale-110 shadow-lg">
+                                <i class="fab fa-instagram text-xl"></i>
                             </a>
-                            <a href="https://www.youtube.com/@humaslapasjombang" aria-label="YouTube" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-[#FF0000] hover:text-white border border-slate-700 hover:border-[#FF0000] transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
-                                <i class="fab fa-youtube text-lg"></i>
+                            <a href="https://www.youtube.com/@humaslapasjombang" aria-label="YouTube" class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-[#FF0000] hover:text-white border border-slate-700 hover:border-[#FF0000] transition-all duration-300 transform hover:scale-110 shadow-lg">
+                                <i class="fab fa-youtube text-xl"></i>
                             </a>
-                            <a href="https://www.tiktok.com/@lapas_jombang" aria-label="TikTok" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-black hover:text-white border border-slate-700 hover:border-slate-500 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
-                                <i class="fab fa-tiktok text-lg"></i>
+                            <a href="https://www.tiktok.com/@lapas_jombang" aria-label="TikTok" class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-black hover:text-white border border-slate-700 hover:border-slate-500 transition-all duration-300 transform hover:scale-110 shadow-lg">
+                                <i class="fab fa-tiktok text-xl"></i>
                             </a>
                         </div>
                     </div>
@@ -500,6 +500,25 @@
                 }
             }
         }
+
+        // Alpine.js component for scroll-triggered animations
+        // Usage: <div x-data="inView" x-init="init()" :class="{'opacity-0 translate-y-4': !inView}" class="transition duration-1000">...</div>
+        Alpine.data('inView', () => ({
+            inView: false,
+            init() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            this.inView = true;
+                            observer.unobserve(this.$el); // Only animate once
+                        }
+                    });
+                }, {
+                    threshold: 0.1 // Trigger when 10% of the element is visible
+                });
+                observer.observe(this.$el);
+            }
+        }));
     </script>
 
 </body>

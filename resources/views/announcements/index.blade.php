@@ -3,8 +3,9 @@
 @section('content')
 <section class="relative bg-slate-900 text-white min-h-[400px] flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0 z-0">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Kantor_Wilayah_Kementerian_Hukum_dan_HAM_Republik_Indonesia_Jawa_Tengah.jpg/1200px-Kantor_Wilayah_Kementerian_Hukum_dan_HAM_Republik_Indonesia_Jawa_Tengah.jpg"
-            alt="Background Lapas"
+        {{-- TODO: Implement dynamic background image selection for hero sections based on page context. --}}
+        <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Background Lapas Announcements"
             class="w-full h-full object-cover opacity-30">
         <div class="absolute inset-0 bg-gradient-to-b from-slate-900/80 to-slate-900/90"></div>
     </div>
@@ -22,7 +23,7 @@
     <div class="container mx-auto px-6 max-w-4xl">
         <div class="space-y-6">
             @forelse($allAnnouncements as $announcement)
-            <div class="bg-white rounded-xl shadow-md border border-gray-100 p-6 hover:shadow-lg transition flex items-start space-x-4 transform hover:-translate-y-1">
+            <div x-data="inView" x-init="init()" :class="{'opacity-0 translate-y-4': !inView}" class="transition duration-700 bg-white rounded-xl shadow-md border border-gray-100 p-6 hover:shadow-lg transition flex items-start space-x-4 transform hover:-translate-y-1" style="transition-delay: {{ $loop->index * 0.1 }}s;">
                 <div class="flex-shrink-0 text-center bg-blue-500 rounded p-3 text-white">
                     <span class="block text-2xl font-bold">{{ $announcement->date->format('d') }}</span>
                     <span class="block text-xs uppercase">{{ $announcement->date->format('M') }}</span>
