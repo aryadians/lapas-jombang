@@ -26,5 +26,6 @@ class Kunjungan extends Model
         'sesi',
         'nomor_antrian_harian',
         'status',
+        'qr_token',
     ];
 }

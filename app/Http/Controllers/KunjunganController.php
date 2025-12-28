@@ -6,6 +6,7 @@ use App\Models\Kunjungan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\KunjunganConfirmationMail;
+use Illuminate\Support\Str;
 
 class KunjunganController extends Controller
 {
@@ -108,11 +109,15 @@ class KunjunganController extends Controller
 
         // 4. Proses Database
         $kunjunganBaru = null;
-        \Illuminate\Support\Facades\DB::transaction(function () use ($validated, $tanggalKunjungan, &$kunjunganBaru) {
+        \Illuminate\Support\Facades\DB::transaction(function () use ($validated, $tanggalKunjungan, $sesi, &$kunjunganBaru) {
             $nomorAntrian = Kunjungan::where('tanggal_kunjungan', $tanggalKunjungan->format('Y-m-d'))->count() + 1;
             
             $validated['nomor_antrian_harian'] = $nomorAntrian;
             $validated['status'] = 'pending';
+            $validated['qr_token'] = Str::uuid(); // Generate unique QR token
+            if ($sesi) {
+                $validated['sesi'] = $sesi;
+            }
 
             $kunjunganBaru = Kunjungan::create($validated);
         });
@@ -230,16 +235,60 @@ class KunjunganController extends Controller
 
     
 
-            return response()->json([
+                    return response()->json([
 
-                'total_kuota' => $totalKuota,
+    
 
-                'jumlah_pendaftar' => $jumlahPendaftar,
+                            'total_kuota' => $totalKuota,
 
-                'sisa_kuota' => $sisaKuota,
+    
 
-            ]);
+                            'jumlah_pendaftar' => $jumlahPendaftar,
 
-        }
+    
 
-    }
+                            'sisa_kuota' => $sisaKuota,
+
+    
+
+                        ]);
+
+    
+
+                    }
+
+    
+
+            
+
+    
+
+                /**
+
+    
+
+                 * Display a printable version of the registration proof.
+
+    
+
+                 */
+
+    
+
+                public function printProof(Kunjungan $kunjungan)
+
+    
+
+                {
+
+    
+
+                    return view('guest.kunjungan.print', compact('kunjungan'));
+
+    
+
+                }
+
+    
+
+            }

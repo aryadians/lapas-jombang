@@ -15,7 +15,7 @@
             <img src="{{ asset('img/logo.png') }}"
                 alt="Logo Lapas"
                 class="h-24 md:h-32 w-auto drop-shadow-2xl animate-fade-in-down"
-                onerror="this.style.display='none'">
+                onerror="this.style.display='none'" loading="lazy">
         </div>
 
         <h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight">
@@ -25,12 +25,18 @@
             Mewujudkan pelayanan pemasyarakatan yang PASTI (Profesional, Akuntabel, Sinergi, Transparan, dan Inovatif).
         </p>
 
-        <div class="flex justify-center gap-4">
-            <a href="#berita" class="bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1">
-                Berita Terbaru
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="{{ route('kunjungan.create') }}" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 inline-flex items-center justify-center gap-2">
+                <i class="fa-solid fa-user-plus"></i> Daftar Kunjungan
             </a>
-            <a href="#profil" class="border-2 border-white hover:bg-white hover:text-slate-900 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1">
-                Profil Kami
+            <a href="#berita" class="bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 inline-flex items-center justify-center gap-2">
+                <i class="fa-solid fa-newspaper"></i> Berita Terbaru
+            </a>
+            <a href="{{ url('/#profil') }}" class="border-2 border-white hover:bg-white hover:text-slate-900 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 inline-flex items-center justify-center gap-2">
+                <i class="fa-solid fa-building-columns"></i> Profil Kami
+            </a>
+            <a href="{{ route('faq.index') }}" class="border-2 border-white hover:bg-white hover:text-slate-900 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 inline-flex items-center justify-center gap-2">
+                <i class="fa-solid fa-circle-info"></i> Lainnya
             </a>
         </div>
     </div>
@@ -41,9 +47,61 @@
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="text-3xl font-bold text-slate-800 mb-2">Tentang Kami</h2>
             <div class="h-1 w-20 bg-yellow-500 mx-auto mb-8"></div>
-            <p class="text-gray-600 leading-relaxed text-lg">
+            <p class="text-gray-600 leading-relaxed text-lg mb-12">
                 Lembaga Pemasyarakatan Kelas 2B Jombang berkomitmen tinggi dalam memberikan pembinaan kepribadian dan kemandirian kepada Warga Binaan Pemasyarakatan (WBP). Kami bertekad menciptakan lingkungan yang aman, tertib, dan manusiawi sebagai bekal mereka kembali ke masyarakat.
             </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md border border-blue-100 flex flex-col items-center justify-center transform hover:-translate-y-1 transition duration-300">
+                    <i class="fa-solid fa-users-line text-4xl text-blue-600 mb-4"></i>
+                    <h3 class="text-4xl font-extrabold text-blue-800">450+</h3>
+                    <p class="text-sm font-semibold text-blue-600 uppercase tracking-wide">Warga Binaan</p>
+                </div>
+                <div class="bg-emerald-50 p-6 rounded-xl shadow-md border border-emerald-100 flex flex-col items-center justify-center transform hover:-translate-y-1 transition duration-300">
+                    <i class="fa-solid fa-handshake-angle text-4xl text-emerald-600 mb-4"></i>
+                    <h3 class="text-4xl font-extrabold text-emerald-800">12+</h3>
+                    <p class="text-sm font-semibold text-emerald-600 uppercase tracking-wide">Program Pembinaan</p>
+                </div>
+                <div class="bg-yellow-50 p-6 rounded-xl shadow-md border border-yellow-100 flex flex-col items-center justify-center transform hover:-translate-y-1 transition duration-300">
+                    <i class="fa-solid fa-star text-4xl text-yellow-600 mb-4"></i>
+                    <h3 class="text-4xl font-extrabold text-yellow-800">95%</h3>
+                    <p class="text-sm font-semibold text-yellow-600 uppercase tracking-wide">Tingkat Keberhasilan</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-20 bg-slate-100">
+    <div class="container mx-auto px-6 text-center">
+        <h2 class="text-3xl font-bold text-slate-800 mb-2">Mengapa Memilih Kami?</h2>
+        <div class="h-1 w-20 bg-blue-500 mx-auto mb-12"></div>
+        <p class="text-gray-600 leading-relaxed text-lg max-w-4xl mx-auto mb-12">
+            Kami berkomitmen penuh untuk menyediakan layanan pemasyarakatan yang transparan, profesional, dan berorientasi pada kemanusiaan. Keamanan, pembinaan, dan reintegrasi sosial adalah prioritas utama kami.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 transform hover:-translate-y-2 transition duration-300 group">
+                <div class="w-16 h-16 flex items-center justify-center bg-blue-100 text-blue-600 rounded-full mx-auto mb-6 group-hover:bg-blue-600 group-hover:text-white transition">
+                    <i class="fa-solid fa-shield-halved text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-3">Keamanan Terjamin</h3>
+                <p class="text-gray-600 text-sm">Sistem keamanan berlapis untuk menjaga ketertiban dan kenyamanan bagi semua pihak.</p>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 transform hover:-translate-y-2 transition duration-300 group">
+                <div class="w-16 h-16 flex items-center justify-center bg-emerald-100 text-emerald-600 rounded-full mx-auto mb-6 group-hover:bg-emerald-600 group-hover:text-white transition">
+                    <i class="fa-solid fa-book-open-reader text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-3">Pembinaan Holistik</h3>
+                <p class="text-gray-600 text-sm">Program pembinaan kepribadian dan kemandirian yang komprehensif untuk WBP.</p>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 transform hover:-translate-y-2 transition duration-300 group">
+                <div class="w-16 h-16 flex items-center justify-center bg-yellow-100 text-yellow-600 rounded-full mx-auto mb-6 group-hover:bg-yellow-600 group-hover:text-white transition">
+                    <i class="fa-solid fa-users-gear text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-3">Pelayanan Profesional</h3>
+                <p class="text-gray-600 text-sm">Petugas yang terlatih dan berintegritas siap memberikan pelayanan terbaik.</p>
+            </div>
         </div>
     </div>
 </section>
@@ -56,7 +114,7 @@
             <div class="md:w-2/3">
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-3xl font-bold text-slate-800 border-l-4 border-yellow-500 pl-4">Berita Terkini</h2>
-                    <a href="#" class="text-blue-700 font-semibold hover:underline text-sm">Lihat Semua &rarr;</a>
+                    <a href="{{ route('news.public.index') }}" class="text-blue-700 font-semibold hover:underline text-sm">Lihat Semua &rarr;</a>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -64,7 +122,7 @@
                     <div class="bg-white rounded-xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden group border border-gray-100">
                         <div class="relative h-48 overflow-hidden">
                             @if($item->image)
-                            <img src="{{ $item->image }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <img src="{{ $item->image }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" loading="lazy">
                             @else
                             <div class="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400">
                                 <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,7 +141,7 @@
                             <p class="text-gray-500 text-sm mb-4 line-clamp-3">
                                 {{ Str::limit($item->content, 100) }}
                             </p>
-                            <a href="#" class="inline-block text-sm font-bold text-yellow-600 hover:text-yellow-700">
+                            <a href="{{ route('news.public.show', $item->slug) }}" class="inline-block text-sm font-bold text-yellow-600 hover:text-yellow-700">
                                 Baca Selengkapnya &rarr;
                             </a>
                         </div>
@@ -129,7 +187,7 @@
                     </ul>
 
                     <div class="mt-8 pt-4 border-t border-slate-700 text-center">
-                        <a href="#" class="text-sm text-gray-400 hover:text-white transition">Lihat Arsip Pengumuman</a>
+                        <a href="{{ route('announcements.public.index') }}" class="text-sm text-gray-400 hover:text-white transition">Lihat Arsip Pengumuman</a>
                     </div>
                 </div>
             </div>

@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Admin\AnnouncementController;
-use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\NewsController; // Public News Controller
+use App\Http\Controllers\AnnouncementController; // Public Announcement Controller
+use App\Http\Controllers\Admin\AnnouncementController as AdminAnnouncementController; // Admin Announcement Controller
+use App\Http\Controllers\Admin\NewsController as AdminNewsController; // Admin News Controller
 use App\Http\Controllers\AuthController; // <--- TAMBAHKAN INI (PENTING)
 use App\Http\Controllers\KunjunganController;
 use App\Http\Controllers\Admin\KunjunganController as AdminKunjunganController;
@@ -34,6 +37,15 @@ Route::get('/', function () {
     return view('welcome', compact('news', 'announcements'));
 });
 
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+
+// Public News Routes
+Route::get('/berita', [NewsController::class, 'index'])->name('news.public.index');
+Route::get('/berita/{news:slug}', [NewsController::class, 'show'])->name('news.public.show'); // Assuming 'slug' for News model
+
+// Public Announcement Routes
+Route::get('/pengumuman', [AnnouncementController::class, 'index'])->name('announcements.public.index');
+
 
 // =========================================================================
 // 2. HALAMAN PENDAFTARAN KUNJUNGAN (GUEST)
@@ -41,6 +53,7 @@ Route::get('/', function () {
 Route::get('/kunjungan/daftar', [KunjunganController::class, 'create'])->name('kunjungan.create');
 Route::post('/kunjungan/daftar', [KunjunganController::class, 'store'])->name('kunjungan.store')->middleware('throttle:10,1');
 Route::get('/kunjungan/status/{kunjungan}', [KunjunganController::class, 'status'])->name('kunjungan.status');
+Route::get('/kunjungan/{kunjungan}/print', [KunjunganController::class, 'printProof'])->name('kunjungan.print');
 Route::get('/kunjungan/verify/{kunjungan}', [KunjunganController::class, 'verify'])->name('kunjungan.verify');
 
 Route::get('/api/kunjungan/{kunjungan}/status', [KunjunganController::class, 'getStatusApi'])->name('kunjungan.status.api');
@@ -73,10 +86,10 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // B. CRUD BERITA
-    Route::resource('news', NewsController::class);
+    Route::resource('news', AdminNewsController::class);
 
     // C. CRUD PENGUMUMAN
-    Route::resource('announcements', AnnouncementController::class);
+    Route::resource('announcements', AdminAnnouncementController::class);
 
     // D. CRUD KUNJUNGAN
     Route::get('kunjungan/verifikasi', [AdminKunjunganController::class, 'showVerificationForm'])->name('admin.kunjungan.verifikasi');

@@ -41,6 +41,30 @@ Aplikasi berbasis web modern yang dirancang untuk memfasilitasi layanan publik d
 
 ---
 
+## 🚀 Tips Optimasi Performa
+
+Untuk menjaga aplikasi tetap cepat dan responsif, perhatikan beberapa hal berikut:
+
+1.  **Optimasi Gambar:**
+    *   Pastikan semua gambar yang diunggah (terutama di bagian berita dan pengumuman) telah dikompresi dengan baik sebelum diunggah. Gunakan tool seperti TinyPNG, Squoosh.app, atau ImageOptim.
+    *   Gunakan format gambar modern (WebP) jika memungkinkan.
+2.  **Laravel Caching:**
+    *   Manfaatkan caching bawaan Laravel untuk konfigurasi, rute, dan view. Jalankan perintah berikut di lingkungan produksi setelah setiap deployment:
+        ```bash
+        php artisan config:cache
+        php artisan route:cache
+        php artisan view:cache
+        ```
+    *   Untuk membersihkan cache:
+        ```bash
+        php artisan cache:clear
+        php artisan config:clear
+        php artisan route:clear
+        php artisan view:clear
+        ```
+
+---
+
 ## 🛠️ Persyaratan Sistem
 
 Pastikan server lokal Anda memenuhi spesifikasi berikut:

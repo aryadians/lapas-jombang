@@ -329,37 +329,27 @@
                             <div>
                                 <label for="nama_pengunjung" class="block text-sm font-semibold text-slate-700 mb-2">Nama Lengkap (Sesuai KTP)</label>
                                 <input type="text" id="nama_pengunjung" name="nama_pengunjung" value="{{ old('nama_pengunjung') }}" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 @error('nama_pengunjung') border-red-500 @enderror" placeholder="Contoh: Budi Santoso">
-                                @error('nama_pengunjung')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                <p class="mt-2 text-sm text-red-600 hidden" id="error_nama_pengunjung"></p>
                             </div>
                             <div>
                                 <label for="nik_pengunjung" class="block text-sm font-semibold text-slate-700 mb-2">NIK (Nomor Induk Kependudukan)</label>
                                 <input type="text" id="nik_pengunjung" name="nik_pengunjung" value="{{ old('nik_pengunjung') }}" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 @error('nik_pengunjung') border-red-500 @enderror" placeholder="16 Digit Angka" maxlength="16">
-                                @error('nik_pengunjung')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                <p class="mt-2 text-sm text-red-600 hidden" id="error_nik_pengunjung"></p>
                             </div>
                             <div>
                                 <label for="no_wa_pengunjung" class="block text-sm font-semibold text-slate-700 mb-2">Nomor WhatsApp Aktif</label>
                                 <input type="text" id="no_wa_pengunjung" name="no_wa_pengunjung" value="{{ old('no_wa_pengunjung') }}" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 @error('no_wa_pengunjung') border-red-500 @enderror" placeholder="08xxxxxxxxxx">
-                                @error('no_wa_pengunjung')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                <p class="mt-2 text-sm text-red-600 hidden" id="error_no_wa_pengunjung"></p>
                             </div>
                             <div>
                                 <label for="email_pengunjung" class="block text-sm font-semibold text-slate-700 mb-2">Alamat Email Aktif</label>
                                 <input type="email" id="email_pengunjung" name="email_pengunjung" value="{{ old('email_pengunjung') }}" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 @error('email_pengunjung') border-red-500 @enderror" placeholder="nama@email.com" required>
-                                @error('email_pengunjung')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                <p class="mt-2 text-sm text-red-600 hidden" id="error_email_pengunjung"></p>
                             </div>
                             <div>
                                 <label for="alamat_pengunjung" class="block text-sm font-semibold text-slate-700 mb-2">Alamat Lengkap</label>
                                 <input type="text" id="alamat_pengunjung" name="alamat_pengunjung" value="{{ old('alamat_pengunjung') }}" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 @error('alamat_pengunjung') border-red-500 @enderror" placeholder="Desa, Kecamatan, Kota">
-                                @error('alamat_pengunjung')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                <p class="mt-2 text-sm text-red-600 hidden" id="error_alamat_pengunjung"></p>
                             </div>
                         </div>
                     </div>
@@ -453,9 +443,7 @@
                             <div>
                                 <label for="nama_wbp" class="block text-sm font-semibold text-slate-700 mb-2">Nama Warga Binaan (WBP)</label>
                                 <input type="text" id="nama_wbp" name="nama_wbp" value="{{ old('nama_wbp') }}" class="w-full rounded-lg border-slate-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm py-3 @error('nama_wbp') border-red-500 @enderror" placeholder="Siapa yang ingin dikunjungi?">
-                                @error('nama_wbp')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                <p class="mt-2 text-sm text-red-600 hidden" id="error_nama_wbp"></p>
                             </div>
 
                             {{-- HUBUNGAN --}}
@@ -470,9 +458,7 @@
                                     <option value="Teman" @if(old('hubungan') == 'Teman') selected @endif>Teman</option>
                                     <option value="Lainnya" @if(old('hubungan') == 'Lainnya') selected @endif>Lainnya</option>
                                 </select>
-                                @error('hubungan')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                <p class="mt-2 text-sm text-red-600 hidden" id="error_hubungan"></p>
                             </div>
 
                             {{-- HARI --}}
@@ -484,6 +470,7 @@
                                         <option value="{{ $day }}">{{ $day }}</option>
                                     @endforeach
                                 </select>
+                                <p class="mt-2 text-sm text-red-600 hidden" id="error_hari"></p>
                             </div>
 
                             {{-- TANGGAL --}}
@@ -495,9 +482,7 @@
                                         <option :value="date.value" x-text="date.label"></option>
                                     </template>
                                 </select>
-                                @error('tanggal_kunjungan')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                <p class="mt-2 text-sm text-red-600 hidden" id="error_tanggal_kunjungan"></p>
                                 <!-- Quota Info Display -->
                                 <div class="mt-2 text-sm font-semibold h-5">
                                     <span x-show="isLoading" class="text-slate-500">Memeriksa kuota...</span>
@@ -513,9 +498,7 @@
                                     <option value="pagi" @if(old('sesi') == 'pagi') selected @endif>Sesi Pagi (08:30 - 10:00)</option>
                                     <option value="siang" @if(old('sesi') == 'siang') selected @endif>Sesi Siang (13:30 - 14:30)</option>
                                 </select>
-                                @error('sesi')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                <p class="mt-2 text-sm text-red-600 hidden" id="error_sesi"></p>
                             </div>
                         </div>
                     </div>
@@ -534,3 +517,151 @@
 
 </div>
 @endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const fields = [
+            { id: 'nama_pengunjung', rules: ['required', { type: 'maxlength', value: 255 }] },
+            { id: 'nik_pengunjung', rules: ['required', { type: 'exactlength', value: 16 }, 'numeric'] },
+            { id: 'no_wa_pengunjung', rules: ['required', { type: 'maxlength', value: 15 }, 'numeric'] },
+            { id: 'email_pengunjung', rules: ['required', 'email', { type: 'maxlength', value: 255 }] },
+            { id: 'alamat_pengunjung', rules: ['required'] },
+            { id: 'nama_wbp', rules: ['required', { type: 'maxlength', value: 255 }] },
+            { id: 'hubungan', rules: ['required'] },
+            { id: 'hari', rules: ['required'] }, // For 'Pilih Hari' dropdown
+            { id: 'tanggal_kunjungan', rules: ['required'] }, // For 'Pilih Tanggal' dropdown
+            { id: 'sesi', rules: [{ type: 'requiredIfMonday', field: 'hari' }] }, // Conditional
+        ];
+
+        const errorMessages = {
+            required: 'Field ini wajib diisi.',
+            email: 'Format email tidak valid.',
+            numeric: 'Hanya angka yang diperbolehkan.',
+            maxlength: 'Maksimal :value karakter.',
+            exactlength: 'Harus :value karakter.',
+            requiredIfMonday: 'Sesi wajib dipilih untuk hari Senin.'
+        };
+
+        function showError(fieldId, message) {
+            const errorElement = document.getElementById(`error_${fieldId}`);
+            const inputElement = document.getElementById(fieldId);
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.classList.remove('hidden');
+            }
+            if (inputElement) {
+                inputElement.classList.add('border-red-500');
+                inputElement.classList.remove('border-slate-300', 'focus:ring-yellow-500', 'focus:border-yellow-500');
+            }
+        }
+
+        function hideError(fieldId) {
+            const errorElement = document.getElementById(`error_${fieldId}`);
+            const inputElement = document.getElementById(fieldId);
+            if (errorElement) {
+                errorElement.classList.add('hidden');
+                errorElement.textContent = '';
+            }
+            if (inputElement) {
+                inputElement.classList.remove('border-red-500');
+                inputElement.classList.add('border-slate-300', 'focus:ring-yellow-500', 'focus:border-yellow-500');
+            }
+        }
+
+        function validateField(fieldId, rules) {
+            const input = document.getElementById(fieldId);
+            const value = input ? input.value.trim() : '';
+            let isValid = true;
+            let message = '';
+
+            for (const rule of rules) {
+                if (typeof rule === 'string') {
+                    if (rule === 'required' && !value) {
+                        isValid = false;
+                        message = errorMessages.required;
+                        break;
+                    }
+                    if (rule === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                        isValid = false;
+                        message = errorMessages.email;
+                        break;
+                    }
+                    if (rule === 'numeric' && value && !/^\d+$/.test(value)) {
+                        isValid = false;
+                        message = errorMessages.numeric;
+                        break;
+                    }
+                } else if (typeof rule === 'object') {
+                    if (rule.type === 'maxlength' && value.length > rule.value) {
+                        isValid = false;
+                        message = errorMessages.maxlength.replace(':value', rule.value);
+                        break;
+                    }
+                    if (rule.type === 'exactlength' && value.length !== rule.value) {
+                        isValid = false;
+                        message = errorMessages.exactlength.replace(':value', rule.value);
+                        break;
+                    }
+                    if (rule.type === 'requiredIfMonday') {
+                        const hariInput = document.getElementById(rule.field);
+                        if (hariInput && hariInput.value === 'Senin' && !value) {
+                            isValid = false;
+                            message = errorMessages.requiredIfMonday;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (!isValid) {
+                showError(fieldId, message);
+                return false;
+            } else {
+                hideError(fieldId);
+                return true;
+            }
+        }
+
+        fields.forEach(field => {
+            const input = document.getElementById(field.id);
+            if (input) {
+                input.addEventListener('input', () => validateField(field.id, field.rules));
+                input.addEventListener('blur', () => validateField(field.id, field.rules));
+                // Special handling for select elements if they need immediate validation on change
+                if (input.tagName === 'SELECT') {
+                    input.addEventListener('change', () => validateField(field.id, field.rules));
+                }
+            }
+        });
+
+        form.addEventListener('submit', function(event) {
+            let formIsValid = true;
+            fields.forEach(field => {
+                if (!validateField(field.id, field.rules)) {
+                    formIsValid = false;
+                }
+            });
+
+            // Prevent form submission if any validation fails
+            if (!formIsValid) {
+                event.preventDefault();
+                // Optionally scroll to the first error
+                const firstError = document.querySelector('.border-red-500');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+
+        // Trigger validation on load if there are old inputs (e.g., after a server-side validation failure)
+        window.addEventListener('load', () => {
+            fields.forEach(field => {
+                const input = document.getElementById(field.id);
+                if (input && input.value) { // Only validate if field has some value
+                    validateField(field.id, field.rules);
+                }
+            });
+        });
+    });
+</script>

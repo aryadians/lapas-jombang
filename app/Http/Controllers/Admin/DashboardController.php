@@ -22,6 +22,7 @@ class DashboardController extends Controller
         
         // Data Kunjungan
         $totalPendingKunjungans = Kunjungan::where('status', 'pending')->count();
+        $totalApprovedKunjungans = Kunjungan::where('status', 'approved')->count(); // Add this line
         $totalApprovedToday = Kunjungan::where('status', 'approved')->whereDate('updated_at', Carbon::today())->count();
         $totalRejectedKunjungans = Kunjungan::where('status', 'rejected')->count();
         $totalKunjungans = Kunjungan::count();
@@ -55,12 +56,21 @@ class DashboardController extends Controller
                                       ->count();
         }
 
+        // Data untuk Chart Kunjungan per Status
+        $chartKunjunganStatusLabels = ['Menunggu Persetujuan', 'Disetujui', 'Ditolak'];
+        $chartKunjunganStatusData = [
+            $totalPendingKunjungans,
+            $totalApprovedKunjungans,
+            $totalRejectedKunjungans,
+        ];
+
         return view('admin.dashboard', compact(
             'totalNews', 
             'totalAnnouncements', 
             'totalUsers', 
             'latestNews',
             'totalPendingKunjungans',
+            'totalApprovedKunjungans',
             'totalApprovedToday',
             'totalRejectedKunjungans',
             'totalKunjungans',
@@ -74,7 +84,9 @@ class DashboardController extends Controller
             'pendaftarBiasa',
             'kuotaBiasa',
             'chartLabels',
-            'chartData'
+            'chartData',
+            'chartKunjunganStatusLabels',
+            'chartKunjunganStatusData'
         ));
     }
 }

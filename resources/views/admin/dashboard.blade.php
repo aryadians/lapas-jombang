@@ -205,6 +205,14 @@
     </div>
 </div>
 
+{{-- CHART STATUS KUNJUNGAN --}}
+<div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 mb-10">
+    <h3 class="text-lg font-bold text-slate-800 mb-4">Grafik Status Kunjungan</h3>
+    <div class="h-80 flex justify-center">
+        <canvas id="kunjunganStatusChart" class="max-w-md"></canvas>
+    </div>
+</div>
+
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
 
     {{-- 3. TABEL BERITA TERBARU --}}
@@ -402,6 +410,52 @@
                             callbacks: {
                                 label: function(context) {
                                     return ' ' + context.parsed.y + ' Kunjungan';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        const kunjunganStatusCtx = document.getElementById('kunjunganStatusChart');
+        if (kunjunganStatusCtx) {
+            new Chart(kunjunganStatusCtx, {
+                type: 'doughnut', // Changed to doughnut
+                data: {
+                    labels: @json($chartKunjunganStatusLabels),
+                    datasets: [{
+                        label: 'Jumlah Kunjungan',
+                        data: @json($chartKunjunganStatusData),
+                        backgroundColor: [
+                            'rgba(251, 191, 36, 0.7)', // Yellow for Pending
+                            'rgba(16, 185, 129, 0.7)', // Green for Approved
+                            'rgba(239, 68, 68, 0.7)',  // Red for Rejected
+                        ],
+                        borderColor: [
+                            'rgba(251, 191, 36, 1)',
+                            'rgba(16, 185, 129, 1)',
+                            'rgba(239, 68, 68, 1)',
+                        ],
+                        borderWidth: 1,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right', // Position legend to the right
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed;
+                                    const total = context.dataset.data.reduce((acc, current) => acc + current, 0);
+                                    const percentage = total > 0 ? ((value / total) * 100).toFixed(2) + '%' : '0.00%';
+                                    return ` ${label}: ${value} (${percentage})`;
                                 }
                             }
                         }

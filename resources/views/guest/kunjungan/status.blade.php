@@ -124,7 +124,13 @@
 
             </div>
 
-            <div class="px-6 py-4 bg-gray-50 border-t flex justify-end">
+            <div class="px-6 py-4 bg-gray-50 border-t flex justify-end gap-3">
+                @if($kunjungan->status == 'approved')
+                <a href="{{ route('kunjungan.print', $kunjungan) }}" target="_blank" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m0 0l-4 4m4-4l4 4m-4-4v-4m7 0v4m-4-4H9"></path></svg>
+                    Cetak Bukti Pendaftaran
+                </a>
+                @endif
                 <a href="{{ route('kunjungan.create') }}" class="bg-slate-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-slate-700 transition">
                     Daftarkan Kunjungan Lain
                 </a>
