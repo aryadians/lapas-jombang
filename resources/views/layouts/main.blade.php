@@ -79,10 +79,10 @@
 
                 {{-- Menu Tengah --}}
                 <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-sm font-medium transition-all">Beranda</a>
-                    <a href="#profil" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-sm font-medium transition-all">Profil</a>
-                    <a href="#berita" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-sm font-medium transition-all">Berita</a>
-                    <a href="#pengumuman" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-sm font-medium transition-all">Pengumuman</a>
+                    <a href="{{ url('/') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-sm font-medium transition-all">Beranda</a>
+                    <a href="{{ url('/#profil') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-sm font-medium transition-all">Profil</a>
+                    <a href="{{ url('/#berita') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-sm font-medium transition-all">Berita</a>
+                    <a href="{{ url('/#pengumuman') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-sm font-medium transition-all">Pengumuman</a>
                 </div>
 
                 {{-- Menu Kanan --}}
@@ -133,9 +133,10 @@
                     class="block w-full text-center px-5 py-3 rounded-md font-bold text-slate-900 bg-yellow-500 hover:bg-yellow-600 transition shadow-md">
                     Pendaftaran Kunjungan
                 </a>
-                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-slate-700">Beranda</a>
-                <a href="#profil" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700">Profil</a>
-                <a href="#berita" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700">Berita</a>
+                <a href="{{ url('/') }}" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-slate-700">Beranda</a>
+                <a href="{{ url('/#profil') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700">Profil</a>
+                <a href="{{ url('/#berita') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700">Berita</a>
+                <a href="{{ url('/#pengumuman') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700">Pengumuman</a>
 
                 @if (Route::has('login'))
                 <a href="{{ route('login') }}" class="block px-3 py-2 mt-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-slate-700">
