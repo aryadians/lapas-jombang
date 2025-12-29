@@ -122,119 +122,119 @@
 </div>
 
 {{-- 2. STATISTIK CARDS --}}
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mb-10">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-10">
 
     {{-- Card Kunjungan Pending --}}
-    <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 transform hover:-translate-y-2 transition duration-300 group cursor-pointer">
-        <div class="flex justify-between items-start">
-            <div>
-                <p class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-1">Menunggu Persetujuan</p>
-                <h3 id="pending-count" class="text-4xl font-extrabold text-slate-800">{{ $totalPendingKunjungans }}</h3>
+    <div class="bg-white p-5 rounded-xl shadow-lg border border-slate-100 hover:shadow-xl hover:border-yellow-300 transition-all duration-300 group cursor-pointer transform hover:-translate-y-1 card-3d">
+        <div class="flex justify-between items-start mb-4">
+            <div class="flex-1 min-w-0">
+                <p class="text-slate-500 text-xs font-bold uppercase tracking-widest truncate mb-1">Menunggu</p>
+                <h3 class="text-3xl font-extrabold text-slate-800 group-hover:animate-float-up inline-block">{{ $totalPendingKunjungans }}</h3>
             </div>
-            <div class="p-3 bg-yellow-100 text-yellow-600 rounded-full group-hover:bg-yellow-500 group-hover:text-white transition-all duration-300">
-                <i class="fa-regular fa-hourglass-half text-2xl"></i>
+            <div class="p-2.5 bg-yellow-100 text-yellow-600 rounded-lg group-hover:bg-yellow-500 group-hover:text-white transition-all duration-300 ml-2 group-hover:animate-float-up">
+                <i class="fa-regular fa-hourglass-half text-lg"></i>
             </div>
         </div>
-        <div class="mt-4 pt-4 border-t border-slate-50">
-            <a href="{{ route('admin.kunjungan.index', ['status' => 'pending']) }}" class="text-sm font-bold text-yellow-600 hover:text-yellow-800 flex items-center gap-2">
-                Lihat Detail <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+        <div class="pt-3 border-t border-slate-100">
+            <a href="{{ route('admin.kunjungan.index', ['status' => 'pending']) }}" class="text-xs font-bold text-yellow-600 hover:text-yellow-800 flex items-center gap-1 group-hover:gap-2 transition-all">
+                Detail <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
         </div>
     </div>
 
     {{-- Card Disetujui Hari Ini --}}
-    <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 transform hover:-translate-y-2 transition duration-300 group cursor-pointer">
-        <div class="flex justify-between items-start">
-            <div>
-                <p class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-1">Disetujui Hari Ini</p>
-                <h3 id="approved-today-count" class="text-4xl font-extrabold text-slate-800">{{ $totalApprovedToday }}</h3>
+    <div class="bg-white p-5 rounded-xl shadow-lg border border-slate-100 hover:shadow-xl hover:border-green-300 transition-all duration-300 group cursor-pointer transform hover:-translate-y-1 card-3d">
+        <div class="flex justify-between items-start mb-4">
+            <div class="flex-1 min-w-0">
+                <p class="text-slate-500 text-xs font-bold uppercase tracking-widest truncate mb-1">Disetujui</p>
+                <h3 class="text-3xl font-extrabold text-slate-800 group-hover:animate-float-up inline-block">{{ $totalApprovedToday }}</h3>
             </div>
-            <div class="p-3 bg-green-100 text-green-600 rounded-full group-hover:bg-green-600 group-hover:text-white transition-all duration-300">
-                <i class="fa-regular fa-calendar-check text-2xl"></i>
+            <div class="p-2.5 bg-green-100 text-green-600 rounded-lg group-hover:bg-green-600 group-hover:text-white transition-all duration-300 ml-2 group-hover:animate-float-up">
+                <i class="fa-regular fa-calendar-check text-lg"></i>
             </div>
         </div>
-        <div class="mt-4 pt-4 border-t border-slate-50">
-            <a href="{{ route('admin.kunjungan.index', ['status' => 'approved']) }}" class="text-sm font-bold text-green-600 hover:text-green-800 flex items-center gap-2">
-                Lihat Detail <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+        <div class="pt-3 border-t border-slate-100">
+            <a href="{{ route('admin.kunjungan.index', ['status' => 'approved']) }}" class="text-xs font-bold text-green-600 hover:text-green-800 flex items-center gap-1 group-hover:gap-2 transition-all">
+                Detail <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
         </div>
     </div>
 
     {{-- Card Ditolak --}}
-    <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 transform hover:-translate-y-2 transition duration-300 group cursor-pointer">
-        <div class="flex justify-between items-start">
-            <div>
-                <p class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-1">Total Ditolak</p>
-                <h3 id="rejected-count" class="text-4xl font-extrabold text-slate-800">{{ $totalRejectedKunjungans }}</h3>
+    <div class="bg-white p-5 rounded-xl shadow-lg border border-slate-100 hover:shadow-xl hover:border-red-300 transition-all duration-300 group cursor-pointer transform hover:-translate-y-1 card-3d">
+        <div class="flex justify-between items-start mb-4">
+            <div class="flex-1 min-w-0">
+                <p class="text-slate-500 text-xs font-bold uppercase tracking-widest truncate mb-1">Ditolak</p>
+                <h3 class="text-3xl font-extrabold text-slate-800 group-hover:animate-float-up inline-block">{{ $totalRejectedKunjungans }}</h3>
             </div>
-            <div class="p-3 bg-red-100 text-red-600 rounded-full group-hover:bg-red-500 group-hover:text-white transition-all duration-300">
-                <i class="fa-regular fa-calendar-xmark text-2xl"></i>
+            <div class="p-2.5 bg-red-100 text-red-600 rounded-lg group-hover:bg-red-500 group-hover:text-white transition-all duration-300 ml-2 group-hover:animate-float-up">
+                <i class="fa-regular fa-calendar-xmark text-lg"></i>
             </div>
         </div>
-        <div class="mt-4 pt-4 border-t border-slate-50">
-            <a href="{{ route('admin.kunjungan.index', ['status' => 'rejected']) }}" class="text-sm font-bold text-red-600 hover:text-red-800 flex items-center gap-2">
-                Lihat Detail <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+        <div class="pt-3 border-t border-slate-100">
+            <a href="{{ route('admin.kunjungan.index', ['status' => 'rejected']) }}" class="text-xs font-bold text-red-600 hover:text-red-800 flex items-center gap-1 group-hover:gap-2 transition-all">
+                Detail <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
         </div>
     </div>
     
     {{-- Card Total Kunjungan --}}
-    <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 transform hover:-translate-y-2 transition duration-300 group cursor-pointer">
-        <div class="flex justify-between items-start">
-            <div>
-                <p class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-1">Total Kunjungan</p>
-                <h3 id="total-kunjungan-count" class="text-4xl font-extrabold text-slate-800">{{ $totalKunjungans }}</h3>
+    <div class="bg-white p-5 rounded-xl shadow-lg border border-slate-100 hover:shadow-xl hover:border-blue-300 transition-all duration-300 group cursor-pointer transform hover:-translate-y-1 card-3d">
+        <div class="flex justify-between items-start mb-4">
+            <div class="flex-1 min-w-0">
+                <p class="text-slate-500 text-xs font-bold uppercase tracking-widest truncate mb-1">Total</p>
+                <h3 class="text-3xl font-extrabold text-slate-800 group-hover:animate-float-up inline-block">{{ $totalKunjungans }}</h3>
             </div>
-            <div class="p-3 bg-blue-100 text-blue-600 rounded-full group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
-                <i class="fa-solid fa-users text-2xl"></i>
+            <div class="p-2.5 bg-blue-100 text-blue-600 rounded-lg group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 ml-2 group-hover:animate-float-up">
+                <i class="fa-solid fa-users text-lg"></i>
             </div>
         </div>
-        <div class="mt-4 pt-4 border-t border-slate-50">
-            <a href="{{ route('admin.kunjungan.index') }}" class="text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center gap-2">
-                Kelola Kunjungan <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+        <div class="pt-3 border-t border-slate-100">
+            <a href="{{ route('admin.kunjungan.index') }}" class="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 group-hover:gap-2 transition-all">
+                Kelola <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
         </div>
     </div>
 
     {{-- Card Total Berita --}}
-    <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 transform hover:-translate-y-2 transition duration-300 group cursor-pointer">
-        <div class="flex justify-between items-start">
-            <div>
-                <p class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-1">Total Berita</p>
-                <h3 id="total-news-count" class="text-4xl font-extrabold text-slate-800">{{ $totalNews }}</h3>
+    <div class="bg-white p-5 rounded-xl shadow-lg border border-slate-100 hover:shadow-xl hover:border-purple-300 transition-all duration-300 group cursor-pointer transform hover:-translate-y-1 card-3d">
+        <div class="flex justify-between items-start mb-4">
+            <div class="flex-1 min-w-0">
+                <p class="text-slate-500 text-xs font-bold uppercase tracking-widest truncate mb-1">Berita</p>
+                <h3 class="text-3xl font-extrabold text-slate-800 group-hover:animate-float-up inline-block">{{ $totalNews }}</h3>
             </div>
-            <div class="p-3 bg-purple-100 text-purple-600 rounded-full group-hover:bg-purple-600 group-hover:text-white transition-all duration-300">
-                <i class="fa-solid fa-newspaper text-2xl"></i>
+            <div class="p-2.5 bg-purple-100 text-purple-600 rounded-lg group-hover:bg-purple-600 group-hover:text-white transition-all duration-300 ml-2 group-hover:animate-float-up">
+                <i class="fa-solid fa-newspaper text-lg"></i>
             </div>
         </div>
-        <div class="mt-4 pt-4 border-t border-slate-50">
-            <a href="{{ route('news.index') }}" class="text-sm font-bold text-purple-600 hover:text-purple-800 flex items-center gap-2">
-                Kelola Berita <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+        <div class="pt-3 border-t border-slate-100">
+            <a href="{{ route('news.index') }}" class="text-xs font-bold text-purple-600 hover:text-purple-800 flex items-center gap-1 group-hover:gap-2 transition-all">
+                Kelola <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
         </div>
     </div>
 
     {{-- Card Total Pengumuman --}}
-    <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 transform hover:-translate-y-2 transition duration-300 group cursor-pointer">
-        <div class="flex justify-between items-start">
-            <div>
-                <p class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-1">Total Pengumuman</p>
-                <h3 id="total-announcements-count" class="text-4xl font-extrabold text-slate-800">{{ $totalAnnouncements }}</h3>
+    <div class="bg-white p-5 rounded-xl shadow-lg border border-slate-100 hover:shadow-xl hover:border-indigo-300 transition-all duration-300 group cursor-pointer transform hover:-translate-y-1 card-3d">
+        <div class="flex justify-between items-start mb-4">
+            <div class="flex-1 min-w-0">
+                <p class="text-slate-500 text-xs font-bold uppercase tracking-widest truncate mb-1">Pengumuman</p>
+                <h3 class="text-3xl font-extrabold text-slate-800 group-hover:animate-float-up inline-block">{{ $totalAnnouncements }}</h3>
             </div>
-            <div class="p-3 bg-indigo-100 text-indigo-600 rounded-full group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
-                <i class="fa-solid fa-bullhorn text-2xl"></i>
+            <div class="p-2.5 bg-indigo-100 text-indigo-600 rounded-lg group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 ml-2 group-hover:animate-float-up">
+                <i class="fa-solid fa-bullhorn text-lg"></i>
             </div>
         </div>
-        <div class="mt-4 pt-4 border-t border-slate-50">
-            <a href="{{ route('announcements.index') }}" class="text-sm font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-2">
-                Kelola Pengumuman <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+        <div class="pt-3 border-t border-slate-100">
+            <a href="{{ route('announcements.index') }}" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 group-hover:gap-2 transition-all">
+                Kelola <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
         </div>
     </div>
 </div>
 
 {{-- CHART KUNJUNGAN --}}
-<div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-100 mb-10">
+<div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-100 mb-10 card-3d hover:shadow-2xl transition-all duration-300">
     <h3 class="text-xl font-extrabold text-slate-800 mb-6">Grafik Kunjungan Disetujui (7 Hari Terakhir)</h3>
     <div class="h-80">
         <canvas id="visitsChart"></canvas>
@@ -242,7 +242,7 @@
 </div>
 
 {{-- CHART STATUS KUNJUNGAN --}}
-<div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-100 mb-10">
+<div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-100 mb-10 card-3d hover:shadow-2xl transition-all duration-300">
     <h3 class="text-xl font-extrabold text-slate-800 mb-6">Grafik Publikasi Konten</h3>
     <div class="h-80 flex justify-center">
         <canvas id="publicationsChart" class="max-w-md"></canvas>

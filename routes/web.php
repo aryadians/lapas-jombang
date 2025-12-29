@@ -104,9 +104,11 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('kunjungan/{kunjungan}', [AdminKunjunganController::class, 'show'])->name('admin.kunjungan.show');
     Route::patch('kunjungan/{kunjungan}', [AdminKunjunganController::class, 'update'])->name('admin.kunjungan.update');
     Route::delete('kunjungan/{kunjungan}', [AdminKunjunganController::class, 'destroy'])->name('admin.kunjungan.destroy');
+    Route::post('kunjungan/bulk-update', [AdminKunjunganController::class, 'bulkUpdate'])->name('admin.kunjungan.bulk-update');
+    Route::delete('kunjungan/bulk-delete', [AdminKunjunganController::class, 'bulkDelete'])->name('admin.kunjungan.bulk-delete');
 
     // E. CRUD PENGGUNA
-    Route::resource('users', AdminUserController::class)->except(['create', 'store', 'show'])->names('admin.users');
+    Route::resource('users', AdminUserController::class)->names('admin.users');
 
     // F. PROFIL ADMIN
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

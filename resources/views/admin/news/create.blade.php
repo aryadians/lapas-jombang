@@ -7,21 +7,51 @@
         Kembali ke Daftar Berita
     </a>
 
-    <div x-data="inView" x-init="init()" :class="{'opacity-0 translate-y-4': !inView}" class="transition duration-700 bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+    <div class="transition duration-700 bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden card-3d hover:shadow-2xl">
         <div class="p-8 border-b border-gray-100 bg-gray-50">
             <h2 class="text-2xl font-extrabold text-slate-800">Tulis Berita Baru</h2>
             <p class="text-sm text-gray-600 mt-1">Isi formulir di bawah ini untuk mempublikasikan berita atau kegiatan terbaru.</p>
         </div>
+
+        <style>
+            trix-editor {
+                border: none !important;
+                border-radius: 0.75rem !important;
+                box-shadow: none !important;
+                background: transparent !important;
+                min-height: 200px !important;
+            }
+            trix-editor:focus-within {
+                outline: none !important;
+            }
+            trix-toolbar {
+                border-bottom: 1px solid #e5e7eb !important;
+                border-radius: 0.75rem 0.75rem 0 0 !important;
+                background: #f9fafb !important;
+                padding: 0.5rem !important;
+            }
+            trix-editor-editor {
+                padding: 1rem !important;
+                min-height: 150px !important;
+                font-size: 0.875rem !important;
+                line-height: 1.5 !important;
+            }
+        </style>
 
         <form action="{{ route('news.store') }}" method="POST" enctype="multipart/form-data" class="p-8 space-y-6">
             @csrf
             
             <div>
                 <label for="title" class="block text-sm font-semibold text-slate-700 mb-2">Judul Artikel</label>
-                <input type="text" id="title" name="title" value="{{ old('title') }}" 
-                       class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 shadow-sm transition @error('title') border-red-500 @enderror"
-                       placeholder="Contoh: Kunjungan Kerja Kakanwil Jawa Timur..." required>
-                @error('title') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                <div class="relative">
+                    <input type="text" id="title" name="title" value="{{ old('title') }}" 
+                           class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all duration-200 bg-white shadow-sm hover:border-gray-300 @error('title') border-red-300 focus:border-red-400 focus:ring-red-100 @enderror"
+                           placeholder="Contoh: Kunjungan Kerja Kakanwil Jawa Timur..." required>
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        <i class="fa-solid fa-heading text-gray-400 text-sm"></i>
+                    </div>
+                </div>
+                @error('title') <p class="text-red-500 text-xs mt-1 flex items-center gap-1"><i class="fa-solid fa-exclamation-triangle"></i> {{ $message }}</p> @enderror
             </div>
 
             <div>
@@ -47,20 +77,33 @@
             <div>
                 <label for="content" class="block text-sm font-semibold text-slate-700 mb-2">Isi Berita</label>
                 <input id="content" type="hidden" name="content" value="{{ old('content') }}">
-                <trix-editor input="content" class="trix-content bg-white rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 shadow-sm transition @error('content') border-red-500 @enderror"></trix-editor>
-                @error('content') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                <div class="relative">
+                    <trix-editor input="content" class="trix-content w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus-within:border-blue-400 focus-within:ring-4 focus-within:ring-blue-100 transition-all duration-200 bg-white shadow-sm hover:border-gray-300 min-h-[200px] @error('content') border-red-300 focus-within:border-red-400 focus-within:ring-red-100 @enderror"></trix-editor>
+                    <div class="absolute top-3 right-3 pointer-events-none">
+                        <i class="fa-solid fa-edit text-gray-400 text-sm"></i>
+                    </div>
+                </div>
+                @error('content') <p class="text-red-500 text-xs mt-1 flex items-center gap-1"><i class="fa-solid fa-exclamation-triangle"></i> {{ $message }}</p> @enderror
             </div>
             
             <div>
                 <label for="status" class="block text-sm font-semibold text-slate-700 mb-2">Status Publikasi</label>
-                <select id="status" name="status" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 shadow-sm transition @error('status') border-red-500 @enderror">
-                    <option value="published" @if(old('status') == 'published') selected @endif>Published (Tayang)</option>
-                    <option value="draft" @if(old('status') == 'draft') selected @endif>Draft (Simpan Saja)</option>
-                </select>
-                @error('status') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                <div class="relative">
+                    <select id="status" name="status" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all duration-200 bg-white shadow-sm hover:border-gray-300 appearance-none @error('status') border-red-300 focus:border-red-400 focus:ring-red-100 @enderror">
+                        <option value="published" @if(old('status') == 'published') selected @endif>Published (Tayang)</option>
+                        <option value="draft" @if(old('status') == 'draft') selected @endif>Draft (Simpan Saja)</option>
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        <i class="fa-solid fa-chevron-down text-gray-400 text-sm"></i>
+                    </div>
+                </div>
+                @error('status') <p class="text-red-500 text-xs mt-1 flex items-center gap-1"><i class="fa-solid fa-exclamation-triangle"></i> {{ $message }}</p> @enderror
             </div>
 
-            <div class="pt-4 border-t border-gray-100 flex justify-end">
+            <div class="pt-4 border-t border-gray-100 flex justify-end gap-3">
+                <a href="{{ route('news.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                    <i class="fa-solid fa-times"></i> Batal
+                </a>
                 <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition transform hover:-translate-y-0.5 flex items-center gap-2">
                     <i class="fa-solid fa-paper-plane"></i> Publikasikan Berita
                 </button>

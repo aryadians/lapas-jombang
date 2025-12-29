@@ -44,16 +44,14 @@
 
         <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-1">
             @forelse($allAnnouncements as $announcement)
-            <div x-data="inView" x-init="init()" :class="{'opacity-0 translate-y-6': !inView}"
-                 class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden transform hover:-translate-y-2"
-                 style="transition-delay: {{ $loop->index * 0.1 }}s;">
+            <div class="group relative bg-white rounded-2xl overflow-hidden transition-all duration-700 border border-slate-200 hover:border-emerald-400 transform hover:-translate-y-2 hover:shadow-2xl flex flex-col card-3d" style="box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);">
 
                 {{-- Date Badge --}}
                 <div class="absolute top-6 right-6 z-10">
-                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white px-4 py-2 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-4 py-3 rounded-2xl shadow-lg group-hover:scale-110 transition-all duration-300 border border-emerald-400/50 group-hover:animate-float-up">
                         <div class="text-center">
-                            <span class="block text-lg font-bold">{{ $announcement->date->format('d') }}</span>
-                            <span class="block text-xs font-semibold uppercase tracking-wide">{{ $announcement->date->format('M') }}</span>
+                            <span class="block text-2xl font-bold">{{ $announcement->date->format('d') }}</span>
+                            <span class="block text-xs font-semibold uppercase tracking-widest">{{ $announcement->date->format('M') }}</span>
                             <span class="block text-xs opacity-90">{{ $announcement->date->format('Y') }}</span>
                         </div>
                     </div>
@@ -62,64 +60,68 @@
                 {{-- Priority Indicator --}}
                 @if($loop->first)
                 <div class="absolute top-6 left-6 z-10">
-                    <div class="bg-gradient-to-r from-red-500 to-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg animate-pulse">
-                        <i class="fas fa-exclamation-triangle mr-1"></i>
-                        PRIORITAS TINGGI
+                    <div class="bg-gradient-to-r from-red-500 to-red-600 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg animate-pulse border border-red-400/50 inline-flex items-center gap-2">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        PRIORITAS
                     </div>
                 </div>
                 @endif
 
                 {{-- Content --}}
-                <div class="p-8">
-                    <div class="flex items-start space-x-4">
+                <div class="p-8 flex-grow flex flex-col">
+                    <div class="flex items-start space-x-4 mb-4">
                         <div class="flex-shrink-0">
-                            <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
+                            <div class="w-14 h-14 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-2xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform duration-300 border border-yellow-300/50 group-hover:animate-float-up">
                                 <span class="text-2xl">📢</span>
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <div class="flex items-center mb-3">
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 mr-3">
-                                    <i class="fas fa-bullhorn mr-1"></i>
-                                    Pengumuman Resmi
+                            <div class="flex items-center gap-2 mb-2 flex-wrap">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 gap-1">
+                                    <i class="fas fa-bullhorn text-sm"></i>
+                                    Pengumuman
                                 </span>
-                                <span class="text-sm text-gray-500 font-medium">
+                                <span class="text-xs text-slate-500 font-medium">
                                     {{ $announcement->created_at->diffForHumans() }}
                                 </span>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-emerald-600 transition-colors duration-300 leading-tight">
+                            <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-emerald-700 transition-colors duration-300 leading-snug">
                                 {{ $announcement->title }}
                             </h3>
-                            <p class="text-gray-600 mb-4 leading-relaxed line-clamp-3">
-                                {{ Str::limit(strip_tags($announcement->content), 200) }}
-                            </p>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center text-sm text-gray-500">
-                                    <i class="far fa-calendar-alt mr-2"></i>
-                                    Dipublikasikan: {{ $announcement->created_at->translatedFormat('d F Y') }}
-                                </div>
-                                <a href="{{ route('announcements.public.show', $announcement) }}" class="inline-flex items-center px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-full transition-all transform hover:-translate-y-1 hover:shadow-lg group-hover:shadow-emerald-500/25">
-                                    <i class="fas fa-eye mr-2"></i>
-                                    <span>Baca Selengkapnya</span>
-                                </a>
-                            </div>
                         </div>
+                    </div>
+                    
+                    <p class="text-slate-600 mb-4 leading-relaxed line-clamp-3 flex-grow">
+                        {{ Str::limit(strip_tags($announcement->content), 200) }}
+                    </p>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center text-sm text-slate-500 group-hover:text-slate-600 transition-colors">
+                            <i class="far fa-calendar-alt mr-2"></i>
+                            {{ $announcement->created_at->translatedFormat('d F Y') }}
+                        </div>
+                        <a href="{{ route('announcements.public.show', $announcement) }}" class="inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition-all transform hover:-translate-y-1 shadow-lg group-hover:shadow-emerald-500/25 duration-300 gap-2">
+                            <i class="fas fa-eye text-sm"></i>
+                            <span class="text-sm">Baca</span>
+                        </a>
                     </div>
                 </div>
 
                 {{-- Hover Effect Border --}}
-                <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-500/20 to-yellow-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-500/10 to-yellow-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
             </div>
             @empty
             <div class="col-span-full">
-                <div class="text-center py-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl border-2 border-dashed border-gray-300">
-                    <div class="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <span class="text-4xl">📭</span>
+                <div class="text-center py-24 bg-gradient-to-br from-slate-50 to-slate-100 rounded-3xl border-2 border-dashed border-slate-300">
+                    <div class="max-w-md mx-auto">
+                        <div class="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full mb-4 shadow-lg border border-slate-200">
+                            <span class="text-4xl">📭</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-700 mb-2">Belum Ada Pengumuman</h3>
+                        <p class="text-slate-600">
+                            Saat ini belum ada pengumuman yang diterbitkan. Silakan kembali lagi nanti untuk informasi terbaru.
+                        </p>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Belum Ada Pengumuman</h3>
-                    <p class="text-gray-500 max-w-md mx-auto">
-                        Saat ini belum ada pengumuman yang diterbitkan. Silakan kembali lagi nanti untuk informasi terbaru.
-                    </p>
                 </div>
             </div>
             @endforelse

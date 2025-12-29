@@ -44,9 +44,7 @@
 
         <div class="space-y-4">
             {{-- FAQ Item 1 --}}
-            <div x-data="{ open: false, ...inView() }" x-init="init()" :class="{'opacity-0 translate-y-6': !inView}"
-                 class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden"
-                 style="transition-delay: 0s;">
+            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gradient-to-r group-hover:from-blue-50 group-hover:to-cyan-50 transition-all duration-300">
                     <div class="flex items-center">
                         <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-transform">
@@ -67,25 +65,9 @@
                     </div>
                 </div>
             </div>
-                    <div class="flex items-center space-x-4">
-                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                            <span class="text-white text-lg">🏛️</span>
-                        </div>
-                        <span class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">Apa itu Lapas Jombang?</span>
-                    </div>
-                    <div class="w-8 h-8 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-lg flex items-center justify-center shadow-lg ml-4">
-                        <i class="fas text-white text-sm transition-transform duration-300" :class="open ? 'fa-minus rotate-180' : 'fa-plus'"></i>
-                    </div>
-                </button>
-                <div x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 max-h-0" x-transition:enter-end="opacity-100 max-h-96" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 max-h-96" x-transition:leave-end="opacity-0 max-h-0" class="px-8 pb-6 text-gray-600 border-t border-gray-100">
-                    <p class="pt-6 leading-relaxed">Lapas Jombang adalah lembaga pemasyarakatan Kelas IIB Jombang yang bertugas melaksanakan pembinaan terhadap narapidana dan tahanan sesuai dengan Undang-Undang Nomor 12 Tahun 1995 tentang Pemasyarakatan.</p>
-                </div>
-            </div>
-
+            
             {{-- FAQ Item 2 --}}
-            <div x-data="{ open: false, ...inView() }" x-init="init()" :class="{'opacity-0 translate-y-6': !inView}"
-                 class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden"
-                 style="transition-delay: 0.1s;">
+            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gray-50 transition-colors duration-300">
                     <div class="flex items-center space-x-4">
                         <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -103,9 +85,7 @@
             </div>
 
             {{-- FAQ Item 3 --}}
-            <div x-data="{ open: false, ...inView() }" x-init="init()" :class="{'opacity-0 translate-y-6': !inView}"
-                 class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden"
-                 style="transition-delay: 0.2s;">
+            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gray-50 transition-colors duration-300">
                     <div class="flex items-center space-x-4">
                         <div class="w-10 h-10 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -123,9 +103,7 @@
             </div>
 
             {{-- FAQ Item 4 --}}
-            <div x-data="{ open: false, ...inView() }" x-init="init()" :class="{'opacity-0 translate-y-6': !inView}"
-                 class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden"
-                 style="transition-delay: 0.3s;">
+            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gray-50 transition-colors duration-300">
                     <div class="flex items-center space-x-4">
                         <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -143,9 +121,7 @@
             </div>
 
             {{-- FAQ Item 6 --}}
-            <div x-data="{ open: false, ...inView() }" x-init="init()" :class="{'opacity-0 translate-y-6': !inView}"
-                 class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden"
-                 style="transition-delay: 0.5s;">
+            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gradient-to-r group-hover:from-indigo-50 group-hover:to-purple-50 transition-all duration-300">
                     <div class="flex items-center">
                         <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-transform">
@@ -173,9 +149,7 @@
             </div>
 
             {{-- FAQ Item 7 --}}
-            <div x-data="{ open: false, ...inView() }" x-init="init()" :class="{'opacity-0 translate-y-6': !inView}"
-                 class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden"
-                 style="transition-delay: 0.6s;">
+            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gradient-to-r group-hover:from-pink-50 group-hover:to-rose-50 transition-all duration-300">
                     <div class="flex items-center">
                         <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-transform">
@@ -203,9 +177,7 @@
             </div>
 
             {{-- FAQ Item 8 --}}
-            <div x-data="{ open: false, ...inView() }" x-init="init()" :class="{'opacity-0 translate-y-6': !inView}"
-                 class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden"
-                 style="transition-delay: 0.7s;">
+            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gradient-to-r group-hover:from-teal-50 group-hover:to-cyan-50 transition-all duration-300">
                     <div class="flex items-center">
                         <div class="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-transform">

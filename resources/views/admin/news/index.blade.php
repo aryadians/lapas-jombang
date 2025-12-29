@@ -7,10 +7,16 @@
             <h2 class="text-3xl font-extrabold text-slate-800">Kelola Berita</h2>
             <p class="text-sm text-gray-500 mt-1">Daftar semua berita dan artikel kegiatan Lapas.</p>
         </div>
-        <a href="{{ route('news.create') }}" class="flex items-center gap-2 bg-slate-900 hover:bg-slate-700 text-white px-6 py-3 rounded-xl shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-            <i class="fa-solid fa-plus"></i>
-            Tambah Berita Baru
-        </a>
+        <div class="flex gap-2 print:hidden">
+            <button onclick="window.print()" class="flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition">
+                <i class="fa-solid fa-print"></i>
+                Cetak
+            </button>
+            <a href="{{ route('news.create') }}" class="flex items-center gap-2 bg-slate-900 hover:bg-slate-700 text-white px-6 py-3 rounded-xl shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                <i class="fa-solid fa-plus"></i>
+                Tambah Berita Baru
+            </a>
+        </div>
     </div>
 
     @if(session('success'))
@@ -24,7 +30,7 @@
     @endif
 
     {{-- SEARCH FORM --}}
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 print:hidden">
         <form method="GET" action="{{ route('news.index') }}" class="flex gap-4">
             <div class="flex-1">
                 <label for="search" class="block text-sm font-medium text-gray-700 mb-2">Cari Berita</label>
@@ -44,7 +50,7 @@
         </form>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden card-3d hover:shadow-2xl transition-all duration-300">
         <div class="overflow-x-auto">
             <table class="w-full text-base text-left">
                 <thead class="text-sm text-slate-700 uppercase bg-slate-100 border-b border-gray-200">
@@ -53,7 +59,7 @@
                         <th class="px-6 py-4 font-extrabold">Judul Berita</th>
                         <th class="px-6 py-4 font-extrabold">Status</th>
                         <th class="px-6 py-4 font-extrabold">Tanggal Upload</th>
-                        <th class="px-6 py-4 font-extrabold text-center">Aksi</th>
+                        <th class="px-6 py-4 font-extrabold text-center print:hidden">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -94,7 +100,7 @@
                             </div>
                         </td>
 
-                        <td class="px-6 py-4 text-center">
+                        <td class="px-6 py-4 text-center print:hidden">
                             <div class="flex justify-center items-center gap-2">
                                 <a href="{{ route('news.edit', $item->id) }}" class="p-2.5 text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-all duration-200" title="Edit">
                                     <i class="fa-solid fa-edit text-lg"></i>
@@ -112,7 +118,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="5" class="px-6 py-10 text-center text-gray-500">
+                        <td colspan="4" class="px-6 py-10 text-center text-gray-500">
                             <div class="flex flex-col items-center justify-center text-slate-400">
                                 <i class="fa-solid fa-folder-open text-5xl mb-3"></i>
                                 <p class="font-medium text-lg">Belum ada berita yang ditambahkan.</p>
@@ -124,7 +130,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="px-6 py-4 bg-white border-t border-gray-100 flex justify-center items-center">
+        <div class="px-6 py-4 bg-white border-t border-gray-100 flex justify-center items-center print:hidden">
             {{ $news->links() }}
         </div>
     </div>

@@ -32,6 +32,36 @@ class UserController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('admin.users.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')],
+            'role' => ['required', Rule::in(['super_admin', 'admin_humas', 'admin_registrasi', 'admin_umum', 'user'])],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('admin.users.index')->with('success', 'Pengguna baru berhasil ditambahkan.');
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(User $user)
@@ -47,7 +77,7 @@ class UserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'role' => ['required', 'in:admin,user'],
+            'role' => ['required', Rule::in(['super_admin', 'admin_humas', 'admin_registrasi', 'admin_umum', 'user'])],
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
         ]);
 

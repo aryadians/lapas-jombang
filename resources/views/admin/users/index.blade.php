@@ -2,87 +2,108 @@
 
 @section('content')
 <div class="space-y-6">
-
-    {{-- HEADER --}}
-    <div class="flex justify-between items-center">
+    {{-- Header Section --}}
+    <div class="flex justify-between items-center mb-8">
         <div>
-            <h2 class="text-2xl font-bold text-slate-800">Manajemen Pengguna</h2>
-            <p class="text-sm text-gray-500">Kelola akun dan peran pengguna sistem.</p>
+            <h1 class="text-3xl font-bold text-slate-800">Kelola Pengguna</h1>
+            <p class="text-slate-600 mt-1">Tambah, edit, dan kelola akun pengguna sistem</p>
         </div>
+        <a href="{{ route('admin.users.create') }}" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition-all transform hover:-translate-y-1">
+            <i class="fas fa-user-plus"></i>
+            Tambah Pengguna
+        </a>
     </div>
 
-    {{-- SUCCESS/ERROR MESSAGES --}}
+    {{-- Success/Error Messages --}}
     @if(session('success'))
-    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-sm" role="alert">
-        <p>{{ session('success') }}</p>
+    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-sm" role="alert">
+        <div class="flex items-center gap-2">
+            <i class="fas fa-check-circle"></i>
+            <p>{{ session('success') }}</p>
+        </div>
     </div>
     @endif
     @if(session('error'))
-    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-sm" role="alert">
-        <p>{{ session('error') }}</p>
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg shadow-sm" role="alert">
+        <div class="flex items-center gap-2">
+            <i class="fas fa-exclamation-circle"></i>
+            <p>{{ session('error') }}</p>
+        </div>
     </div>
     @endif
 
-    {{-- SEARCH FORM --}}
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <form method="GET" action="{{ route('admin.users.index') }}" class="flex gap-4">
+    {{-- Filter and Search --}}
+    <div class="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 card-3d hover:shadow-2xl transition-all duration-300">
+        <form method="GET" action="{{ route('admin.users.index') }}" class="flex flex-col md:flex-row gap-4">
             <div class="flex-1">
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-2">Cari Pengguna</label>
-                <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Cari berdasarkan nama atau email..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-slate-500">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau email..." class="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all duration-300">
             </div>
-            <div class="flex items-end gap-2">
-                <button type="submit" class="px-6 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg transition">
-                    <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    Cari
-                </button>
-                @if(request('search'))
-                <a href="{{ route('admin.users.index') }}" class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition">
-                    Reset
-                </a>
-                @endif
-            </div>
+            <select name="role" class="px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all duration-300 bg-white">
+                <option value="">Semua Role</option>
+                <option value="super_admin" {{ request('role') == 'super_admin' ? 'selected' : '' }}>Super Admin</option>
+                <option value="admin_humas" {{ request('role') == 'admin_humas' ? 'selected' : '' }}>Admin Humas</option>
+                <option value="admin_registrasi" {{ request('role') == 'admin_registrasi' ? 'selected' : '' }}>Admin Registrasi</option>
+                <option value="admin_umum" {{ request('role') == 'admin_umum' ? 'selected' : '' }}>Admin Umum</option>
+                <option value="user" {{ request('role') == 'user' ? 'selected' : '' }}>User</option>
+            </select>
+            <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-300">
+                <i class="fas fa-search mr-2"></i>Cari
+            </button>
+            <a href="{{ route('admin.users.index') }}" class="px-6 py-3 border-2 border-slate-300 hover:border-slate-400 text-slate-700 font-semibold rounded-lg transition-all duration-300">
+                <i class="fas fa-times mr-2"></i>Reset
+            </a>
         </form>
     </div>
 
-    {{-- DATA TABLE --}}
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    {{-- Users Table --}}
+    <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden card-3d hover:shadow-2xl transition-all duration-300">
         <div class="overflow-x-auto">
-            <table class="w-full text-sm text-left">
-                <thead class="text-xs text-slate-500 uppercase bg-slate-50 border-b border-gray-100">
+            <table class="w-full text-sm">
+                <thead class="bg-slate-50 border-b border-slate-200">
                     <tr>
-                        <th class="px-6 py-4 font-bold">Pengguna</th>
-                        <th class="px-6 py-4 font-bold">Peran (Role)</th>
-                        <th class="px-6 py-4 font-bold">Tanggal Registrasi</th>
-                        <th class="px-6 py-4 font-bold text-center">Aksi</th>
+                        <th class="px-6 py-4 text-left font-bold text-slate-700 uppercase tracking-wider">Nama</th>
+                        <th class="px-6 py-4 text-left font-bold text-slate-700 uppercase tracking-wider">Email</th>
+                        <th class="px-6 py-4 text-left font-bold text-slate-700 uppercase tracking-wider">Role</th>
+                        <th class="px-6 py-4 text-left font-bold text-slate-700 uppercase tracking-wider">Tanggal Dibuat</th>
+                        <th class="px-6 py-4 text-right font-bold text-slate-700 uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100">
-                    @forelse ($users as $user)
-                    <tr class="hover:bg-slate-50 transition duration-150">
+                <tbody class="divide-y divide-slate-200">
+                    @forelse($users as $user)
+                    <tr class="hover:bg-slate-50 transition-colors duration-200">
                         <td class="px-6 py-4">
-                            <span class="font-semibold text-slate-800 block">{{ $user->name }}</span>
-                            <span class="text-xs text-gray-500">{{ $user->email }}</span>
+                            <div class="font-semibold text-slate-800">{{ $user->name }}</div>
                         </td>
+                        <td class="px-6 py-4 text-slate-600">{{ $user->email }}</td>
                         <td class="px-6 py-4">
-                            @if($user->role == 'admin')
-                                <span class="px-2.5 py-1 text-xs font-semibold text-red-800 bg-red-100 rounded-full">Admin</span>
-                            @else
-                                <span class="px-2.5 py-1 text-xs font-semibold text-slate-800 bg-slate-100 rounded-full">User</span>
-                            @endif
+                            @php
+                                $roleConfig = [
+                                    'super_admin' => ['badge' => 'bg-red-100 text-red-800 border border-red-300', 'label' => 'Super Admin', 'icon' => 'fa-crown'],
+                                    'admin_humas' => ['badge' => 'bg-blue-100 text-blue-800 border border-blue-300', 'label' => 'Admin Humas', 'icon' => 'fa-megaphone'],
+                                    'admin_registrasi' => ['badge' => 'bg-purple-100 text-purple-800 border border-purple-300', 'label' => 'Admin Registrasi', 'icon' => 'fa-clipboard-list'],
+                                    'admin_umum' => ['badge' => 'bg-green-100 text-green-800 border border-green-300', 'label' => 'Admin Umum', 'icon' => 'fa-cog'],
+                                    'user' => ['badge' => 'bg-slate-100 text-slate-800 border border-slate-300', 'label' => 'User', 'icon' => 'fa-user'],
+                                ];
+                                $config = $roleConfig[$user->role] ?? $roleConfig['user'];
+                            @endphp
+                            <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold {{ $config['badge'] }}">
+                                <i class="fas {{ $config['icon'] }} text-xs"></i>
+                                {{ $config['label'] }}
+                            </span>
                         </td>
-                        <td class="px-6 py-4 text-gray-600">
-                            {{ $user->created_at->translatedFormat('d F Y') }}
-                        </td>
-                        <td class="px-6 py-4 text-center">
-                            <div class="flex justify-center items-center gap-2">
-                                <a href="{{ route('admin.users.edit', $user->id) }}" class="p-2 text-yellow-600 bg-yellow-50 hover:bg-yellow-100 rounded-lg transition" title="Edit">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                        <td class="px-6 py-4 text-slate-600 text-sm">{{ $user->created_at->translatedFormat('d F Y') }}</td>
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex items-center justify-end gap-2">
+                                <a href="{{ route('admin.users.edit', $user) }}" class="inline-flex items-center gap-1 px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold rounded-lg transition-all duration-300 text-sm">
+                                    <i class="fas fa-edit"></i>
+                                    Edit
                                 </a>
-                                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pengguna ini?')">
+                                <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="p-2 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition" title="Hapus">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                    <button type="submit" onclick="return confirm('Yakin ingin menghapus pengguna ini?');" class="inline-flex items-center gap-1 px-3 py-2 bg-red-50 hover:bg-red-100 text-red-700 font-semibold rounded-lg transition-all duration-300 text-sm">
+                                        <i class="fas fa-trash"></i>
+                                        Hapus
                                     </button>
                                 </form>
                             </div>
@@ -90,8 +111,11 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="px-6 py-10 text-center text-gray-500">
-                            Tidak ada data pengguna untuk ditampilkan.
+                        <td colspan="5" class="px-6 py-12 text-center">
+                            <div class="flex flex-col items-center justify-center text-slate-400">
+                                <i class="fas fa-users text-5xl mb-3"></i>
+                                <p class="text-lg font-semibold">Tidak ada pengguna ditemukan</p>
+                            </div>
                         </td>
                     </tr>
                     @endforelse
@@ -99,10 +123,12 @@
             </table>
         </div>
 
-        {{-- PAGINATION --}}
-        @if ($users->hasPages())
-        <div class="px-6 py-4 bg-gray-50 border-t border-gray-100">
-            {{ $users->links() }}
+        {{-- Pagination --}}
+        @if($users->hasPages())
+        <div class="px-6 py-4 border-t border-slate-200 flex justify-center">
+            <div class="bg-slate-50 rounded-lg p-3">
+                {{ $users->links() }}
+            </div>
         </div>
         @endif
     </div>

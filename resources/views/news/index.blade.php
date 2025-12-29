@@ -105,41 +105,41 @@
         {{-- News Grid --}}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             @forelse($allNews as $item)
-            <article x-data="inView" x-init="init()" :class="{'opacity-0 translate-y-8 scale-95': !inView}" class="transition-all duration-1000 bg-white rounded-2xl shadow-xl hover:shadow-2xl overflow-hidden group border border-gray-100 transform hover:-translate-y-3" style="transition-delay: {{ $loop->index * 0.1 }}s;">
-                <div class="relative h-56 overflow-hidden">
+            <article class="transition-all duration-1000 bg-white rounded-2xl overflow-hidden group border border-gray-100 hover:border-blue-300 transform hover:shadow-2xl hover:-translate-y-2 flex flex-col h-full card-3d" style="box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                <div class="relative h-56 overflow-hidden flex-shrink-0">
                     @if(is_array($item->image) && count($item->image) > 0)
-                    <img src="{{ $item->image[0] }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-500" loading="lazy">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <img src="{{ $item->image[0] }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" loading="lazy">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent group-hover:from-black/50 transition-all duration-300"></div>
                     @else
-                    <div class="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                        <div class="text-center text-gray-400">
-                            <i class="fas fa-image text-4xl mb-2"></i>
-                            <p class="text-sm">Tidak ada gambar</p>
+                    <div class="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center group-hover:from-slate-200 group-hover:to-slate-300 transition-colors duration-300">
+                        <div class="text-center">
+                            <i class="fas fa-image text-5xl text-slate-300 mb-2 group-hover:text-slate-400 transition-colors"></i>
+                            <p class="text-sm text-slate-400 group-hover:text-slate-500 transition-colors">Tidak ada gambar</p>
                         </div>
                     </div>
                     @endif
-                    <div class="absolute top-4 right-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                    <div class="absolute top-4 right-4 bg-white/95 backdrop-blur-sm text-slate-800 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg group-hover:shadow-xl transition-all duration-300 border border-white/50">
                         {{ $item->created_at->translatedFormat('d M Y') }}
                     </div>
                     <div class="absolute top-4 left-4">
-                        <span class="bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                        <span class="bg-blue-600/95 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1.5 rounded-full group-hover:bg-blue-700 transition-colors duration-300 border border-blue-400/50">
                             Berita
                         </span>
                     </div>
                 </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-blue-700 transition-colors line-clamp-2 leading-tight">
+                <div class="p-6 flex flex-col flex-grow">
+                    <h3 class="text-lg font-bold text-slate-800 mb-3 group-hover:text-blue-700 transition-colors duration-300 line-clamp-2 leading-tight">
                         {{ $item->title }}
                     </h3>
-                    <p class="text-gray-600 text-sm mb-4 line-clamp-3 leading-relaxed">
+                    <p class="text-slate-600 text-sm mb-4 line-clamp-3 leading-relaxed flex-grow">
                         {{ Str::limit(strip_tags($item->content), 120) }}
                     </p>
-                    <div class="flex items-center justify-between">
-                        <a href="{{ route('news.public.show', $item->slug) }}" class="inline-flex items-center text-sm font-bold text-blue-600 hover:text-blue-700 group-hover:text-blue-800 transition-colors">
+                    <div class="flex items-center justify-between pt-3 border-t border-slate-100">
+                        <a href="{{ route('news.public.show', $item->slug) }}" class="inline-flex items-center text-sm font-bold text-blue-600 hover:text-blue-800 group-hover:text-blue-700 transition-all duration-300 gap-1">
                             <span>Baca Selengkapnya</span>
-                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
                         </a>
-                        <div class="flex items-center text-xs text-gray-400">
+                        <div class="flex items-center text-xs text-slate-400 group-hover:text-slate-500 transition-colors duration-300">
                             <i class="fas fa-clock mr-1"></i>
                             <span>{{ $item->created_at->diffForHumans() }}</span>
                         </div>
@@ -148,13 +148,15 @@
             </article>
             @empty
             <div class="col-span-full">
-                <div class="text-center py-20 bg-white rounded-2xl border-2 border-dashed border-gray-300 shadow-lg">
+                <div class="text-center py-24 bg-gradient-to-br from-slate-50 to-slate-100 rounded-3xl border-2 border-dashed border-slate-300 shadow-lg hover:shadow-xl transition-shadow duration-300">
                     <div class="max-w-md mx-auto">
-                        <i class="fas fa-newspaper text-6xl text-gray-300 mb-4"></i>
-                        <h3 class="text-2xl font-semibold text-gray-600 mb-2">Belum Ada Berita</h3>
-                        <p class="text-gray-500 mb-6">Informasi terbaru akan segera dipublikasikan di sini.</p>
-                        <a href="/" class="inline-flex items-center px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-full transition-colors">
-                            <i class="fas fa-home mr-2"></i>
+                        <div class="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full mb-4 shadow-lg border border-slate-200">
+                            <i class="fas fa-newspaper text-4xl text-slate-400"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-700 mb-2">Belum Ada Berita</h3>
+                        <p class="text-slate-600 mb-8">Informasi terbaru akan segera dipublikasikan di sini.</p>
+                        <a href="/" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-full transition-all transform hover:-translate-y-1 shadow-lg hover:shadow-xl gap-2">
+                            <i class="fas fa-home"></i>
                             Kembali ke Beranda
                         </a>
                     </div>

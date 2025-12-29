@@ -65,5 +65,8 @@
     {{-- Pastikan file resources/views/components/aksesibilitas.blade.php sudah dibuat --}}
     <x-aksesibilitas /> 
 
+    {{-- Alpine.js --}}
+    <script src="//unpkg.com/alpinejs" defer></script>
+
 </body>
 </html>

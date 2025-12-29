@@ -1,68 +1,105 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="space-y-6">
+<div class="max-w-2xl mx-auto">
+    {{-- Back Button --}}
+    <a href="{{ route('admin.users.index') }}" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold mb-6 transition-colors">
+        <i class="fas fa-arrow-left mr-2"></i>
+        Kembali ke Daftar Pengguna
+    </a>
 
-    {{-- HEADER --}}
-    <div>
-        <h2 class="text-2xl font-bold text-slate-800">Edit Pengguna</h2>
-        <p class="text-sm text-gray-500">Ubah detail dan peran pengguna.</p>
-    </div>
+    {{-- Edit Form --}}
+    <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+        <div class="p-8 border-b border-slate-100 bg-slate-50">
+            <h2 class="text-2xl font-bold text-slate-800">Edit Pengguna</h2>
+            <p class="text-sm text-slate-600 mt-1">Ubah detail dan peran pengguna di sistem.</p>
+        </div>
 
-    {{-- EDIT FORM --}}
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100">
-        <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
+        <form action="{{ route('admin.users.update', $user->id) }}" method="POST" class="p-8 space-y-6">
             @csrf
             @method('PATCH')
 
-            <div class="p-8 space-y-6">
-                {{-- Name --}}
-                <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-                    <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" class="w-full rounded-lg border-gray-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm" required>
-                    @error('name')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
-                </div>
-
-                {{-- Email --}}
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Alamat Email</label>
-                    <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" class="w-full rounded-lg border-gray-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm" required>
-                    @error('email')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
-                </div>
-
-                {{-- Role --}}
-                <div>
-                    <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Peran (Role)</label>
-                    <select name="role" id="role" class="w-full rounded-lg border-gray-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm" required>
-                        <option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>User</option>
-                        <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
-                    </select>
-                    @error('role')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
-                </div>
-
-                <hr class="border-gray-200">
-
-                <p class="text-sm text-gray-500">Isi kolom di bawah hanya jika Anda ingin mengubah kata sandi.</p>
-
-                {{-- Password --}}
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Kata Sandi Baru</label>
-                    <input type="password" name="password" id="password" class="w-full rounded-lg border-gray-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm">
-                    @error('password')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
-                </div>
-
-                {{-- Password Confirmation --}}
-                <div>
-                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Kata Sandi</label>
-                    <input type="password" name="password_confirmation" id="password_confirmation" class="w-full rounded-lg border-gray-300 focus:ring-yellow-500 focus:border-yellow-500 transition shadow-sm">
-                </div>
+            {{-- Name Field --}}
+            <div>
+                <label for="name" class="block text-sm font-semibold text-slate-700 mb-2">Nama Lengkap</label>
+                <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" 
+                       class="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all duration-200 @error('name') border-red-300 focus:border-red-400 focus:ring-red-100 @enderror" 
+                       required>
+                @error('name') <p class="text-red-500 text-xs mt-1"><i class="fas fa-exclamation-triangle mr-1"></i>{{ $message }}</p> @enderror
             </div>
 
-            {{-- FOOTER --}}
-            <div class="px-8 py-4 bg-gray-50 border-t border-gray-100 flex justify-end items-center gap-4">
-                <a href="{{ route('admin.users.index') }}" class="text-sm font-medium text-gray-600 hover:text-gray-900">Batal</a>
-                <button type="submit" class="bg-slate-900 hover:bg-slate-800 text-white px-6 py-2.5 rounded-lg shadow-md transition-all duration-300">
-                    Simpan Perubahan
+            {{-- Email Field --}}
+            <div>
+                <label for="email" class="block text-sm font-semibold text-slate-700 mb-2">Alamat Email</label>
+                <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" 
+                       class="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all duration-200 @error('email') border-red-300 focus:border-red-400 focus:ring-red-100 @enderror" 
+                       required>
+                @error('email') <p class="text-red-500 text-xs mt-1"><i class="fas fa-exclamation-triangle mr-1"></i>{{ $message }}</p> @enderror
+            </div>
+
+            {{-- Role Selection --}}
+            <div>
+                <label for="role" class="block text-sm font-semibold text-slate-700 mb-3">Peran (Role)</label>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    @php
+                        $roles = [
+                            'super_admin' => ['label' => 'Super Admin', 'icon' => 'fa-crown', 'color' => 'red'],
+                            'admin_humas' => ['label' => 'Admin Humas', 'icon' => 'fa-megaphone', 'color' => 'blue'],
+                            'admin_registrasi' => ['label' => 'Admin Registrasi', 'icon' => 'fa-clipboard-list', 'color' => 'purple'],
+                            'admin_umum' => ['label' => 'Admin Umum', 'icon' => 'fa-cog', 'color' => 'green'],
+                            'user' => ['label' => 'User', 'icon' => 'fa-user', 'color' => 'slate'],
+                        ];
+                    @endphp
+                    @foreach($roles as $roleValue => $roleData)
+                    <label class="relative flex items-center p-4 rounded-lg border-2 cursor-pointer transition-all duration-300 group
+                        {{ old('role', $user->role) == $roleValue ? 'border-'.$roleData['color'].'-400 bg-'.$roleData['color'].'-50' : 'border-slate-200 hover:border-slate-300' }}">
+                        <input type="radio" name="role" value="{{ $roleValue }}" 
+                               class="w-4 h-4 text-{{ $roleData['color'] }}-600 cursor-pointer" 
+                               {{ old('role', $user->role) == $roleValue ? 'checked' : '' }}>
+                        <div class="ml-3 flex items-center gap-2">
+                            <i class="fas {{ $roleData['icon'] }} text-{{ $roleData['color'] }}-600"></i>
+                            <span class="font-semibold text-slate-800 group-hover:text-slate-900">{{ $roleData['label'] }}</span>
+                        </div>
+                    </label>
+                    @endforeach
+                </div>
+                @error('role') <p class="text-red-500 text-xs mt-2"><i class="fas fa-exclamation-triangle mr-1"></i>{{ $message }}</p> @enderror
+            </div>
+
+            <hr class="border-slate-200 my-6">
+
+            {{-- Password Section --}}
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                <p class="text-sm text-blue-800">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    Kosongi field password jika tidak ingin mengubah kata sandi.
+                </p>
+            </div>
+
+            {{-- Password Field --}}
+            <div>
+                <label for="password" class="block text-sm font-semibold text-slate-700 mb-2">Kata Sandi Baru</label>
+                <input type="password" name="password" id="password" 
+                       class="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all duration-200 @error('password') border-red-300 focus:border-red-400 focus:ring-red-100 @enderror"
+                       placeholder="Biarkan kosong jika tidak ingin mengubah">
+                @error('password') <p class="text-red-500 text-xs mt-1"><i class="fas fa-exclamation-triangle mr-1"></i>{{ $message }}</p> @enderror
+            </div>
+
+            {{-- Password Confirmation Field --}}
+            <div>
+                <label for="password_confirmation" class="block text-sm font-semibold text-slate-700 mb-2">Konfirmasi Kata Sandi</label>
+                <input type="password" name="password_confirmation" id="password_confirmation" 
+                       class="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all duration-200"
+                       placeholder="Konfirmasi kata sandi baru">
+            </div>
+
+            {{-- Action Buttons --}}
+            <div class="pt-6 border-t border-slate-200 flex justify-end gap-3">
+                <a href="{{ route('admin.users.index') }}" class="px-6 py-3 bg-slate-500 hover:bg-slate-600 text-white font-semibold rounded-lg transition-all transform hover:-translate-y-0.5">
+                    <i class="fas fa-times mr-2"></i>Batal
+                </a>
+                <button type="submit" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-lg shadow-lg transition-all transform hover:-translate-y-1">
+                    <i class="fas fa-save mr-2"></i>Simpan Perubahan
                 </button>
             </div>
         </form>

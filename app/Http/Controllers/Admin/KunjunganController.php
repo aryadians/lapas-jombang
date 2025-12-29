@@ -136,4 +136,63 @@ class KunjunganController extends Controller
 
         return view('admin.kunjungan.verifikasi', compact('kunjungan'));
     }
+
+    /**
+     * Bulk update status for multiple kunjungans.
+     */
+    public function bulkUpdate(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array|min:1',
+            'ids.*' => 'integer|exists:kunjungans,id',
+            'status' => 'required|in:approved,rejected',
+        ]);
+
+        $ids = $request->input('ids');
+        $status = $request->input('status');
+
+        // Update all selected kunjungans
+        $kunjungans = Kunjungan::whereIn('id', $ids)->get();
+
+        foreach ($kunjungans as $kunjungan) {
+            $updateData = ['status' => $status];
+
+            // Generate QR token for approved kunjungans if not exists
+            if ($status === 'approved' && is_null($kunjungan->qr_token)) {
+                $updateData['qr_token'] = Str::random(40);
+            }
+
+            $kunjungan->update($updateData);
+
+            // Send email notification
+            try {
+                if ($kunjungan->email_pengunjung) {
+                    Mail::to($kunjungan->email_pengunjung)->send(new KunjunganStatusMail($kunjungan));
+                }
+            } catch (\Exception $e) {
+                \Log::error("Gagal mengirim email status kunjungan ke {$kunjungan->email_pengunjung}: " . $e->getMessage());
+            }
+        }
+
+        return redirect()->route('admin.kunjungan.index')->with('success', 'Status ' . count($kunjungans) . ' pendaftaran kunjungan berhasil diperbarui.');
+    }
+
+    /**
+     * Bulk delete multiple kunjungans.
+     */
+    public function bulkDelete(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array|min:1',
+            'ids.*' => 'integer|exists:kunjungans,id',
+        ]);
+
+        $ids = $request->input('ids');
+        $count = Kunjungan::whereIn('id', $ids)->count();
+
+        // Delete all selected kunjungans
+        Kunjungan::whereIn('id', $ids)->delete();
+
+        return redirect()->route('admin.kunjungan.index')->with('success', $count . ' pendaftaran kunjungan berhasil dihapus.');
+    }
 }

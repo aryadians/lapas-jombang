@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
@@ -35,13 +36,21 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             // Cek role setelah login berhasil
-            if (Auth::user()->role === 'admin') {
+            $userRole = Auth::user()->role;
+
+            if (in_array($userRole, ['super_admin', 'admin_humas', 'admin_registrasi', 'admin_umum', 'admin'])) {
                 // Jika admin, redirect ke dashboard admin
                 return redirect()->intended(route('dashboard'));
+            } elseif ($userRole) {
+                // Jika user biasa, redirect ke halaman utama
+                return redirect()->intended('/');
+            } else {
+                // Jika role tidak valid, logout dan beri pesan error
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'Akun Anda tidak memiliki akses yang valid. Hubungi administrator.',
+                ]);
             }
-
-            // Jika user biasa, redirect ke halaman utama
-            return redirect()->intended('/');
         }
 
         // 4. Jika login gagal, kembalikan ke halaman login dengan error
