@@ -11,6 +11,7 @@ use App\Http\Controllers\KunjunganController;
 use App\Http\Controllers\Admin\KunjunganController as AdminKunjunganController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\FaqController;
 use App\Models\News;
 use App\Models\Announcement;
 use App\Models\Kunjungan;
