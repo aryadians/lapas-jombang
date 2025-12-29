@@ -28,6 +28,16 @@ Berikut adalah detail pendaftaran Anda:
 <br> **Status:** **PENDING**
 @endcomponent
 
+### Kode QR Status Pendaftaran
+Gunakan kode QR di bawah ini untuk memeriksa status pendaftaran Anda secara mudah melalui ponsel.
+
+<div style="text-align: center; margin-top: 15px; margin-bottom: 15px;">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ urlencode(route('kunjungan.status', $kunjungan->id)) }}" alt="QR Code Cek Status" style="display: inline-block;">
+</div>
+<p style="text-align: center; font-size: 12px; color: #666;">
+    Scan untuk cek status pendaftaran
+</p>
+
 **Langkah Selanjutnya:**
 *   Petugas kami akan segera memverifikasi data pendaftaran Anda.
 *   Anda akan menerima email terpisah yang berisi informasi status pendaftaran Anda (Disetujui/Ditolak) dalam waktu maksimal 1x24 jam.

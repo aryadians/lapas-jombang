@@ -63,14 +63,18 @@
         <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tight leading-tight">
             {{ $news->title }}
         </h1>
-        <div class="flex items-center justify-center space-x-6 text-gray-300">
-            <div class="flex items-center">
+        <div class="flex items-center justify-center space-x-6 text-gray-300 mb-8">
+            <div class="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
                 <i class="fas fa-calendar-alt mr-2"></i>
                 <span>{{ $news->created_at->translatedFormat('l, d F Y') }}</span>
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
                 <i class="fas fa-clock mr-2"></i>
                 <span>{{ $news->created_at->translatedFormat('H:i') }} WIB</span>
+            </div>
+            <div class="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                <i class="fas fa-book-open mr-2"></i>
+                <span>{{ ceil(str_word_count(strip_tags($news->content)) / 200) }} menit baca</span>
             </div>
         </div>
     </div>
@@ -80,18 +84,26 @@
     <div class="container mx-auto px-6 max-w-5xl">
         {{-- Social Sharing Buttons --}}
         <div class="flex justify-center gap-4 mb-12">
-            <a href="https://wa.me/?text={{ urlencode($news->title . ' ' . route('news.public.show', $news->slug)) }}" target="_blank" class="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full transition-all transform hover:-translate-y-1 hover:shadow-lg" aria-label="Share on WhatsApp">
-                <i class="fab fa-whatsapp text-xl"></i>
-            </a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('news.public.show', $news->slug)) }}" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full transition-all transform hover:-translate-y-1 hover:shadow-lg" aria-label="Share on Facebook">
-                <i class="fab fa-facebook-f text-xl"></i>
-            </a>
-            <a href="https://twitter.com/intent/tweet?url={{ urlencode(route('news.public.show', $news->slug)) }}&text={{ urlencode($news->title) }}" target="_blank" class="bg-sky-500 hover:bg-sky-600 text-white p-4 rounded-full transition-all transform hover:-translate-y-1 hover:shadow-lg" aria-label="Share on Twitter">
-                <i class="fab fa-twitter text-xl"></i>
-            </a>
-            <button onclick="navigator.share({title: '{{ $news->title }}', url: '{{ route('news.public.show', $news->slug) }}'})" class="bg-gray-600 hover:bg-gray-700 text-white p-4 rounded-full transition-all transform hover:-translate-y-1 hover:shadow-lg" aria-label="Share">
-                <i class="fas fa-share-alt text-xl"></i>
-            </button>
+            <div class="bg-white rounded-2xl shadow-xl p-6">
+                <div class="text-center mb-4">
+                    <h4 class="text-lg font-bold text-gray-800 mb-2">Bagikan Berita Ini</h4>
+                    <p class="text-sm text-gray-600">Bantu sebarkan informasi penting ini</p>
+                </div>
+                <div class="flex justify-center gap-3">
+                    <a href="https://wa.me/?text={{ urlencode($news->title . ' ' . route('news.public.show', $news->slug)) }}" target="_blank" class="bg-green-500 hover:bg-green-600 text-white p-3 rounded-xl transition-all transform hover:-translate-y-1 hover:shadow-lg group" aria-label="Share on WhatsApp">
+                        <i class="fab fa-whatsapp text-xl group-hover:scale-110 transition-transform"></i>
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('news.public.show', $news->slug)) }}" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-xl transition-all transform hover:-translate-y-1 hover:shadow-lg group" aria-label="Share on Facebook">
+                        <i class="fab fa-facebook-f text-xl group-hover:scale-110 transition-transform"></i>
+                    </a>
+                    <a href="https://twitter.com/intent/tweet?url={{ urlencode(route('news.public.show', $news->slug)) }}&text={{ urlencode($news->title) }}" target="_blank" class="bg-sky-500 hover:bg-sky-600 text-white p-3 rounded-xl transition-all transform hover:-translate-y-1 hover:shadow-lg group" aria-label="Share on Twitter">
+                        <i class="fab fa-twitter text-xl group-hover:scale-110 transition-transform"></i>
+                    </a>
+                    <button onclick="navigator.share({title: '{{ $news->title }}', url: '{{ route('news.public.show', $news->slug) }}'})" class="bg-gray-600 hover:bg-gray-700 text-white p-3 rounded-xl transition-all transform hover:-translate-y-1 hover:shadow-lg group" aria-label="Share">
+                        <i class="fas fa-share-alt text-xl group-hover:scale-110 transition-transform"></i>
+                    </button>
+                </div>
+            </div>
         </div>
 
         {{-- Main Content --}}
@@ -116,19 +128,63 @@
             </div>
         </article>
 
-        {{-- Related News or Navigation --}}
-        <div class="mt-16 text-center">
-            <div class="inline-flex items-center space-x-4">
-                <a href="{{ route('news.public.index') }}" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
-                    <svg class="-ml-2 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
-                    </svg>
-                    Lihat Semua Berita
+        {{-- Article Navigation --}}
+        <div class="mt-16 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100">
+            <h3 class="text-2xl font-bold text-slate-800 mb-6 text-center">Artikel Lainnya</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {{-- Previous Article --}}
+                @if($previousNews)
+                <a href="{{ route('news.public.show', $previousNews->slug) }}" class="group bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 border border-gray-100">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mr-4 group-hover:bg-blue-600 transition-colors">
+                            <i class="fas fa-arrow-left text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm text-blue-600 font-semibold mb-1">Artikel Sebelumnya</p>
+                            <h4 class="font-bold text-slate-800 group-hover:text-blue-700 transition-colors line-clamp-2">{{ $previousNews->title }}</h4>
+                        </div>
+                    </div>
                 </a>
-                <button onclick="window.history.back()" class="inline-flex items-center px-6 py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-full hover:bg-gray-50 transition-colors">
-                    <i class="fas fa-arrow-left mr-2"></i>
-                    Kembali
-                </button>
+                @else
+                <div class="bg-gray-100 rounded-xl p-6 border border-gray-200 opacity-50">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gray-400 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-arrow-left text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm text-gray-500 font-semibold mb-1">Artikel Sebelumnya</p>
+                            <p class="text-gray-400">Tidak ada artikel sebelumnya</p>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                {{-- Next Article --}}
+                @if($nextNews)
+                <a href="{{ route('news.public.show', $nextNews->slug) }}" class="group bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 border border-gray-100">
+                    <div class="flex items-center">
+                        <div class="flex-1 text-right mr-4">
+                            <p class="text-sm text-blue-600 font-semibold mb-1">Artikel Selanjutnya</p>
+                            <h4 class="font-bold text-slate-800 group-hover:text-blue-700 transition-colors line-clamp-2">{{ $nextNews->title }}</h4>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center group-hover:bg-blue-600 transition-colors">
+                            <i class="fas fa-arrow-right text-white"></i>
+                        </div>
+                    </div>
+                </a>
+                @else
+                <div class="bg-gray-100 rounded-xl p-6 border border-gray-200 opacity-50">
+                    <div class="flex items-center">
+                        <div class="flex-1 text-right mr-4">
+                            <p class="text-sm text-gray-500 font-semibold mb-1">Artikel Selanjutnya</p>
+                            <p class="text-gray-400">Tidak ada artikel selanjutnya</p>
+                        </div>
+                        <div class="w-12 h-12 bg-gray-400 rounded-full flex items-center justify-center">
+                            <i class="fas fa-arrow-right text-white"></i>
+                        </div>
+                    </div>
+                </div>
+                @endif
             </div>
         </div>
     </div>

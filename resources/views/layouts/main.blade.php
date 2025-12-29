@@ -66,13 +66,16 @@
                 {{-- Logo Kiri --}}
                 <div class="flex-shrink-0 flex items-center gap-4">
                     <a href="{{ url('/') }}" class="flex items-center gap-4 group">
-                        <img class="h-12 w-auto group-hover:scale-105 transition-transform duration-300 drop-shadow-lg"
-                            src="{{ asset('img/logo.png') }}"
-                            alt="Logo Lapas">
+                        <div class="relative">
+                            <img class="h-12 w-12 rounded-full border-2 border-yellow-500 shadow-lg group-hover:scale-105 transition-transform duration-300 bg-white p-1"
+                                src="{{ asset('img/logo.png') }}"
+                                alt="Logo Lapas">
+                            <div class="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full blur opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                        </div>
 
                         <div class="flex flex-col">
-                            <span class="font-bold text-white text-xl tracking-wide group-hover:text-yellow-400 transition-colors duration-300">LAPAS KELAS 2B JOMBANG</span>
-                            <span class="text-[11px] text-yellow-500 uppercase tracking-wider font-semibold">Kementerian Imigrasi dan Pemasyarakatan RI</span>
+                            <span class="font-bold text-white text-lg md:text-xl tracking-wide group-hover:text-yellow-400 transition-colors duration-300">LAPAS KELAS 2B JOMBANG</span>
+                            <span class="text-[11px] text-yellow-500 uppercase tracking-wider font-semibold hidden md:block">Kementerian Imigrasi dan Pemasyarakatan RI</span>
                         </div>
                     </a>
                 </div>

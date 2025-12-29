@@ -50,7 +50,7 @@
 
                 {{-- Date Badge --}}
                 <div class="absolute top-6 right-6 z-10">
-                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white px-4 py-2 rounded-xl shadow-lg">
+                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white px-4 py-2 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
                         <div class="text-center">
                             <span class="block text-lg font-bold">{{ $announcement->date->format('d') }}</span>
                             <span class="block text-xs font-semibold uppercase tracking-wide">{{ $announcement->date->format('M') }}</span>
@@ -59,29 +59,49 @@
                     </div>
                 </div>
 
+                {{-- Priority Indicator --}}
+                @if($loop->first)
+                <div class="absolute top-6 left-6 z-10">
+                    <div class="bg-gradient-to-r from-red-500 to-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg animate-pulse">
+                        <i class="fas fa-exclamation-triangle mr-1"></i>
+                        PRIORITAS TINGGI
+                    </div>
+                </div>
+                @endif
+
                 {{-- Content --}}
                 <div class="p-8">
                     <div class="flex items-start space-x-4">
                         <div class="flex-shrink-0">
-                            <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center shadow-lg">
+                            <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
                                 <span class="text-2xl">📢</span>
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
+                            <div class="flex items-center mb-3">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 mr-3">
+                                    <i class="fas fa-bullhorn mr-1"></i>
+                                    Pengumuman Resmi
+                                </span>
+                                <span class="text-sm text-gray-500 font-medium">
+                                    {{ $announcement->created_at->diffForHumans() }}
+                                </span>
+                            </div>
                             <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-emerald-600 transition-colors duration-300 leading-tight">
                                 {{ $announcement->title }}
                             </h3>
                             <p class="text-gray-600 mb-4 leading-relaxed line-clamp-3">
-                                {{ $announcement->content }}
+                                {{ Str::limit(strip_tags($announcement->content), 200) }}
                             </p>
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center text-sm text-gray-500">
                                     <i class="far fa-calendar-alt mr-2"></i>
                                     Dipublikasikan: {{ $announcement->created_at->translatedFormat('d F Y') }}
                                 </div>
-                                <div class="text-emerald-600 font-semibold text-sm group-hover:translate-x-1 transition-transform duration-300">
-                                    Baca selengkapnya →
-                                </div>
+                                <a href="{{ route('announcements.public.show', $announcement) }}" class="inline-flex items-center px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-full transition-all transform hover:-translate-y-1 hover:shadow-lg group-hover:shadow-emerald-500/25">
+                                    <i class="fas fa-eye mr-2"></i>
+                                    <span>Baca Selengkapnya</span>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -113,4 +133,5 @@
         </div>
     </div>
 </section>
+
 @endsection

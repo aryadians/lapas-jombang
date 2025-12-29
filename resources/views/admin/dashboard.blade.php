@@ -3,7 +3,7 @@
 @section('content')
 
 {{-- 1. HERO SECTION & JAM REALTIME --}}
-<div class="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 rounded-3xl p-8 mb-10 text-white shadow-2xl overflow-hidden border border-slate-700">
+<div class="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 rounded-3xl p-6 md:p-8 mb-10 text-white shadow-2xl overflow-hidden border border-slate-700">
     {{-- Background Accents --}}
     <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-yellow-500 opacity-10 blur-3xl"></div>
     <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-60 h-60 rounded-full bg-blue-500 opacity-10 blur-3xl"></div>
@@ -23,7 +23,7 @@
 
         {{-- Jam Realtime --}}
         <div class="text-center md:text-right bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-sm">
-            <p id="realtime-clock" class="text-4xl font-mono font-bold text-yellow-400 tracking-wider drop-shadow-md">
+            <p id="realtime-clock" class="text-2xl md:text-4xl font-mono font-bold text-yellow-400 tracking-wider drop-shadow-md">
                 {{ now()->format('H:i:s') }}
             </p>
             <p id="realtime-date" class="text-xs font-semibold text-slate-300 uppercase tracking-widest mt-1">

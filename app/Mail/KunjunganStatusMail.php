@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 
 class KunjunganStatusMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use SerializesModels;
 
     public $kunjungan;
 

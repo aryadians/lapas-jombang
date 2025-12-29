@@ -28,27 +28,49 @@
         </div>
 
         {{-- Main Heading --}}
-        <h1 class="text-5xl md:text-7xl font-black mb-6 tracking-tight leading-tight animate-fade-in-up">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight leading-tight animate-fade-in-up">
             Lapas Kelas 2B <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">Jombang</span>
         </h1>
 
         {{-- Subtitle --}}
-        <p class="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto font-light leading-relaxed animate-fade-in-up" style="animation-delay: 0.2s;">
+        <p class="text-lg sm:text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto font-light leading-relaxed animate-fade-in-up" style="animation-delay: 0.2s;">
             Mewujudkan pelayanan pemasyarakatan yang <span class="font-semibold text-yellow-400">PASTI</span> (Profesional, Akuntabel, Sinergi, Transparan, dan Inovatif).
         </p>
 
         {{-- CTA Buttons --}}
         <div class="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in-up" style="animation-delay: 0.4s;">
-            <a href="{{ route('kunjungan.create') }}" class="group bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white text-lg font-bold py-4 px-10 rounded-full shadow-2xl transition-all transform hover:-translate-y-2 hover:shadow-emerald-500/25 inline-flex items-center justify-center gap-3">
-                <i class="fa-solid fa-user-plus text-xl"></i>
-                <span>Daftar Kunjungan</span>
-                <i class="fa-solid fa-arrow-right-long text-sm group-hover:translate-x-2 transition-transform"></i>
+            <a href="{{ route('kunjungan.create') }}" class="group bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white text-lg font-bold py-4 px-10 rounded-full shadow-2xl transition-all transform hover:-translate-y-2 hover:shadow-emerald-500/25 inline-flex items-center justify-center gap-3 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <i class="fa-solid fa-user-plus text-xl relative z-10"></i>
+                <span class="relative z-10">Daftar Kunjungan</span>
+                <i class="fa-solid fa-arrow-right-long text-sm group-hover:translate-x-2 transition-transform relative z-10"></i>
             </a>
-            <a href="#berita" class="group bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-400 hover:to-yellow-500 text-slate-900 text-lg font-bold py-4 px-10 rounded-full shadow-2xl transition-all transform hover:-translate-y-2 hover:shadow-yellow-500/25 inline-flex items-center justify-center gap-3">
-                <i class="fa-solid fa-newspaper text-xl"></i>
-                <span>Berita Terbaru</span>
-                <i class="fa-solid fa-arrow-right-long text-sm group-hover:translate-x-2 transition-transform"></i>
+            <a href="#berita" class="group bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-400 hover:to-yellow-500 text-slate-900 text-lg font-bold py-4 px-10 rounded-full shadow-2xl transition-all transform hover:-translate-y-2 hover:shadow-yellow-500/25 inline-flex items-center justify-center gap-3 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-slate-900/0 via-slate-900/10 to-slate-900/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <i class="fa-solid fa-newspaper text-xl relative z-10"></i>
+                <span class="relative z-10">Berita Terbaru</span>
+                <i class="fa-solid fa-arrow-right-long text-sm group-hover:translate-x-2 transition-transform relative z-10"></i>
             </a>
+        </div>
+
+        {{-- Quick Stats --}}
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-4xl mx-auto animate-fade-in-up" style="animation-delay: 0.8s;">
+            <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-4 text-center hover:bg-white/20 transition-all transform hover:-translate-y-1">
+                <div class="text-2xl md:text-3xl font-black text-yellow-400 mb-1">24/7</div>
+                <div class="text-xs md:text-sm text-gray-300 font-medium">Layanan Online</div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-4 text-center hover:bg-white/20 transition-all transform hover:-translate-y-1">
+                <div class="text-2xl md:text-3xl font-black text-emerald-400 mb-1">450+</div>
+                <div class="text-xs md:text-sm text-gray-300 font-medium">Warga Binaan</div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-4 text-center hover:bg-white/20 transition-all transform hover:-translate-y-1">
+                <div class="text-2xl md:text-3xl font-black text-blue-400 mb-1">95%</div>
+                <div class="text-xs md:text-sm text-gray-300 font-medium">Keberhasilan</div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-4 text-center hover:bg-white/20 transition-all transform hover:-translate-y-1">
+                <div class="text-2xl md:text-3xl font-black text-purple-400 mb-1">12+</div>
+                <div class="text-xs md:text-sm text-gray-300 font-medium">Program</div>
+            </div>
         </div>
 
         {{-- Secondary Links --}}
@@ -76,7 +98,7 @@
     </div>
 </section>
 
-<section id="profil" class="py-24 bg-gradient-to-b from-white to-gray-50">
+<section id="profil" class="py-24 bg-gradient-to-b from-white to-gray-50 mb-16">
     <div class="container mx-auto px-6">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16">
@@ -84,7 +106,7 @@
                     <i class="fas fa-building mr-2"></i>
                     Tentang Kami
                 </div>
-                <h2 class="text-4xl md:text-5xl font-black text-slate-800 mb-6">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-800 mb-6">
                     Lembaga Pemasyarakatan <span class="text-blue-600">Jombang</span>
                 </h2>
                 <div class="h-1 w-24 bg-gradient-to-r from-blue-500 to-yellow-500 mx-auto mb-8"></div>
@@ -161,7 +183,7 @@
     </div>
 </section>
 
-<section class="py-24 bg-gradient-to-b from-slate-50 to-white">
+<section class="py-24 bg-gradient-to-b from-slate-50 to-white mb-16">
     <div class="container mx-auto px-6">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16">
@@ -169,7 +191,7 @@
                     <i class="fas fa-handshake mr-2"></i>
                     Komitmen Kami
                 </div>
-                <h2 class="text-4xl md:text-5xl font-black text-slate-800 mb-6">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-800 mb-6">
                     Pelayanan yang <span class="text-emerald-600">Berkualitas</span>
                 </h2>
                 <div class="h-1 w-24 bg-gradient-to-r from-emerald-500 to-blue-500 mx-auto mb-8"></div>
@@ -205,7 +227,7 @@
     </div>
 </section>
 
-<section id="berita" class="py-20 bg-gradient-to-b from-slate-50 to-white border-t border-gray-200">
+<section id="berita" class="py-20 bg-gradient-to-b from-slate-50 to-white border-t border-gray-200 mb-16">
     <div class="container mx-auto px-6">
 
         <div class="flex flex-col lg:flex-row gap-12">
@@ -218,7 +240,7 @@
                             <i class="fas fa-newspaper mr-2"></i>
                             Berita Terkini
                         </div>
-                        <h2 class="text-4xl font-black text-slate-800">Informasi Terbaru</h2>
+                        <h2 class="text-3xl sm:text-4xl font-black text-slate-800">Informasi Terbaru</h2>
                     </div>
                     <a href="{{ route('news.public.index') }}" class="group inline-flex items-center text-blue-700 font-bold hover:text-blue-800 transition-colors">
                         <span>Lihat Semua</span>
@@ -367,7 +389,7 @@
                 <i class="fas fa-phone mr-2"></i>
                 Hubungi Kami
             </div>
-            <h2 class="text-4xl md:text-5xl font-black mb-6">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mb-6">
                 Butuh Informasi <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">Lebih Lanjut?</span>
             </h2>
             <p class="text-xl text-slate-300 mb-12 leading-relaxed">

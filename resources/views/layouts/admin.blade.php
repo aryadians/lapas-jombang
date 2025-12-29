@@ -14,12 +14,16 @@
     <!-- Trix Editor CDN -->
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
     <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100" x-data="{ sidebarOpen: false }">
 
     <div class="flex h-screen overflow-hidden">
         
-        <aside class="w-72 bg-slate-900 text-white flex flex-col shadow-2xl transition-all duration-300">
+        <!-- Backdrop for mobile -->
+        <div x-show="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 z-40 bg-black bg-opacity-50 md:hidden" x-transition:enter="transition-opacity ease-linear duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity ease-linear duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"></div>
+        
+        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 z-50 w-72 bg-slate-900 text-white flex flex-col shadow-2xl transition-transform duration-300 md:translate-x-0 md:static md:inset-0">
             <div class="h-24 flex items-center px-6 bg-slate-950 border-b border-slate-800">
                 <img src="{{ asset('img/logo.png') }}" alt="Logo" class="h-12 w-auto mr-3" onerror="this.style.display='none'">
                 <div>
@@ -71,7 +75,14 @@
         <div class="flex-1 flex flex-col overflow-hidden">
             
             <header class="flex justify-between items-center py-4 px-8 bg-white shadow-sm border-b border-gray-200">
-                <h2 class="text-2xl font-bold text-slate-800">Sistem Informasi Lapas</h2>
+                <div class="flex items-center">
+                    <button @click="sidebarOpen = !sidebarOpen" class="md:hidden mr-4 p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <h2 class="text-xl md:text-2xl font-bold text-slate-800">Sistem Informasi Lapas</h2>
+                </div>
                 
                 <div class="flex items-center space-x-4">
                     <div class="text-right">

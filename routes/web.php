@@ -49,6 +49,7 @@ Route::get('/berita/{news:slug}', [NewsController::class, 'show'])->name('news.p
 
 // Public Announcement Routes
 Route::get('/pengumuman', [AnnouncementController::class, 'index'])->name('announcements.public.index');
+Route::get('/pengumuman/{announcement}', [AnnouncementController::class, 'show'])->name('announcements.public.show');
 
 
 // =========================================================================

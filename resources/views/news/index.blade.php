@@ -3,7 +3,7 @@
 @section('content')
 
 {{-- Breadcrumb --}}
-<section class="bg-gray-50 py-4">
+<section class="bg-gray-50 py-6">
     <div class="container mx-auto px-6">
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -49,9 +49,31 @@
         <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tight">
             Berita <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">Terbaru</span>
         </h1>
-        <p class="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-            Informasi terkini seputar kegiatan, program, dan pembangunan di Lembaga Pemasyarakatan Kelas 2B Jombang.
+        <p class="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed mb-8">
+            Tetap update dengan informasi terkini, kegiatan, dan berita penting dari Lembaga Pemasyarakatan Kelas 2B Jombang.
         </p>
+
+        {{-- Search & Filter --}}
+        <form method="GET" action="{{ route('news.public.index') }}" class="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-2xl mx-auto">
+            <div class="relative w-full sm:w-auto">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari berita..." class="w-full sm:w-80 pl-12 pr-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-200"></i>
+            </div>
+            <div class="relative w-full sm:w-auto">
+                <select name="category" class="w-full sm:w-48 px-6 py-3 pr-10 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full text-slate-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent appearance-none">
+                    <option value="">Semua Kategori</option>
+                    <option value="kegiatan" {{ request('category') == 'kegiatan' ? 'selected' : '' }}>Kegiatan</option>
+                    <option value="pengumuman" {{ request('category') == 'pengumuman' ? 'selected' : '' }}>Pengumuman</option>
+                    <option value="berita" {{ request('category') == 'berita' ? 'selected' : '' }}>Berita</option>
+                </select>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <i class="fas fa-chevron-down text-slate-900"></i>
+                </div>
+            </div>
+            <button type="submit" class="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold rounded-full transition-colors">
+                <i class="fas fa-search mr-2"></i>Cari
+            </button>
+        </form>
     </div>
 </section>
 

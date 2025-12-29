@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -29,16 +30,20 @@ class PasswordResetLinkController extends Controller
             'email' => ['required', 'email'],
         ]);
 
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
+        // Custom password reset logic
+        $user = \App\Models\User::where('email', $request->email)->first();
 
-        return $status == Password::RESET_LINK_SENT
-                    ? back()->with('status', __($status))
-                    : back()->withInput($request->only('email'))
-                        ->withErrors(['email' => __($status)]);
+        if ($user) {
+            // Generate token
+            $token = app('auth.password.broker')->createToken($user);
+
+            // Send custom notification
+            $user->notify(new ResetPasswordNotification($token));
+
+            return back()->with('status', 'Link reset password telah dikirim ke email Anda.');
+        }
+
+        // If user not found, still show success message for security
+        return back()->with('status', 'Jika email terdaftar dalam sistem, link reset password akan dikirim.');
     }
 }
