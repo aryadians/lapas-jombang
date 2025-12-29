@@ -19,7 +19,7 @@
             Informasi Penting
         </div>
         <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tight">
-            Papan <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">Pengumuman</span>
+            Papan <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent animate-text-shimmer">Pengumuman</span>
         </h1>
         <p class="text-xl text-emerald-100 max-w-3xl mx-auto leading-relaxed">
             Informasi penting, jadwal kegiatan, dan pengumuman resmi dari Lembaga Pemasyarakatan Kelas 2B Jombang.
@@ -44,7 +44,7 @@
 
         <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-1">
             @forelse($allAnnouncements as $announcement)
-            <div class="group relative bg-white rounded-2xl overflow-hidden transition-all duration-700 border border-slate-200 hover:border-emerald-400 transform hover:-translate-y-2 hover:shadow-2xl flex flex-col card-3d" style="box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);">
+            <div class="group relative bg-white rounded-2xl overflow-hidden transition-all duration-700 border border-slate-200 hover:border-emerald-400 card-hover-scale flex flex-col card-3d" style="box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);">
 
                 {{-- Date Badge --}}
                 <div class="absolute top-6 right-6 z-10">
@@ -100,7 +100,7 @@
                             <i class="far fa-calendar-alt mr-2"></i>
                             {{ $announcement->created_at->translatedFormat('d F Y') }}
                         </div>
-                        <a href="{{ route('announcements.public.show', $announcement) }}" class="inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition-all transform hover:-translate-y-1 shadow-lg group-hover:shadow-emerald-500/25 duration-300 gap-2">
+                        <a href="{{ route('announcements.public.show', $announcement) }}" class="inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition-all btn-hover-lift shadow-lg group-hover:shadow-emerald-500/25 duration-300 gap-2">
                             <i class="fas fa-eye text-sm"></i>
                             <span class="text-sm">Baca</span>
                         </a>

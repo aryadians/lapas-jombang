@@ -19,7 +19,7 @@
             Bantuan & Dukungan
         </div>
         <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tight">
-            Pertanyaan yang <span class="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">Sering Diajukan</span>
+            Pertanyaan yang <span class="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent animate-text-shimmer">Sering Diajukan</span>
         </h1>
         <p class="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
             Temukan jawaban atas pertanyaan umum seputar layanan kunjungan dan informasi penting lainnya.
@@ -44,7 +44,7 @@
 
         <div class="space-y-4">
             {{-- FAQ Item 1 --}}
-            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
+            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden card-3d card-hover-scale">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gradient-to-r group-hover:from-blue-50 group-hover:to-cyan-50 transition-all duration-300">
                     <div class="flex items-center">
                         <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-transform">
@@ -67,7 +67,7 @@
             </div>
             
             {{-- FAQ Item 2 --}}
-            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
+            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden card-3d card-hover-scale">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gray-50 transition-colors duration-300">
                     <div class="flex items-center space-x-4">
                         <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -85,7 +85,7 @@
             </div>
 
             {{-- FAQ Item 3 --}}
-            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
+            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden card-3d card-hover-scale">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gray-50 transition-colors duration-300">
                     <div class="flex items-center space-x-4">
                         <div class="w-10 h-10 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -103,7 +103,7 @@
             </div>
 
             {{-- FAQ Item 4 --}}
-            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
+            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden card-3d card-hover-scale">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gray-50 transition-colors duration-300">
                     <div class="flex items-center space-x-4">
                         <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -121,7 +121,7 @@
             </div>
 
             {{-- FAQ Item 6 --}}
-            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
+            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden card-3d card-hover-scale">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gradient-to-r group-hover:from-indigo-50 group-hover:to-purple-50 transition-all duration-300">
                     <div class="flex items-center">
                         <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-transform">
@@ -149,7 +149,7 @@
             </div>
 
             {{-- FAQ Item 7 --}}
-            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
+            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden card-3d card-hover-scale">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gradient-to-r group-hover:from-pink-50 group-hover:to-rose-50 transition-all duration-300">
                     <div class="flex items-center">
                         <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-transform">
@@ -177,7 +177,7 @@
             </div>
 
             {{-- FAQ Item 8 --}}
-            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
+            <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden card-3d card-hover-scale">
                 <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gradient-to-r group-hover:from-teal-50 group-hover:to-cyan-50 transition-all duration-300">
                     <div class="flex items-center">
                         <div class="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-transform">
@@ -226,7 +226,7 @@
                 <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
                     Jika pertanyaan Anda tidak terjawab di atas, jangan ragu untuk menghubungi kami melalui informasi kontak yang tersedia.
                 </p>
-                <a href="#contact" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                <a href="#contact" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 shadow-lg hover:shadow-xl btn-hover-lift">
                     <i class="fas fa-phone mr-2"></i>
                     Hubungi Kami
                 </a>
@@ -256,7 +256,7 @@
                     </div>
                     <h3 class="text-xl font-bold text-slate-800 mb-2">Telepon</h3>
                     <p class="text-gray-600 mb-4">Hubungi kami untuk informasi langsung</p>
-                    <a href="tel:+62321512345" class="inline-flex items-center px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-full transition-all transform hover:-translate-y-1 hover:shadow-lg">
+                    <a href="tel:+62321512345" class="inline-flex items-center px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-full transition-all btn-hover-lift hover:shadow-lg">
                         <i class="fas fa-phone mr-2"></i>
                         (0321) 512345
                     </a>
@@ -269,7 +269,7 @@
                     </div>
                     <h3 class="text-xl font-bold text-slate-800 mb-2">Email</h3>
                     <p class="text-gray-600 mb-4">Kirim email untuk pertanyaan detail</p>
-                    <a href="mailto:info@lapas-jombang.go.id" class="inline-flex items-center px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-full transition-all transform hover:-translate-y-1 hover:shadow-lg">
+                    <a href="mailto:info@lapas-jombang.go.id" class="inline-flex items-center px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-full transition-all btn-hover-lift hover:shadow-lg">
                         <i class="fas fa-envelope mr-2"></i>
                         info@lapas-jombang.go.id
                     </a>
@@ -282,7 +282,7 @@
                     </div>
                     <h3 class="text-xl font-bold text-slate-800 mb-2">Live Chat</h3>
                     <p class="text-gray-600 mb-4">Chat langsung dengan petugas kami</p>
-                    <button onclick="alert('Fitur live chat akan segera hadir!')" class="inline-flex items-center px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-full transition-all transform hover:-translate-y-1 hover:shadow-lg">
+                    <button onclick="alert('Fitur live chat akan segera hadir!')" class="inline-flex items-center px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-full transition-all btn-hover-lift hover:shadow-lg">
                         <i class="fas fa-comments mr-2"></i>
                         Mulai Chat
                     </button>

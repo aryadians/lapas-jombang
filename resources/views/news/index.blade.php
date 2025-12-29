@@ -47,7 +47,7 @@
             Berita & Informasi
         </div>
         <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tight">
-            Berita <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">Terbaru</span>
+            Berita <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent animate-text-shimmer">Terbaru</span>
         </h1>
         <p class="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed mb-8">
             Tetap update dengan informasi terkini, kegiatan, dan berita penting dari Lembaga Pemasyarakatan Kelas 2B Jombang.
@@ -56,11 +56,11 @@
         {{-- Search & Filter --}}
         <form method="GET" action="{{ route('news.public.index') }}" class="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-2xl mx-auto">
             <div class="relative w-full sm:w-auto">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari berita..." class="w-full sm:w-80 pl-12 pr-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari berita..." class="w-full sm:w-80 pl-12 pr-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent form-focus-glow">
                 <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-200"></i>
             </div>
             <div class="relative w-full sm:w-auto">
-                <select name="category" class="w-full sm:w-48 px-6 py-3 pr-10 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full text-slate-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent appearance-none">
+                <select name="category" class="w-full sm:w-48 px-6 py-3 pr-10 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full text-slate-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent appearance-none form-focus-glow">
                     <option value="">Semua Kategori</option>
                     <option value="kegiatan" {{ request('category') == 'kegiatan' ? 'selected' : '' }}>Kegiatan</option>
                     <option value="pengumuman" {{ request('category') == 'pengumuman' ? 'selected' : '' }}>Pengumuman</option>
@@ -105,7 +105,7 @@
         {{-- News Grid --}}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             @forelse($allNews as $item)
-            <article class="transition-all duration-1000 bg-white rounded-2xl overflow-hidden group border border-gray-100 hover:border-blue-300 transform hover:shadow-2xl hover:-translate-y-2 flex flex-col h-full card-3d" style="box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+            <article class="transition-all duration-1000 bg-white rounded-2xl overflow-hidden group border border-gray-100 hover:border-blue-300 card-hover-scale flex flex-col h-full card-3d" style="box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
                 <div class="relative h-56 overflow-hidden flex-shrink-0">
                     @if(is_array($item->image) && count($item->image) > 0)
                     <img src="{{ $item->image[0] }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" loading="lazy">

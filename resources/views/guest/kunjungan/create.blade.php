@@ -22,7 +22,7 @@
                     <span>Layanan Publik</span>
                 </div>
                 <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight drop-shadow-lg">
-                    Pendaftaran Kunjungan Tatap Muka
+                    Pendaftaran Kunjungan <span class="animate-text-shimmer bg-gradient-to-r from-yellow-400 to-yellow-300 bg-clip-text text-transparent">Tatap Muka</span>
                 </h1>
                 <p class="text-gray-200 max-w-4xl mx-auto text-lg leading-relaxed drop-shadow-sm">
                     Mohon pelajari <strong class="text-yellow-300 underline decoration-yellow-400">Jadwal</strong>, <strong class="text-yellow-300 underline decoration-yellow-400">Alur Layanan</strong>, dan <strong class="text-yellow-300 underline decoration-yellow-400">Ketentuan Barang</strong> di bawah ini sebelum mengisi formulir pendaftaran demi kelancaran kunjungan Anda.
@@ -53,7 +53,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
 
                 {{-- Card 1: Waktu Layanan --}}
-                <div class="bg-white rounded-2xl shadow-2xl p-6 border-t-4 border-blue-600 flex flex-col h-full transform hover:-translate-y-2 transition-all duration-300 hover:shadow-blue-500/20">
+                <div class="bg-white rounded-2xl shadow-2xl p-6 border-t-4 border-blue-600 flex flex-col h-full card-hover-scale transition-all duration-300 hover:shadow-blue-500/20">
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-14 h-14 flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200 rounded-full text-blue-600 shadow-lg">
                             <i class="fa-solid fa-clock text-2xl"></i>
@@ -81,7 +81,7 @@
                 </div>
 
                 {{-- Card 2: Jadwal Kunjungan --}}
-                <div class="bg-white rounded-2xl shadow-2xl p-6 border-t-4 border-yellow-500 flex flex-col h-full transform hover:-translate-y-2 transition-all duration-300 hover:shadow-yellow-500/20">
+                <div class="bg-white rounded-2xl shadow-2xl p-6 border-t-4 border-yellow-500 flex flex-col h-full card-hover-scale transition-all duration-300 hover:shadow-yellow-500/20">
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-14 h-14 flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-full text-yellow-600 shadow-lg">
                             <i class="fa-solid fa-calendar-check text-2xl"></i>
@@ -113,7 +113,7 @@
                 </div>
 
                 {{-- Card 3: Kuota Antrian --}}
-                <div class="bg-white rounded-2xl shadow-2xl p-6 border-t-4 border-emerald-500 flex flex-col h-full transform hover:-translate-y-2 transition-all duration-300 hover:shadow-emerald-500/20">
+                <div class="bg-white rounded-2xl shadow-2xl p-6 border-t-4 border-emerald-500 flex flex-col h-full card-hover-scale transition-all duration-300 hover:shadow-emerald-500/20">
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-14 h-14 flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-full text-emerald-600 shadow-lg">
                             <i class="fa-solid fa-users text-2xl"></i>
@@ -150,47 +150,47 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 relative z-10">
-                    <div class="relative flex flex-col items-center text-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl hover:shadow-xl transition-all duration-300 border border-slate-200 group hover:border-yellow-300 transform hover:-translate-y-1">
+                    <div class="relative flex flex-col items-center text-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl hover:shadow-xl transition-all duration-300 border border-slate-200 group hover:border-yellow-300 card-hover-scale">
                         <div class="w-12 h-12 bg-gradient-to-br from-blue-900 to-blue-800 text-yellow-400 rounded-full flex items-center justify-center font-bold text-xl mb-4 shadow-lg group-hover:scale-110 transition-all duration-300">1</div>
                         <h4 class="font-bold text-slate-900 text-lg mb-2">Daftar Online (H-1)</h4>
                         <p class="text-sm text-slate-600">Daftar via Website atau WA: <br><strong class="text-blue-700">08573333400</strong></p>
                     </div>
-                    <div class="relative flex flex-col items-center text-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl hover:shadow-xl transition-all duration-300 border border-slate-200 group hover:border-yellow-300 transform hover:-translate-y-1">
+                    <div class="relative flex flex-col items-center text-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl hover:shadow-xl transition-all duration-300 border border-slate-200 group hover:border-yellow-300 card-hover-scale">
                         <div class="w-12 h-12 bg-white border-4 border-slate-200 text-slate-500 rounded-full flex items-center justify-center font-bold text-xl mb-4 shadow-lg group-hover:border-yellow-500 group-hover:text-yellow-600 transition-all duration-300">2</div>
                         <h4 class="font-bold text-slate-900 text-lg mb-2">Ruang Transit</h4>
                         <p class="text-sm text-slate-600">Menunggu panggilan petugas di ruang transit.</p>
                     </div>
-                    <div class="relative flex flex-col items-center text-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl hover:shadow-xl transition-all duration-300 border border-slate-200 group hover:border-yellow-300 transform hover:-translate-y-1">
+                    <div class="relative flex flex-col items-center text-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl hover:shadow-xl transition-all duration-300 border border-slate-200 group hover:border-yellow-300 card-hover-scale">
                         <div class="w-12 h-12 bg-white border-4 border-slate-200 text-slate-500 rounded-full flex items-center justify-center font-bold text-xl mb-4 shadow-lg group-hover:border-yellow-500 group-hover:text-yellow-600 transition-all duration-300">3</div>
                         <h4 class="font-bold text-slate-900 text-lg mb-2">Loket Pelayanan</h4>
                         <p class="text-sm text-slate-600">Verifikasi data & ambil nomor antrian.</p>
                     </div>
-                    <div class="relative flex flex-col items-center text-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl hover:shadow-xl transition-all duration-300 border border-slate-200 group hover:border-yellow-300 transform hover:-translate-y-1">
+                    <div class="relative flex flex-col items-center text-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl hover:shadow-xl transition-all duration-300 border border-slate-200 group hover:border-yellow-300 card-hover-scale">
                         <div class="w-12 h-12 bg-white border-4 border-slate-200 text-slate-500 rounded-full flex items-center justify-center font-bold text-xl mb-4 shadow-lg group-hover:border-yellow-500 group-hover:text-yellow-600 transition-all duration-300">4</div>
                         <h4 class="font-bold text-slate-900 text-lg mb-2">Penggeledahan</h4>
                         <p class="text-sm text-slate-600">Pemeriksaan badan & barang bawaan.</p>
                     </div>
-                    <div class="relative flex flex-col items-center text-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl hover:shadow-xl transition-all duration-300 border border-slate-200 group hover:border-yellow-300 transform hover:-translate-y-1">
+                    <div class="relative flex flex-col items-center text-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl hover:shadow-xl transition-all duration-300 border border-slate-200 group hover:border-yellow-300 card-hover-scale">
                         <div class="w-12 h-12 bg-white border-4 border-slate-200 text-slate-500 rounded-full flex items-center justify-center font-bold text-xl mb-4 shadow-lg group-hover:border-yellow-500 group-hover:text-yellow-600 transition-all duration-300">5</div>
                         <h4 class="font-bold text-slate-900 text-lg mb-2">P2U (Identitas)</h4>
                         <p class="text-sm text-slate-600">Tukar KTP dengan ID Card Kunjungan.</p>
                     </div>
-                    <div class="relative flex flex-col items-center text-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl hover:shadow-xl transition-all duration-300 border border-slate-200 group hover:border-yellow-300 transform hover:-translate-y-1">
+                    <div class="relative flex flex-col items-center text-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl hover:shadow-xl transition-all duration-300 border border-slate-200 group hover:border-yellow-300 card-hover-scale">
                         <div class="w-12 h-12 bg-white border-4 border-slate-200 text-slate-500 rounded-full flex items-center justify-center font-bold text-xl mb-4 shadow-lg group-hover:border-yellow-500 group-hover:text-yellow-600 transition-all duration-300">6</div>
                         <h4 class="font-bold text-slate-900 text-lg mb-2">Ganti Alas Kaki</h4>
                         <p class="text-sm text-slate-600">Wajib pakai sandal inventaris Lapas.</p>
                     </div>
-                    <div class="relative flex flex-col items-center text-center p-6 bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-xl hover:shadow-xl transition-all duration-300 group transform hover:-translate-y-1 hover:border-green-400">
+                    <div class="relative flex flex-col items-center text-center p-6 bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-xl hover:shadow-xl transition-all duration-300 group card-hover-scale hover:border-green-400">
                         <div class="w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 text-white rounded-full flex items-center justify-center font-bold text-xl mb-4 shadow-lg group-hover:scale-110 transition-all duration-300">7</div>
                         <h4 class="font-bold text-green-800 text-lg mb-2">PELAKSANAAN</h4>
                         <p class="text-sm text-green-700">Masuk ruang kunjungan & bertemu WBP.</p>
                     </div>
-                    <div class="relative flex flex-col items-center text-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl hover:shadow-xl transition-all duration-300 border border-slate-200 group hover:border-yellow-300 transform hover:-translate-y-1">
+                    <div class="relative flex flex-col items-center text-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl hover:shadow-xl transition-all duration-300 border border-slate-200 group hover:border-yellow-300 card-hover-scale">
                         <div class="w-12 h-12 bg-white border-4 border-slate-200 text-slate-500 rounded-full flex items-center justify-center font-bold text-xl mb-4 shadow-lg group-hover:border-yellow-500 group-hover:text-yellow-600 transition-all duration-300">8</div>
                         <h4 class="font-bold text-slate-900 text-lg mb-2">Selesai</h4>
                         <p class="text-sm text-slate-600">Ambil KTP & kembalikan ID Card.</p>
                     </div>
-                    <div class="relative flex flex-col items-center text-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl hover:shadow-xl transition-all duration-300 border border-slate-200 group hover:border-yellow-300 transform hover:-translate-y-1">
+                    <div class="relative flex flex-col items-center text-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl hover:shadow-xl transition-all duration-300 border border-slate-200 group hover:border-yellow-300 card-hover-scale">
                         <div class="w-12 h-12 bg-white border-4 border-slate-200 text-slate-500 rounded-full flex items-center justify-center font-bold text-xl mb-4 shadow-lg group-hover:border-yellow-500 group-hover:text-yellow-600 transition-all duration-300">9</div>
                         <h4 class="font-bold text-slate-900 text-lg mb-2">Pulang</h4>
                         <p class="text-sm text-slate-600">Cek stempel & tinggalkan area Lapas.</p>
@@ -212,28 +212,28 @@
                         </div>
                     </div>
                     <div class="p-6 space-y-5">
-                        <div class="flex gap-4 items-start p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg border border-yellow-200 hover:shadow-md transition-all duration-300 transform hover:scale-102">
+                        <div class="flex gap-4 items-start p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg border border-yellow-200 hover:shadow-md transition-all duration-300 card-hover-scale">
                             <div class="w-12 h-12 flex-shrink-0 bg-yellow-200 rounded-full flex items-center justify-center text-2xl shadow-sm">🍇</div>
                             <div>
                                 <h4 class="font-bold text-slate-800">Buah-buahan</h4>
                                 <p class="text-sm text-slate-600 mt-1">Wajib <strong>dikupas, potong, tanpa biji</strong>. (Salak/Durian dilarang).</p>
                             </div>
                         </div>
-                        <div class="flex gap-4 items-start p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg border border-yellow-200 hover:shadow-md transition-all duration-300 transform hover:scale-102">
+                        <div class="flex gap-4 items-start p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg border border-yellow-200 hover:shadow-md transition-all duration-300 card-hover-scale">
                             <div class="w-12 h-12 flex-shrink-0 bg-yellow-200 rounded-full flex items-center justify-center text-2xl shadow-sm">🍜</div>
                             <div>
                                 <h4 class="font-bold text-slate-800">Makanan Berkuah</h4>
                                 <p class="text-sm text-slate-600 mt-1">Harus <strong>BENING & POLOS</strong>. Tanpa kecap/sambal campur.</p>
                             </div>
                         </div>
-                        <div class="flex gap-4 items-start p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg border border-yellow-200 hover:shadow-md transition-all duration-300 transform hover:scale-102">
+                        <div class="flex gap-4 items-start p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg border border-yellow-200 hover:shadow-md transition-all duration-300 card-hover-scale">
                             <div class="w-12 h-12 flex-shrink-0 bg-yellow-200 rounded-full flex items-center justify-center text-2xl shadow-sm">🍗</div>
                             <div>
                                 <h4 class="font-bold text-slate-800">Lauk Pauk</h4>
                                 <p class="text-sm text-slate-600 mt-1">Terlihat jelas isinya. Telur wajib dibelah. (Jeroan dilarang).</p>
                             </div>
                         </div>
-                        <div class="flex gap-4 items-start p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg border border-yellow-200 hover:shadow-md transition-all duration-300 transform hover:scale-102">
+                        <div class="flex gap-4 items-start p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg border border-yellow-200 hover:shadow-md transition-all duration-300 card-hover-scale">
                             <div class="w-12 h-12 flex-shrink-0 bg-yellow-200 rounded-full flex items-center justify-center text-2xl shadow-sm">🛍️</div>
                             <div>
                                 <h4 class="font-bold text-slate-800">Kemasan</h4>
@@ -255,39 +255,39 @@
                     </div>
                     <div class="p-6">
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-center">
-                            <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg flex flex-col items-center justify-center h-24 hover:shadow-lg transition-all duration-300 transform hover:scale-105 border border-red-200">
+                            <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg flex flex-col items-center justify-center h-24 hover:shadow-lg transition-all duration-300 card-hover-scale border border-red-200">
                                 <span class="text-2xl mb-2">🍢</span>
                                 <span class="text-xs font-bold text-red-800 leading-tight">Makanan Berongga</span>
                             </div>
-                            <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg flex flex-col items-center justify-center h-24 hover:shadow-lg transition-all duration-300 transform hover:scale-105 border border-red-200">
+                            <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg flex flex-col items-center justify-center h-24 hover:shadow-lg transition-all duration-300 card-hover-scale border border-red-200">
                                 <span class="text-2xl mb-2">🥤</span>
                                 <span class="text-xs font-bold text-red-800 leading-tight">Minuman / Cairan</span>
                             </div>
-                            <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg flex flex-col items-center justify-center h-24 hover:shadow-lg transition-all duration-300 transform hover:scale-105 border border-red-200">
+                            <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg flex flex-col items-center justify-center h-24 hover:shadow-lg transition-all duration-300 card-hover-scale border border-red-200">
                                 <span class="text-2xl mb-2">🍞</span>
                                 <span class="text-xs font-bold text-red-800 leading-tight">Kemasan Pabrik</span>
                             </div>
-                            <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg flex flex-col items-center justify-center h-24 hover:shadow-lg transition-all duration-300 transform hover:scale-105 border border-red-200">
+                            <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg flex flex-col items-center justify-center h-24 hover:shadow-lg transition-all duration-300 card-hover-scale border border-red-200">
                                 <span class="text-2xl mb-2">🦀</span>
                                 <span class="text-xs font-bold text-red-800 leading-tight">Makanan Bercangkang</span>
                             </div>
-                            <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg flex flex-col items-center justify-center h-24 hover:shadow-lg transition-all duration-300 transform hover:scale-105 border border-red-200">
+                            <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg flex flex-col items-center justify-center h-24 hover:shadow-lg transition-all duration-300 card-hover-scale border border-red-200">
                                 <span class="text-2xl mb-2">🧂</span>
                                 <span class="text-xs font-bold text-red-800 leading-tight">Saos Sachet</span>
                             </div>
-                            <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg flex flex-col items-center justify-center h-24 hover:shadow-lg transition-all duration-300 transform hover:scale-105 border border-red-200">
+                            <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg flex flex-col items-center justify-center h-24 hover:shadow-lg transition-all duration-300 card-hover-scale border border-red-200">
                                 <span class="text-2xl mb-2">🚬</span>
                                 <span class="text-xs font-bold text-red-800 leading-tight">Rokok / Korek</span>
                             </div>
-                            <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg flex flex-col items-center justify-center h-24 hover:shadow-lg transition-all duration-300 transform hover:scale-105 border border-red-200">
+                            <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg flex flex-col items-center justify-center h-24 hover:shadow-lg transition-all duration-300 card-hover-scale border border-red-200">
                                 <span class="text-2xl mb-2">📱</span>
                                 <span class="text-xs font-bold text-red-800 leading-tight">HP / Elektronik</span>
                             </div>
-                            <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg flex flex-col items-center justify-center h-24 hover:shadow-lg transition-all duration-300 transform hover:scale-105 border border-red-200">
+                            <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg flex flex-col items-center justify-center h-24 hover:shadow-lg transition-all duration-300 card-hover-scale border border-red-200">
                                 <span class="text-2xl mb-2">💊</span>
                                 <span class="text-xs font-bold text-red-800 leading-tight">Obat / Narkoba</span>
                             </div>
-                            <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg flex flex-col items-center justify-center h-24 hover:shadow-lg transition-all duration-300 transform hover:scale-105 border border-red-200">
+                            <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg flex flex-col items-center justify-center h-24 hover:shadow-lg transition-all duration-300 card-hover-scale border border-red-200">
                                 <span class="text-2xl mb-2">🤢</span>
                                 <span class="text-xs font-bold text-red-800 leading-tight">Bau Menyengat</span>
                             </div>

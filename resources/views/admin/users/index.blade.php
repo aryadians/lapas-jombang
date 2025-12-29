@@ -79,7 +79,7 @@
                             @php
                                 $roleConfig = [
                                     'super_admin' => ['badge' => 'bg-red-100 text-red-800 border border-red-300', 'label' => 'Super Admin', 'icon' => 'fa-crown'],
-                                    'admin_humas' => ['badge' => 'bg-blue-100 text-blue-800 border border-blue-300', 'label' => 'Admin Humas', 'icon' => 'fa-megaphone'],
+                                    'admin_humas' => ['badge' => 'bg-blue-100 text-blue-800 border border-blue-300', 'label' => 'Admin Humas', 'icon' => 'fa-bullhorn'],
                                     'admin_registrasi' => ['badge' => 'bg-purple-100 text-purple-800 border border-purple-300', 'label' => 'Admin Registrasi', 'icon' => 'fa-clipboard-list'],
                                     'admin_umum' => ['badge' => 'bg-green-100 text-green-800 border border-green-300', 'label' => 'Admin Umum', 'icon' => 'fa-cog'],
                                     'user' => ['badge' => 'bg-slate-100 text-slate-800 border border-slate-300', 'label' => 'User', 'icon' => 'fa-user'],
