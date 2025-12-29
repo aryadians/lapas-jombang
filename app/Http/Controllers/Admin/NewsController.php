@@ -10,11 +10,21 @@ use Illuminate\Support\Str;
 class NewsController extends Controller
 {
    
-    public function index()
+    public function index(Request $request)
     {
-        // Ambil berita terbaru, paginasi 10 per halaman
-        $news = News::latest()->paginate(10);
-        
+        // Ambil berita terbaru, paginasi 10 per halaman, dengan pencarian
+        $query = News::query();
+
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('content', 'like', '%' . $search . '%');
+            });
+        }
+
+        $news = $query->latest()->paginate(10)->withQueryString();
+
         // Kirim ke view
         return view('admin.news.index', compact('news'));
     }

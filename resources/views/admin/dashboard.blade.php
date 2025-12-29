@@ -122,14 +122,14 @@
 </div>
 
 {{-- 2. STATISTIK CARDS --}}
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mb-10">
 
     {{-- Card Kunjungan Pending --}}
     <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 transform hover:-translate-y-2 transition duration-300 group cursor-pointer">
         <div class="flex justify-between items-start">
             <div>
                 <p class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-1">Menunggu Persetujuan</p>
-                <h3 class="text-4xl font-extrabold text-slate-800">{{ $totalPendingKunjungans }}</h3>
+                <h3 id="pending-count" class="text-4xl font-extrabold text-slate-800">{{ $totalPendingKunjungans }}</h3>
             </div>
             <div class="p-3 bg-yellow-100 text-yellow-600 rounded-full group-hover:bg-yellow-500 group-hover:text-white transition-all duration-300">
                 <i class="fa-regular fa-hourglass-half text-2xl"></i>
@@ -147,7 +147,7 @@
         <div class="flex justify-between items-start">
             <div>
                 <p class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-1">Disetujui Hari Ini</p>
-                <h3 class="text-4xl font-extrabold text-slate-800">{{ $totalApprovedToday }}</h3>
+                <h3 id="approved-today-count" class="text-4xl font-extrabold text-slate-800">{{ $totalApprovedToday }}</h3>
             </div>
             <div class="p-3 bg-green-100 text-green-600 rounded-full group-hover:bg-green-600 group-hover:text-white transition-all duration-300">
                 <i class="fa-regular fa-calendar-check text-2xl"></i>
@@ -165,7 +165,7 @@
         <div class="flex justify-between items-start">
             <div>
                 <p class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-1">Total Ditolak</p>
-                <h3 class="text-4xl font-extrabold text-slate-800">{{ $totalRejectedKunjungans }}</h3>
+                <h3 id="rejected-count" class="text-4xl font-extrabold text-slate-800">{{ $totalRejectedKunjungans }}</h3>
             </div>
             <div class="p-3 bg-red-100 text-red-600 rounded-full group-hover:bg-red-500 group-hover:text-white transition-all duration-300">
                 <i class="fa-regular fa-calendar-xmark text-2xl"></i>
@@ -178,12 +178,12 @@
         </div>
     </div>
     
-    {{-- Card Total Pendaftar --}}
+    {{-- Card Total Kunjungan --}}
     <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 transform hover:-translate-y-2 transition duration-300 group cursor-pointer">
         <div class="flex justify-between items-start">
             <div>
                 <p class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-1">Total Kunjungan</p>
-                <h3 class="text-4xl font-extrabold text-slate-800">{{ $totalKunjungans }}</h3>
+                <h3 id="total-kunjungan-count" class="text-4xl font-extrabold text-slate-800">{{ $totalKunjungans }}</h3>
             </div>
             <div class="p-3 bg-blue-100 text-blue-600 rounded-full group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
                 <i class="fa-solid fa-users text-2xl"></i>
@@ -192,6 +192,42 @@
         <div class="mt-4 pt-4 border-t border-slate-50">
             <a href="{{ route('admin.kunjungan.index') }}" class="text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center gap-2">
                 Kelola Kunjungan <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+            </a>
+        </div>
+    </div>
+
+    {{-- Card Total Berita --}}
+    <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 transform hover:-translate-y-2 transition duration-300 group cursor-pointer">
+        <div class="flex justify-between items-start">
+            <div>
+                <p class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-1">Total Berita</p>
+                <h3 id="total-news-count" class="text-4xl font-extrabold text-slate-800">{{ $totalNews }}</h3>
+            </div>
+            <div class="p-3 bg-purple-100 text-purple-600 rounded-full group-hover:bg-purple-600 group-hover:text-white transition-all duration-300">
+                <i class="fa-solid fa-newspaper text-2xl"></i>
+            </div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-slate-50">
+            <a href="{{ route('news.index') }}" class="text-sm font-bold text-purple-600 hover:text-purple-800 flex items-center gap-2">
+                Kelola Berita <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+            </a>
+        </div>
+    </div>
+
+    {{-- Card Total Pengumuman --}}
+    <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 transform hover:-translate-y-2 transition duration-300 group cursor-pointer">
+        <div class="flex justify-between items-start">
+            <div>
+                <p class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-1">Total Pengumuman</p>
+                <h3 id="total-announcements-count" class="text-4xl font-extrabold text-slate-800">{{ $totalAnnouncements }}</h3>
+            </div>
+            <div class="p-3 bg-indigo-100 text-indigo-600 rounded-full group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
+                <i class="fa-solid fa-bullhorn text-2xl"></i>
+            </div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-slate-50">
+            <a href="{{ route('announcements.index') }}" class="text-sm font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-2">
+                Kelola Pengumuman <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
             </a>
         </div>
     </div>
@@ -207,9 +243,9 @@
 
 {{-- CHART STATUS KUNJUNGAN --}}
 <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-100 mb-10">
-    <h3 class="text-xl font-extrabold text-slate-800 mb-6">Grafik Status Kunjungan</h3>
+    <h3 class="text-xl font-extrabold text-slate-800 mb-6">Grafik Publikasi Konten</h3>
     <div class="h-80 flex justify-center">
-        <canvas id="kunjunganStatusChart" class="max-w-md"></canvas>
+        <canvas id="publicationsChart" class="max-w-md"></canvas>
     </div>
 </div>
 
@@ -418,24 +454,22 @@
             });
         }
 
-        const kunjunganStatusCtx = document.getElementById('kunjunganStatusChart');
-        if (kunjunganStatusCtx) {
-            new Chart(kunjunganStatusCtx, {
-                type: 'doughnut', // Changed to doughnut
+        const publicationsCtx = document.getElementById('publicationsChart');
+        if (publicationsCtx) {
+            new Chart(publicationsCtx, {
+                type: 'doughnut',
                 data: {
-                    labels: @json($chartKunjunganStatusLabels),
+                    labels: ['Berita', 'Pengumuman'],
                     datasets: [{
-                        label: 'Jumlah Kunjungan',
-                        data: @json($chartKunjunganStatusData),
+                        label: 'Jumlah Publikasi',
+                        data: [@json($totalNews), @json($totalAnnouncements)],
                         backgroundColor: [
-                            'rgba(251, 191, 36, 0.7)', // Yellow for Pending
-                            'rgba(16, 185, 129, 0.7)', // Green for Approved
-                            'rgba(239, 68, 68, 0.7)',  // Red for Rejected
+                            'rgba(147, 51, 234, 0.7)', // Purple for News
+                            'rgba(99, 102, 241, 0.7)',  // Indigo for Announcements
                         ],
                         borderColor: [
-                            'rgba(251, 191, 36, 1)',
-                            'rgba(16, 185, 129, 1)',
-                            'rgba(239, 68, 68, 1)',
+                            'rgba(147, 51, 234, 1)',
+                            'rgba(99, 102, 241, 1)',
                         ],
                         borderWidth: 1,
                         hoverOffset: 4
@@ -446,7 +480,7 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            position: 'right', // Position legend to the right
+                            position: 'right',
                         },
                         tooltip: {
                             callbacks: {
@@ -464,5 +498,49 @@
             });
         }
     });
+
+    // Real-time updates
+    function updateDashboardStats() {
+        fetch('{{ route("dashboard.stats") }}', {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Update counts
+            document.getElementById('pending-count').textContent = data.totalPendingKunjungans;
+            document.getElementById('approved-today-count').textContent = data.totalApprovedToday;
+            document.getElementById('rejected-count').textContent = data.totalRejectedKunjungans;
+            document.getElementById('total-kunjungan-count').textContent = data.totalKunjungans;
+            document.getElementById('total-news-count').textContent = data.totalNews;
+            document.getElementById('total-announcements-count').textContent = data.totalAnnouncements;
+
+            // Update quota if available
+            if (data.pendaftarPagi !== null) {
+                document.getElementById('pagi-count').textContent = data.pendaftarPagi;
+                const pagiPercent = data.kuotaPagi > 0 ? ((data.pendaftarPagi / data.kuotaPagi) * 100).toFixed(1) : 0;
+                document.getElementById('pagi-percent').textContent = pagiPercent + '%';
+                document.getElementById('pagi-bar').style.width = pagiPercent + '%';
+            }
+            if (data.pendaftarSiang !== null) {
+                document.getElementById('siang-count').textContent = data.pendaftarSiang;
+                const siangPercent = data.kuotaSiang > 0 ? ((data.pendaftarSiang / data.kuotaSiang) * 100).toFixed(1) : 0;
+                document.getElementById('siang-percent').textContent = siangPercent + '%';
+                document.getElementById('siang-bar').style.width = siangPercent + '%';
+            }
+            if (data.pendaftarBiasa !== null) {
+                document.getElementById('biasa-count').textContent = data.pendaftarBiasa;
+                const biasaPercent = data.kuotaBiasa > 0 ? ((data.pendaftarBiasa / data.kuotaBiasa) * 100).toFixed(1) : 0;
+                document.getElementById('biasa-percent').textContent = biasaPercent + '%';
+                document.getElementById('biasa-bar').style.width = biasaPercent + '%';
+            }
+        })
+        .catch(error => console.error('Error updating dashboard:', error));
+    }
+
+    // Update every 30 seconds
+    setInterval(updateDashboardStats, 30000);
 </script>
 @endsection

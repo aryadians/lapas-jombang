@@ -23,6 +23,27 @@
     </div>
     @endif
 
+    {{-- SEARCH FORM --}}
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <form method="GET" action="{{ route('admin.users.index') }}" class="flex gap-4">
+            <div class="flex-1">
+                <label for="search" class="block text-sm font-medium text-gray-700 mb-2">Cari Pengguna</label>
+                <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Cari berdasarkan nama atau email..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-slate-500">
+            </div>
+            <div class="flex items-end gap-2">
+                <button type="submit" class="px-6 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg transition">
+                    <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    Cari
+                </button>
+                @if(request('search'))
+                <a href="{{ route('admin.users.index') }}" class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition">
+                    Reset
+                </a>
+                @endif
+            </div>
+        </form>
+    </div>
+
     {{-- DATA TABLE --}}
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="overflow-x-auto">

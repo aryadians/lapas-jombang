@@ -89,6 +89,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 
     // A. DASHBOARD ADMIN
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/api/dashboard/stats', [DashboardController::class, 'getStats'])->name('dashboard.stats');
 
     // B. CRUD BERITA
     Route::resource('news', AdminNewsController::class);

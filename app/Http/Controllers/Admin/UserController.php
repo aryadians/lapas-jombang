@@ -14,10 +14,20 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Ambil semua user kecuali admin yang sedang login, dengan paginasi
-        $users = User::where('id', '!=', auth()->id())->latest()->paginate(15);
+        // Ambil semua user kecuali admin yang sedang login, dengan paginasi dan pencarian
+        $query = User::where('id', '!=', auth()->id());
+
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                  ->orWhere('email', 'like', '%' . $search . '%');
+            });
+        }
+
+        $users = $query->latest()->paginate(15)->withQueryString();
         return view('admin.users.index', compact('users'));
     }
 

@@ -9,10 +9,20 @@ use Illuminate\Http\Request;
 class AnnouncementController extends Controller
 {
     // INDEX: Tampilkan daftar pengumuman
-    public function index()
+    public function index(Request $request)
     {
-        // Urutkan berdasarkan tanggal kegiatan terbaru
-        $announcements = Announcement::orderBy('date', 'desc')->paginate(10);
+        // Urutkan berdasarkan tanggal kegiatan terbaru, dengan pencarian
+        $query = Announcement::query();
+
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('content', 'like', '%' . $search . '%');
+            });
+        }
+
+        $announcements = $query->orderBy('date', 'desc')->paginate(10)->withQueryString();
         return view('admin.announcements.index', compact('announcements'));
     }
 

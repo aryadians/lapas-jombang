@@ -36,12 +36,12 @@ class DashboardController extends Controller
         $pendaftarPagi = $kuotaPagi = $pendaftarSiang = $kuotaSiang = $pendaftarBiasa = $kuotaBiasa = null;
 
         if ($isMonday) {
-            $pendaftarPagi = Kunjungan::whereDate('tanggal_kunjungan', $today)->where('sesi', 'pagi')->count();
+            $pendaftarPagi = Kunjungan::whereDate('tanggal_kunjungan', $today)->where('sesi', 'pagi')->where('status', 'approved')->count();
             $kuotaPagi = config('kunjungan.quota_senin_pagi');
-            $pendaftarSiang = Kunjungan::whereDate('tanggal_kunjungan', $today)->where('sesi', 'siang')->count();
+            $pendaftarSiang = Kunjungan::whereDate('tanggal_kunjungan', $today)->where('sesi', 'siang')->where('status', 'approved')->count();
             $kuotaSiang = config('kunjungan.quota_senin_siang');
         } elseif ($isVisitingDay) {
-            $pendaftarBiasa = Kunjungan::whereDate('tanggal_kunjungan', $today)->count();
+            $pendaftarBiasa = Kunjungan::whereDate('tanggal_kunjungan', $today)->where('status', 'approved')->count();
             $kuotaBiasa = config('kunjungan.quota_hari_biasa');
         }
 
@@ -88,5 +88,54 @@ class DashboardController extends Controller
             'chartKunjunganStatusLabels',
             'chartKunjunganStatusData'
         ));
+    }
+
+    public function getStats()
+    {
+        // Real-time stats
+        $totalPendingKunjungans = Kunjungan::where('status', 'pending')->count();
+        $totalApprovedKunjungans = Kunjungan::where('status', 'approved')->count();
+        $totalApprovedToday = Kunjungan::where('status', 'approved')->whereDate('updated_at', Carbon::today())->count();
+        $totalRejectedKunjungans = Kunjungan::where('status', 'rejected')->count();
+        $totalKunjungans = Kunjungan::count();
+        $totalNews = News::count();
+        $totalAnnouncements = Announcement::count();
+        $totalUsers = User::count();
+
+        // Quota data
+        $today = Carbon::today();
+        $isMonday = $today->isMonday();
+        $isVisitingDay = $today->isTuesday() || $today->isWednesday() || $today->isThursday();
+        
+        $pendaftarPagi = $kuotaPagi = $pendaftarSiang = $kuotaSiang = $pendaftarBiasa = $kuotaBiasa = null;
+
+        if ($isMonday) {
+            $pendaftarPagi = Kunjungan::whereDate('tanggal_kunjungan', $today)->where('sesi', 'pagi')->where('status', 'approved')->count();
+            $kuotaPagi = config('kunjungan.quota_senin_pagi');
+            $pendaftarSiang = Kunjungan::whereDate('tanggal_kunjungan', $today)->where('sesi', 'siang')->where('status', 'approved')->count();
+            $kuotaSiang = config('kunjungan.quota_senin_siang');
+        } elseif ($isVisitingDay) {
+            $pendaftarBiasa = Kunjungan::whereDate('tanggal_kunjungan', $today)->where('status', 'approved')->count();
+            $kuotaBiasa = config('kunjungan.quota_hari_biasa');
+        }
+
+        return response()->json([
+            'totalPendingKunjungans' => $totalPendingKunjungans,
+            'totalApprovedKunjungans' => $totalApprovedKunjungans,
+            'totalApprovedToday' => $totalApprovedToday,
+            'totalRejectedKunjungans' => $totalRejectedKunjungans,
+            'totalKunjungans' => $totalKunjungans,
+            'totalNews' => $totalNews,
+            'totalAnnouncements' => $totalAnnouncements,
+            'totalUsers' => $totalUsers,
+            'isMonday' => $isMonday,
+            'isVisitingDay' => $isVisitingDay,
+            'pendaftarPagi' => $pendaftarPagi,
+            'kuotaPagi' => $kuotaPagi,
+            'pendaftarSiang' => $pendaftarSiang,
+            'kuotaSiang' => $kuotaSiang,
+            'pendaftarBiasa' => $pendaftarBiasa,
+            'kuotaBiasa' => $kuotaBiasa,
+        ]);
     }
 }

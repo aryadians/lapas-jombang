@@ -88,7 +88,7 @@ class KunjunganController extends Controller
         
         if ($tanggalKunjungan->isMonday()) {
             $kuota = ($sesi == 'pagi') ? config('kunjungan.quota_senin_pagi') : config('kunjungan.quota_senin_siang');
-            $jumlahPendaftar = (clone $query)->where('sesi', $sesi)->count();
+            $jumlahPendaftar = (clone $query)->where('sesi', $sesi)->where('status', 'approved')->count();
             
             if ($jumlahPendaftar >= $kuota) {
                 $namaSesi = ($sesi == 'pagi') ? 'Pagi' : 'Siang';
@@ -98,7 +98,7 @@ class KunjunganController extends Controller
             }
         } else {
             $kuota = config('kunjungan.quota_hari_biasa');
-            $jumlahPendaftar = (clone $query)->count();
+            $jumlahPendaftar = (clone $query)->where('status', 'approved')->count();
 
             if ($jumlahPendaftar >= $kuota) {
                  throw \Illuminate\Validation\ValidationException::withMessages([
@@ -219,13 +219,13 @@ class KunjunganController extends Controller
 
                 $totalKuota = ($sesi == 'pagi') ? config('kunjungan.quota_senin_pagi') : config('kunjungan.quota_senin_siang');
 
-                $jumlahPendaftar = (clone $query)->where('sesi', $sesi)->count();
+                $jumlahPendaftar = (clone $query)->where('sesi', $sesi)->where('status', 'approved')->count();
 
             } else {
 
                 $totalKuota = config('kunjungan.quota_hari_biasa');
 
-                $jumlahPendaftar = (clone $query)->count();
+                $jumlahPendaftar = (clone $query)->where('status', 'approved')->count();
 
             }
 
