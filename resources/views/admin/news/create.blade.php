@@ -2,73 +2,43 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto">
-    <a href="{{ route('news.index') }}" class="inline-flex items-center text-sm text-blue-600 hover:text-blue-800 font-semibold mb-6 transition-colors duration-200">
-        <i class="fa-solid fa-arrow-left mr-2"></i>
+    <a href="{{ route('news.index') }}" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold mb-6 transition-colors">
+        <i class="fas fa-arrow-left mr-2"></i>
         Kembali ke Daftar Berita
     </a>
 
-    <div class="transition duration-700 bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden card-3d hover:shadow-2xl">
-        <div class="p-8 border-b border-gray-100 bg-gray-50">
-            <h2 class="text-2xl font-extrabold text-slate-800">Tulis Berita Baru</h2>
-            <p class="text-sm text-gray-600 mt-1">Isi formulir di bawah ini untuk mempublikasikan berita atau kegiatan terbaru.</p>
+    <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+        <div class="p-8 border-b border-slate-100 bg-slate-50">
+            <h2 class="text-2xl font-bold text-slate-800">Tulis Berita Baru</h2>
+            <p class="text-sm text-slate-600 mt-1">Isi formulir untuk mempublikasikan berita atau kegiatan terbaru.</p>
         </div>
 
-        <style>
-            trix-editor {
-                border: none !important;
-                border-radius: 0.75rem !important;
-                box-shadow: none !important;
-                background: transparent !important;
-                min-height: 200px !important;
-            }
-            trix-editor:focus-within {
-                outline: none !important;
-            }
-            trix-toolbar {
-                border-bottom: 1px solid #e5e7eb !important;
-                border-radius: 0.75rem 0.75rem 0 0 !important;
-                background: #f9fafb !important;
-                padding: 0.5rem !important;
-            }
-            trix-editor-editor {
-                padding: 1rem !important;
-                min-height: 150px !important;
-                font-size: 0.875rem !important;
-                line-height: 1.5 !important;
-            }
-        </style>
-
-        <form action="{{ route('news.store') }}" method="POST" enctype="multipart/form-data" class="p-8 space-y-6">
+        <form action="{{ route('news.store') }}" method="POST" enctype="multipart/form-data" id="createNewsForm" class="p-8 space-y-6">
             @csrf
             
             <div>
                 <label for="title" class="block text-sm font-semibold text-slate-700 mb-2">Judul Artikel</label>
-                <div class="relative">
-                    <input type="text" id="title" name="title" value="{{ old('title') }}" 
-                           class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all duration-200 bg-white shadow-sm hover:border-gray-300 @error('title') border-red-300 focus:border-red-400 focus:ring-red-100 @enderror"
-                           placeholder="Contoh: Kunjungan Kerja Kakanwil Jawa Timur..." required>
-                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                        <i class="fa-solid fa-heading text-gray-400 text-sm"></i>
-                    </div>
-                </div>
-                @error('title') <p class="text-red-500 text-xs mt-1 flex items-center gap-1"><i class="fa-solid fa-exclamation-triangle"></i> {{ $message }}</p> @enderror
+                <input type="text" id="title" name="title" value="{{ old('title') }}" 
+                       class="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all @error('title') border-red-300 @enderror"
+                       placeholder="Contoh: Kunjungan Kerja Kakanwil Jawa Timur" required>
+                @error('title') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
             </div>
 
             <div>
-                <label for="images" class="block text-sm font-semibold text-slate-700 mb-2">Foto Utama (Bisa Lebih Dari Satu)</label>
-                <div class="flex items-center justify-center w-full">
-                    <label for="dropzone-file" class="relative flex flex-col items-center justify-center w-full h-56 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition overflow-hidden p-4">
-                        
-                        <div id="placeholder-container" class="flex flex-col items-center justify-center pt-5 pb-6">
-                            <i class="fa-solid fa-cloud-arrow-up text-5xl mb-3 text-gray-400"></i>
-                            <p class="text-sm text-gray-600 mb-1"><span class="font-semibold">Klik untuk upload</span> atau drag and drop</p>
-                            <p class="text-xs text-gray-500">PNG, JPG (MAX. 2MB per gambar)</p>
+                <label for="images" class="block text-sm font-semibold text-slate-700 mb-2">Gambar Unggulan</label>
+                <div class="mt-2 flex justify-center rounded-lg border-2 border-dashed border-slate-300 px-6 py-10 @error('images.*') border-red-300 @enderror">
+                    <div class="text-center" id="image-uploader">
+                        <i class="fas fa-photo-video text-4xl text-slate-400"></i>
+                        <div class="mt-4 flex text-sm leading-6 text-slate-600">
+                            <label for="dropzone-file" class="relative cursor-pointer rounded-md bg-white font-semibold text-blue-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-600 focus-within:ring-offset-2 hover:text-blue-500">
+                                <span>Unggah file</span>
+                                <input id="dropzone-file" name="images[]" type="file" class="sr-only" multiple onchange="previewFiles(this)">
+                            </label>
+                            <p class="pl-1">atau tarik dan lepas</p>
                         </div>
-
-                        <div id="previews-container" class="hidden absolute inset-0 w-full h-full flex flex-wrap gap-2 justify-center items-center p-2 overflow-y-auto"></div>
-
-                        <input id="dropzone-file" type="file" name="images[]" multiple class="hidden" onchange="previewFiles(this)" accept="image/png, image/jpeg" />
-                    </label>
+                        <p class="text-xs leading-5 text-slate-500">PNG, JPG, GIF hingga 2MB per file</p>
+                    </div>
+                    <div id="previews-container" class="hidden grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
                 </div>
                 @error('images') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 @error('images.*') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
@@ -77,79 +47,87 @@
             <div>
                 <label for="content" class="block text-sm font-semibold text-slate-700 mb-2">Isi Berita</label>
                 <input id="content" type="hidden" name="content" value="{{ old('content') }}">
-                <div class="relative">
-                    <trix-editor input="content" class="trix-content w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus-within:border-blue-400 focus-within:ring-4 focus-within:ring-blue-100 transition-all duration-200 bg-white shadow-sm hover:border-gray-300 min-h-[200px] @error('content') border-red-300 focus-within:border-red-400 focus-within:ring-red-100 @enderror"></trix-editor>
-                    <div class="absolute top-3 right-3 pointer-events-none">
-                        <i class="fa-solid fa-edit text-gray-400 text-sm"></i>
-                    </div>
+                <div class="rounded-lg border-2 border-slate-200 focus-within:border-blue-400 focus-within:ring-4 focus-within:ring-blue-100 transition-all @error('content') border-red-300 @enderror">
+                    <trix-editor input="content" class="trix-content"></trix-editor>
                 </div>
-                @error('content') <p class="text-red-500 text-xs mt-1 flex items-center gap-1"><i class="fa-solid fa-exclamation-triangle"></i> {{ $message }}</p> @enderror
+                @error('content') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
             </div>
             
             <div>
                 <label for="status" class="block text-sm font-semibold text-slate-700 mb-2">Status Publikasi</label>
-                <div class="relative">
-                    <select id="status" name="status" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all duration-200 bg-white shadow-sm hover:border-gray-300 appearance-none @error('status') border-red-300 focus:border-red-400 focus:ring-red-100 @enderror">
-                        <option value="published" @if(old('status') == 'published') selected @endif>Published (Tayang)</option>
-                        <option value="draft" @if(old('status') == 'draft') selected @endif>Draft (Simpan Saja)</option>
-                    </select>
-                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                        <i class="fa-solid fa-chevron-down text-gray-400 text-sm"></i>
-                    </div>
-                </div>
-                @error('status') <p class="text-red-500 text-xs mt-1 flex items-center gap-1"><i class="fa-solid fa-exclamation-triangle"></i> {{ $message }}</p> @enderror
+                <select id="status" name="status" class="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all bg-white @error('status') border-red-300 @enderror">
+                    <option value="published" @if(old('status') == 'published') selected @endif>Terbitkan</option>
+                    <option value="draft" @if(old('status') == 'draft') selected @endif>Simpan sebagai Draft</option>
+                </select>
+                @error('status') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
             </div>
 
-            <div class="pt-4 border-t border-gray-100 flex justify-end gap-3">
-                <a href="{{ route('news.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition transform hover:-translate-y-0.5 flex items-center gap-2">
-                    <i class="fa-solid fa-times"></i> Batal
+            <div class="pt-6 border-t border-slate-200 flex justify-end gap-3">
+                <a href="{{ route('news.index') }}" class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg transition-all border border-slate-200">
+                    Batal
                 </a>
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition transform hover:-translate-y-0.5 flex items-center gap-2">
-                    <i class="fa-solid fa-paper-plane"></i> Publikasikan Berita
+                <button type="submit" onclick="confirmCreate(event)" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition-all">
+                    <i class="fas fa-save mr-2"></i>Simpan Berita
                 </button>
             </div>
         </form>
     </div>
 </div>
 
+<style>
+.trix-content { min-height: 250px; }
+trix-editor { border: none !important; }
+trix-editor:focus { outline: none; }
+</style>
+
 <script>
-    function previewFiles(input) {
-        var previewsContainer = document.getElementById('previews-container');
-        var placeholder = document.getElementById('placeholder-container');
-        
-        previewsContainer.innerHTML = ''; // Clear previous previews
-        
-        if (input.files && input.files.length > 0) {
-            placeholder.classList.add('hidden');
-            previewsContainer.classList.remove('hidden');
-
-            for (let i = 0; i < input.files.length; i++) {
-                var file = input.files[i];
-                var reader = new FileReader();
-
-                reader.onload = function(e) {
-                    var imgContainer = document.createElement('div');
-                    imgContainer.className = 'relative w-24 h-24 rounded-lg overflow-hidden border border-gray-200 shadow-sm';
-                    
-                    var img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.className = 'w-full h-full object-cover';
-                    
-                    var fileNameOverlay = document.createElement('div');
-                    fileNameOverlay.className = 'absolute bottom-0 left-0 right-0 bg-gray-800 bg-opacity-75 text-white text-xs px-1 py-0.5 truncate';
-                    fileNameOverlay.textContent = file.name;
-
-                    imgContainer.appendChild(img);
-                    imgContainer.appendChild(fileNameOverlay);
-                    previewsContainer.appendChild(imgContainer);
-                }
-                reader.readAsDataURL(file);
-            }
-        } else {
-            placeholder.classList.remove('hidden');
-            previewsContainer.classList.add('hidden');
-            previewsContainer.innerHTML = '';
+function confirmCreate(event) {
+    event.preventDefault();
+    const form = document.getElementById('createNewsForm');
+    
+    Swal.fire({
+        ...swalTheme,
+        title: 'Publikasikan Berita?',
+        text: "Pastikan semua isi berita sudah benar sebelum dipublikasikan.",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Publikasikan',
+        cancelButtonText: 'Batal',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.submit();
         }
+    });
+}
+
+function previewFiles(input) {
+    const uploader = document.getElementById('image-uploader');
+    const previewsContainer = document.getElementById('previews-container');
+    previewsContainer.innerHTML = '';
+    
+    if (input.files.length > 0) {
+        uploader.classList.add('hidden');
+        previewsContainer.classList.remove('hidden');
+
+        Array.from(input.files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'relative w-full h-32 rounded-lg overflow-hidden border-2 border-slate-200 shadow-sm';
+                
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'w-full h-full object-cover';
+
+                imgContainer.appendChild(img);
+                previewsContainer.appendChild(imgContainer);
+            }
+            reader.readAsDataURL(file);
+        });
+    } else {
+        uploader.classList.remove('hidden');
+        previewsContainer.classList.add('hidden');
     }
+}
 </script>
 @endsection

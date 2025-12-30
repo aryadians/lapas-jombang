@@ -1,138 +1,135 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="space-y-6">
-    <div class="flex justify-between items-center">
+<div class="space-y-8">
+
+    {{-- HEADER --}}
+    <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-            <h2 class="text-3xl font-extrabold text-slate-800">Kelola Berita</h2>
-            <p class="text-sm text-gray-500 mt-1">Daftar semua berita dan artikel kegiatan Lapas.</p>
+            <h1 class="text-3xl font-bold text-slate-800">Kelola Berita</h1>
+            <p class="text-slate-600 mt-1">Daftar semua berita dan artikel kegiatan Lapas.</p>
         </div>
-        <div class="flex gap-2 print:hidden">
-            <button onclick="window.print()" class="flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition">
-                <i class="fa-solid fa-print"></i>
-                Cetak
+        <div class="flex items-center gap-2">
+            <button onclick="window.print()" class="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-4 py-2.5 rounded-lg transition-all duration-300 border border-slate-200">
+                <i class="fas fa-print"></i>
+                <span>Cetak</span>
             </button>
-            <a href="{{ route('news.create') }}" class="flex items-center gap-2 bg-slate-900 hover:bg-slate-700 text-white px-6 py-3 rounded-xl shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                <i class="fa-solid fa-plus"></i>
-                Tambah Berita Baru
+            <a href="{{ route('news.create') }}" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-2.5 px-5 rounded-lg shadow-lg transition-all transform hover:-translate-y-0.5">
+                <i class="fas fa-plus"></i>
+                <span>Tambah Berita</span>
             </a>
         </div>
-    </div>
+    </header>
 
+    {{-- ALERT MESSAGES --}}
     @if(session('success'))
-    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-md flex items-center gap-3 mb-6" role="alert">
-        <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-md flex items-center gap-3" role="alert">
+        <i class="fas fa-check-circle text-green-500 text-xl"></i>
         <div>
-            <p class="font-bold">Sukses!</p>
-            <p class="text-sm">{{ session('success') }}</p>
+            <p class="font-bold">Berhasil!</p>
+            <p>{{ session('success') }}</p>
         </div>
     </div>
     @endif
 
-    {{-- SEARCH FORM --}}
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 print:hidden">
-        <form method="GET" action="{{ route('news.index') }}" class="flex gap-4">
-            <div class="flex-1">
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-2">Cari Berita</label>
-                <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Cari berdasarkan judul atau isi..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-slate-500">
+    {{-- SEARCH AND FILTER FORM --}}
+    <div class="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
+        <form method="GET" action="{{ route('news.index') }}" class="flex flex-col md:flex-row items-center gap-4">
+            <div class="relative flex-grow w-full md:w-auto">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i class="fas fa-search text-slate-400"></i>
+                </div>
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari berita berdasarkan judul..." class="w-full pl-12 pr-4 py-3 border-2 border-slate-200 rounded-lg bg-slate-50 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all">
             </div>
-            <div class="flex items-end gap-2">
-                <button type="submit" class="px-6 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg transition">
-                    <i class="fa-solid fa-search mr-2"></i>
-                    Cari
+            <div class="w-full md:w-auto">
+                <select name="status" class="w-full py-3 pl-4 pr-10 border-2 border-slate-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all">
+                    <option value="">Semua Status</option>
+                    <option value="published" @if(request('status') == 'published') selected @endif>Tayang</option>
+                    <option value="draft" @if(request('status') == 'draft') selected @endif>Draft</option>
+                </select>
+            </div>
+            <div class="flex items-center gap-2 w-full md:w-auto">
+                <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all">
+                    <i class="fas fa-filter"></i><span>Filter</span>
                 </button>
-                @if(request('search'))
-                <a href="{{ route('news.index') }}" class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition">
-                    Reset
+                <a href="{{ route('news.index') }}" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg text-slate-700 bg-slate-100 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-all border border-slate-200">
+                    <span>Reset</span>
                 </a>
-                @endif
             </div>
         </form>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden card-3d hover:shadow-2xl transition-all duration-300">
-        <div class="overflow-x-auto">
-            <table class="w-full text-base text-left">
-                <thead class="text-sm text-slate-700 uppercase bg-slate-100 border-b border-gray-200">
-                    <tr>
-                        <th class="px-6 py-4 font-extrabold">Gambar</th>
-                        <th class="px-6 py-4 font-extrabold">Judul Berita</th>
-                        <th class="px-6 py-4 font-extrabold">Status</th>
-                        <th class="px-6 py-4 font-extrabold">Tanggal Upload</th>
-                        <th class="px-6 py-4 font-extrabold text-center print:hidden">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-100">
-                    @forelse ($news as $item)
-                    <tr class="odd:bg-white even:bg-slate-50 hover:bg-slate-100 transition duration-150">
-                        
-                        <td class="px-6 py-4">
-                            @if(is_array($item->image) && count($item->image) > 0)
-                                <img src="{{ $item->image[0] }}" alt="Thumbnail" class="h-16 w-24 object-cover rounded-lg shadow-sm border border-gray-200">
-                            @else
-                                <div class="h-16 w-24 bg-gray-100 rounded-lg flex items-center justify-center text-xs text-gray-400">No Img</div>
-                            @endif
-                        </td>
-                        
-                        <td class="px-6 py-4">
-                            <span class="font-bold text-slate-800 block text-lg">{{ $item->title }}</span>
-                            <span class="text-sm text-gray-500">{{ Str::limit($item->content, 70) }}</span>
-                        </td>
+    {{-- NEWS CARDS GRID --}}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        @forelse ($news as $item)
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transform hover:-translate-y-1 transition-all duration-300 hover:shadow-2xl flex flex-col">
+                <div class="relative">
+                    @if(is_array($item->image) && count($item->image) > 0)
+                        <img src="{{ $item->image[0] }}" alt="{{ $item->title }}" class="h-48 w-full object-cover">
+                    @else
+                        <div class="h-48 w-full bg-slate-100 flex items-center justify-center">
+                            <i class="fas fa-image text-4xl text-slate-300"></i>
+                        </div>
+                    @endif
+                    <div class="absolute top-3 right-3">
+                        @if($item->status == 'published')
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200 shadow-sm">
+                                <span class="w-2 h-2 mr-2 bg-green-500 rounded-full"></span>
+                                Tayang
+                            </span>
+                        @else
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-800 border border-slate-200 shadow-sm">
+                                <span class="w-2 h-2 mr-2 bg-slate-500 rounded-full"></span>
+                                Draft
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="p-5 flex-grow flex flex-col">
+                    <h3 class="font-bold text-slate-800 text-lg leading-tight mb-2 flex-grow">{{ $item->title }}</h3>
+                    <p class="text-sm text-slate-600 line-clamp-2">{{ Str::limit(strip_tags($item->content), 120) }}</p>
+                </div>
+                <div class="p-4 bg-slate-50 border-t border-slate-100 flex justify-between items-center">
+                    <p class="text-xs text-slate-500 flex items-center gap-2">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>{{ $item->created_at->translatedFormat('d F Y') }}</span>
+                    </p>
+                    <div class="flex items-center gap-2">
+                        <a href="{{ route('news.show', $item->id) }}" class="inline-flex items-center justify-center h-9 w-9 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg transition-all duration-200" title="Lihat">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a href="{{ route('news.edit', $item->id) }}" class="inline-flex items-center justify-center h-9 w-9 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-lg transition-all duration-200" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <form action="{{ route('news.destroy', $item->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="confirmDelete(event)" class="inline-flex items-center justify-center h-9 w-9 bg-red-100 hover:bg-red-200 text-red-800 rounded-lg transition-all duration-200" title="Hapus">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="md:col-span-2 lg:col-span-3 text-center py-24">
+                <div class="flex flex-col items-center justify-center text-slate-500">
+                    <div class="bg-slate-100 p-6 rounded-full mb-4 border border-slate-200">
+                        <i class="fas fa-newspaper text-5xl text-slate-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-slate-700">Belum Ada Berita</h3>
+                    <p class="text-slate-500 mt-2">Klik "Tambah Berita" untuk membuat artikel baru.</p>
+                </div>
+            </div>
+        @endforelse
+    </div>
 
-                        <td class="px-6 py-4">
-                            @if($item->status == 'published')
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800 border border-green-200">
-                                    <span class="w-2 h-2 mr-2 bg-green-500 rounded-full"></span>
-                                    Tayang
-                                </span>
-                            @else
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-gray-100 text-gray-800 border border-gray-200">
-                                    <span class="w-2 h-2 mr-2 bg-gray-500 rounded-full"></span>
-                                    Draft
-                                </span>
-                            @endif
-                        </td>
-
-                        <td class="px-6 py-4 text-gray-600">
-                            <div class="flex items-center gap-2">
-                                <i class="fa-solid fa-calendar-alt text-gray-400"></i>
-                                <span class="text-sm">{{ $item->created_at->translatedFormat('d F Y') }}</span>
-                            </div>
-                        </td>
-
-                        <td class="px-6 py-4 text-center print:hidden">
-                            <div class="flex justify-center items-center gap-2">
-                                <a href="{{ route('news.edit', $item->id) }}" class="p-2.5 text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-all duration-200" title="Edit">
-                                    <i class="fa-solid fa-edit text-lg"></i>
-                                </a>
-                                
-                                <form action="{{ route('news.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="p-2.5 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-all duration-200" title="Hapus">
-                                        <i class="fa-solid fa-trash-alt text-lg"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="4" class="px-6 py-10 text-center text-gray-500">
-                            <div class="flex flex-col items-center justify-center text-slate-400">
-                                <i class="fa-solid fa-folder-open text-5xl mb-3"></i>
-                                <p class="font-medium text-lg">Belum ada berita yang ditambahkan.</p>
-                                <p class="text-sm mt-1">Klik "Tambah Berita Baru" untuk memulai.</p>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-        <div class="px-6 py-4 bg-white border-t border-gray-100 flex justify-center items-center print:hidden">
+    {{-- PAGINATION --}}
+    @if($news->hasPages())
+        <div class="mt-8">
             {{ $news->links() }}
         </div>
-    </div>
+    @endif
+
 </div>
 @endsection

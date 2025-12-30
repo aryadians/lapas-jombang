@@ -1,118 +1,108 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="space-y-6">
-    <div class="flex justify-between items-center">
+<div class="space-y-8">
+
+    {{-- HEADER --}}
+    <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-            <h2 class="text-3xl font-extrabold text-slate-800">Kelola Pengumuman</h2>
-            <p class="text-sm text-gray-500 mt-1">Informasi penting untuk pegawai dan pengunjung.</p>
+            <h1 class="text-3xl font-bold text-slate-800">Kelola Pengumuman</h1>
+            <p class="text-slate-600 mt-1">Informasi penting untuk pegawai dan pengunjung.</p>
         </div>
-        <div class="flex gap-2 print:hidden">
-            <button onclick="window.print()" class="flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition">
-                <i class="fa-solid fa-print"></i>
-                Cetak
+        <div class="flex items-center gap-2">
+            <button onclick="window.print()" class="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-4 py-2.5 rounded-lg transition-all duration-300 border border-slate-200">
+                <i class="fas fa-print"></i>
+                <span>Cetak</span>
             </button>
-            <a href="{{ route('announcements.create') }}" class="flex items-center gap-2 bg-slate-900 hover:bg-slate-700 text-white px-6 py-3 rounded-xl shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                <i class="fa-solid fa-plus"></i>
-                Buat Pengumuman Baru
+            <a href="{{ route('announcements.create') }}" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-2.5 px-5 rounded-lg shadow-lg transition-all transform hover:-translate-y-0.5">
+                <i class="fas fa-plus"></i>
+                <span>Buat Pengumuman</span>
             </a>
         </div>
-    </div>
+    </header>
 
+    {{-- ALERT MESSAGES --}}
     @if(session('success'))
-    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-md flex items-center gap-3 mb-6" role="alert">
-        <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-md flex items-center gap-3" role="alert">
+        <i class="fas fa-check-circle text-green-500 text-xl"></i>
         <div>
-            <p class="font-bold">Sukses!</p>
-            <p class="text-sm">{{ session('success') }}</p>
+            <p class="font-bold">Berhasil!</p>
+            <p>{{ session('success') }}</p>
         </div>
     </div>
     @endif
 
     {{-- SEARCH FORM --}}
-    <div class="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 print:hidden">
-        <form method="GET" action="{{ route('announcements.index') }}" class="flex flex-col md:flex-row gap-4">
-            <div class="flex-1">
-                <label for="search" class="block text-sm font-medium text-slate-700 mb-2">Cari Pengumuman</label>
-                <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Cari berdasarkan judul..." class="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all duration-200">
+    <div class="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
+        <form method="GET" action="{{ route('announcements.index') }}" class="flex flex-col md:flex-row items-center gap-4">
+            <div class="relative flex-grow w-full md:w-auto">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i class="fas fa-search text-slate-400"></i>
+                </div>
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari pengumuman..." class="w-full pl-12 pr-4 py-3 border-2 border-slate-200 rounded-lg bg-slate-50 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all">
             </div>
-            <div class="flex items-end gap-2">
-                <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all duration-200 font-semibold">
-                    <i class="fa-solid fa-search mr-2"></i>
-                    Cari
+            <div class="flex items-center gap-2 w-full md:w-auto">
+                <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all">
+                    <i class="fas fa-filter"></i><span>Filter</span>
                 </button>
-                @if(request('search'))
-                <a href="{{ route('announcements.index') }}" class="px-6 py-3 bg-slate-500 hover:bg-slate-600 text-white rounded-lg transition-all duration-200 font-semibold">
-                    Reset
+                <a href="{{ route('announcements.index') }}" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg text-slate-700 bg-slate-100 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-all border border-slate-200">
+                    <span>Reset</span>
                 </a>
-                @endif
             </div>
         </form>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden card-3d hover:shadow-2xl transition-all duration-300">
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm text-left">
-                <thead class="text-xs text-slate-700 uppercase bg-slate-50 border-b border-slate-200">
-                    <tr>
-                        <th class="px-6 py-4 font-bold">Tanggal</th>
-                        <th class="px-6 py-4 font-bold">Judul Pengumuman</th>
-                        <th class="px-6 py-4 font-bold text-right print:hidden">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100">
-                    @forelse ($announcements as $item)
-                    <tr class="odd:bg-white even:bg-slate-50 hover:bg-slate-50 transition-colors duration-200 group">
-                        <td class="px-6 py-4 align-middle">
-                            <div class="inline-flex flex-col items-center justify-center bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-800 rounded-lg p-2 w-20 border border-yellow-300 group-hover:border-yellow-400 transition-all duration-200">
-                                <span class="text-xl font-bold">{{ $item->date->format('d') }}</span>
-                                <span class="text-xs font-semibold uppercase tracking-wider">{{ $item->date->format('M') }}</span>
-                                <span class="text-xs opacity-75">{{ $item->date->format('Y') }}</span>
-                            </div>
-                        </td>
-                        
-                        <td class="px-6 py-4 align-middle">
-                            <div class="flex-1">
-                                <span class="font-bold text-slate-800 block text-base group-hover:text-yellow-700 transition-colors duration-200">{{ $item->title }}</span>
-                                <span class="text-xs text-slate-600 mt-1 block line-clamp-2">{{ Str::limit(strip_tags($item->content), 100) }}</span>
-                            </div>
-                        </td>
+    {{-- ANNOUNCEMENTS LIST --}}
+    <div class="space-y-4">
+        @forelse ($announcements as $item)
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transform hover:-translate-y-1 transition-all duration-300 hover:shadow-2xl">
+                <div class="p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="flex-shrink-0 flex flex-col items-center justify-center bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-800 rounded-lg p-3 w-20 h-20 border border-yellow-300">
+                            <span class="text-2xl font-bold">{{ $item->date->format('d') }}</span>
+                            <span class="text-sm font-semibold uppercase tracking-wider">{{ $item->date->format('M') }}</span>
+                            <span class="text-xs opacity-75">{{ $item->date->format('Y') }}</span>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="font-bold text-slate-800 text-lg leading-tight">{{ $item->title }}</h3>
+                            <p class="text-sm text-slate-600 mt-1 line-clamp-2">{{ Str::limit(strip_tags($item->content), 150) }}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-end gap-2 w-full sm:w-auto flex-shrink-0">
+                        <a href="{{ route('announcements.show', $item->id) }}" class="inline-flex items-center justify-center h-9 w-9 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg transition-all duration-200" title="Lihat">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a href="{{ route('announcements.edit', $item->id) }}" class="inline-flex items-center justify-center h-9 w-9 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-lg transition-all duration-200" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <form action="{{ route('announcements.destroy', $item->id) }}" method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="confirmDelete(event)" class="inline-flex items-center justify-center h-9 w-9 bg-red-100 hover:bg-red-200 text-red-800 rounded-lg transition-all duration-200" title="Hapus">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="text-center py-24">
+                <div class="flex flex-col items-center justify-center text-slate-500">
+                    <div class="bg-slate-100 p-6 rounded-full mb-4 border border-slate-200">
+                        <i class="fas fa-bullhorn text-5xl text-slate-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-slate-700">Belum Ada Pengumuman</h3>
+                    <p class="text-slate-500 mt-2">Klik "Buat Pengumuman" untuk membuat informasi baru.</p>
+                </div>
+            </div>
+        @endforelse
+    </div>
 
-                        <td class="px-6 py-4 text-right align-middle print:hidden">
-                            <div class="flex justify-end items-center gap-2">
-                                <a href="{{ route('announcements.edit', $item->id) }}" class="inline-flex items-center gap-1 px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold rounded-lg transition-all duration-200 text-sm" title="Edit">
-                                    <i class="fa-solid fa-edit"></i>
-                                    Edit
-                                </a>
-                                <form action="{{ route('announcements.destroy', $item->id) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pengumuman ini?')">
-                                    @csrf @method('DELETE')
-                                    <button type="submit" class="inline-flex items-center gap-1 px-3 py-2 bg-red-50 hover:bg-red-100 text-red-700 font-semibold rounded-lg transition-all duration-200 text-sm" title="Hapus">
-                                        <i class="fa-solid fa-trash-alt"></i>
-                                        Hapus
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="3" class="px-6 py-12 text-center">
-                            <div class="flex flex-col items-center justify-center text-slate-400">
-                                <div class="bg-slate-50 p-4 rounded-full mb-3 border border-slate-200">
-                                    <i class="fa-solid fa-bullhorn text-4xl"></i>
-                                </div>
-                                <p class="font-medium text-lg text-slate-600">Belum ada pengumuman yang ditambahkan.</p>
-                                <p class="text-sm text-slate-500 mt-1">Klik "Buat Pengumuman Baru" untuk memulai.</p>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-        <div class="px-6 py-4 bg-white border-t border-gray-100 flex justify-center items-center print:hidden">
+    {{-- PAGINATION --}}
+    @if($announcements->hasPages())
+        <div class="mt-8">
             {{ $announcements->links() }}
         </div>
-    </div>
+    @endif
 </div>
 @endsection

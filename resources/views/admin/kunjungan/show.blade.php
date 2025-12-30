@@ -168,29 +168,29 @@
                 </div>
                 <div class="p-6 space-y-3">
                     @if($kunjungan->status == 'pending')
-                        <form action="{{ route('admin.kunjungan.update', $kunjungan->id) }}" method="POST" onsubmit="confirmUpdate(event, 'approved', '{{ $kunjungan->nama_pengunjung }}')">
+                        <form action="{{ route('admin.kunjungan.update', $kunjungan->id) }}" method="POST">
                             @csrf
                             @method('PATCH')
                             <input type="hidden" name="status" value="approved">
-                            <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold rounded-lg shadow-lg transition-all transform hover:shadow-xl hover:-translate-y-0.5">
+                            <button type="submit" onclick="confirmUpdate(event, 'approved', '{{ $kunjungan->nama_pengunjung }}')" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold rounded-lg shadow-lg transition-all transform hover:shadow-xl hover:-translate-y-0.5">
                                 <i class="fa-solid fa-check-circle"></i>Setujui Kunjungan
                             </button>
                         </form>
-                        <form action="{{ route('admin.kunjungan.update', $kunjungan->id) }}" method="POST" onsubmit="confirmUpdate(event, 'rejected', '{{ $kunjungan->nama_pengunjung }}')">
+                        <form action="{{ route('admin.kunjungan.update', $kunjungan->id) }}" method="POST">
                             @csrf
                             @method('PATCH')
                             <input type="hidden" name="status" value="rejected">
-                            <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold rounded-lg shadow-lg transition-all transform hover:shadow-xl hover:-translate-y-0.5">
+                            <button type="submit" onclick="confirmUpdate(event, 'rejected', '{{ $kunjungan->nama_pengunjung }}')" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold rounded-lg shadow-lg transition-all transform hover:shadow-xl hover:-translate-y-0.5">
                                 <i class="fa-solid fa-times-circle"></i>Tolak Kunjungan
                             </button>
                         </form>
                         <div class="border-t border-slate-200 my-4"></div>
                     @endif
 
-                    <form action="{{ route('admin.kunjungan.destroy', $kunjungan->id) }}" method="POST" onsubmit="confirmDelete(event)">
+                    <form action="{{ route('admin.kunjungan.destroy', $kunjungan->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-red-100 hover:bg-red-200 text-red-700 font-bold rounded-lg transition-all">
+                        <button type="submit" onclick="confirmDelete(event)" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-red-100 hover:bg-red-200 text-red-700 font-bold rounded-lg transition-all">
                             <i class="fa-solid fa-trash-alt"></i>Hapus Pendaftaran
                         </button>
                     </form>
