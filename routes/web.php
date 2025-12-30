@@ -19,6 +19,7 @@ use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,7 +41,6 @@ Route::get('/', function () {
 
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
-// Survey Route
 Route::post('/survey', [SurveyController::class, 'store'])->name('survey.store');
 
 // Public News Routes

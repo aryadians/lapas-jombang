@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{-- CSRF Token Wajib untuk AJAX --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <title>Lapas Kelas 2B Jombang</title>
 
@@ -15,12 +15,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     {{-- Font Khusus Disleksia --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/opendyslexic@latest/open-dyslexic.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.tailwindcss.com"></script>
 
     {{-- WAJIB: Script Alpine.js --}}
     <script src="//unpkg.com/alpinejs" defer></script>
+    {{-- WAJIB: SweetAlert2 untuk Notifikasi Cantik --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         body {
@@ -29,17 +32,9 @@
         }
 
         /* Class untuk fitur aksesibilitas */
-        .acc-grayscale {
-            filter: grayscale(100%);
-        }
-
-        .acc-contrast {
-            filter: invert(100%) hue-rotate(180deg);
-        }
-
-        .acc-dyslexia * {
-            font-family: 'OpenDyslexic', sans-serif !important;
-        }
+        .acc-grayscale { filter: grayscale(100%); }
+        .acc-contrast { filter: invert(100%) hue-rotate(180deg); }
+        .acc-dyslexia * { font-family: 'OpenDyslexic', sans-serif !important; }
 
         .acc-cursor,
         .acc-cursor a,
@@ -286,7 +281,8 @@
 
             {{-- Body Form --}}
             <div class="p-5">
-                <form action="{{ route('survey.store') }}" method="POST" id="surveyForm">
+                {{-- PERBAIKAN: Tambahkan onsubmit="return handleSurvey(event)" untuk mencegah reload --}}
+                <form action="{{ route('survey.store') }}" method="POST" id="surveyForm" onsubmit="return handleSurvey(event)">
                     @csrf
 
                     <div class="mb-4 text-center">
@@ -448,8 +444,76 @@
         </div>
     </footer>
 
-    {{-- Script Logic Aksesibilitas dengan TTS --}}
+    {{-- Script Logic Aksesibilitas dengan TTS & Survey AJAX --}}
     <script>
+        // 1. Logic Survey AJAX (Wajib: Diletakkan di luar Alpine.data agar tidak error)
+        function handleSurvey(e) {
+            e.preventDefault(); // Mencegah reload halaman
+
+            const form = document.getElementById('surveyForm');
+            const submitBtn = document.getElementById('submitSurvey');
+            const submitText = document.getElementById('submitText');
+            const loadingText = document.getElementById('loadingText');
+
+            // UI Loading
+            submitBtn.disabled = true;
+            submitText.classList.add('hidden');
+            loadingText.classList.remove('hidden');
+
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(res => {
+                if (!res.ok) throw new Error('Network error');
+                return res.json();
+            })
+            .then(data => {
+                // Tampilkan Notifikasi Sukses via SweetAlert2
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: data.message || 'Terima kasih atas penilaian Anda!',
+                    timer: 3000,
+                    showConfirmButton: false,
+                    toast: true,
+                    position: 'top-end'
+                });
+                
+                form.reset();
+                
+                // Tutup modal secara paksa lewat tombol close
+                const closeBtn = document.querySelector('[x-data="{ openSurvey: false }"] button i.fa-times') || document.querySelector('[x-data="{ openSurvey: false }"] button svg');
+                if (closeBtn) {
+                   // Cek apakah tombol close adalah icon atau button pembungkusnya
+                   if(closeBtn.tagName === 'svg' || closeBtn.tagName === 'i') {
+                       closeBtn.parentElement.click();
+                   } else {
+                       closeBtn.click();
+                   }
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                Swal.fire('Error', 'Gagal mengirim data. Silakan coba lagi.', 'error');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitText.classList.remove('hidden');
+                loadingText.classList.add('hidden');
+            });
+
+            return false; // Double protection
+        }
+
+        // 2. Logic Aksesibilitas (Alpine Data)
         function accessibilityHandler() {
             return {
                 grayscale: false,
@@ -524,126 +588,25 @@
         }
 
         // Alpine.js component for scroll-triggered animations
-        // Usage: <div x-data="inView" x-init="init()" :class="{'opacity-0 translate-y-4': !inView}" class="transition duration-1000">...</div>
-        Alpine.data('inView', () => ({
-            inView: false,
-            init() {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            this.inView = true;
-                            observer.unobserve(this.$el); // Only animate once
-                        }
+        // PERBAIKAN: Menutup blok Alpine.data dengan benar "}));"
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('inView', () => ({
+                inView: false,
+                init() {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                this.inView = true;
+                                observer.unobserve(this.$el); // Only animate once
+                            }
+                        });
+                    }, {
+                        threshold: 0.1 // Trigger when 10% of the element is visible
                     });
-                }, {
-                    threshold: 0.1 // Trigger when 10% of the element is visible
-                });
-                observer.observe(this.$el);
-            }
-        // Survey Form Submission
-        document.addEventListener('DOMContentLoaded', function() {
-            const surveyForm = document.getElementById('surveyForm');
-            if (surveyForm) {
-                surveyForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-
-                    const form = this;
-                    const submitBtn = document.getElementById('submitSurvey');
-                    const submitText = document.getElementById('submitText');
-                    const loadingText = document.getElementById('loadingText');
-
-                    // Show loading state
-                    submitBtn.disabled = true;
-                    submitText.classList.add('hidden');
-                    loadingText.classList.remove('hidden');
-
-                    // Prepare form data
-                    const formData = new FormData(form);
-
-                    // Send AJAX request
-                    fetch(form.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest',
-                            'Accept': 'application/json'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Show success message
-                            showNotification('Terima kasih atas penilaian Anda!', 'success');
-
-                            // Reset form
-                            form.reset();
-
-                            // Close modal after delay
-                            setTimeout(() => {
-                                // Find the Alpine.js component and close it
-                                const surveyComponent = document.querySelector('[x-data*="{ openSurvey: false }"]');
-                                if (surveyComponent && surveyComponent.__x) {
-                                    surveyComponent.__x.$data.openSurvey = false;
-                                }
-                            }, 2000);
-                        } else {
-                            showNotification('Terjadi kesalahan. Silakan coba lagi.', 'error');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        showNotification('Terjadi kesalahan. Silakan coba lagi.', 'error');
-                    })
-                    .finally(() => {
-                        // Reset loading state
-                        submitBtn.disabled = false;
-                        submitText.classList.remove('hidden');
-                        loadingText.classList.add('hidden');
-                    });
-                });
-            }
+                    observer.observe(this.$el);
+                }
+            }));
         });
-
-        // Notification function
-        function showNotification(message, type = 'info') {
-            // Create notification element
-            const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transform transition-all duration-300 translate-x-full`;
-
-            if (type === 'success') {
-                notification.classList.add('bg-green-500', 'text-white');
-            } else if (type === 'error') {
-                notification.classList.add('bg-red-500', 'text-white');
-            } else {
-                notification.classList.add('bg-blue-500', 'text-white');
-            }
-
-            notification.innerHTML = `
-                <div class="flex items-center">
-                    <span>${message}</span>
-                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                </div>
-            `;
-
-            document.body.appendChild(notification);
-
-            // Animate in
-            setTimeout(() => {
-                notification.classList.remove('translate-x-full');
-            }, 100);
-
-            // Auto remove after 5 seconds
-            setTimeout(() => {
-                notification.classList.add('translate-x-full');
-                setTimeout(() => {
-                    notification.remove();
-                }, 300);
-            }, 5000);
-        }
     </script>
 
 </body>

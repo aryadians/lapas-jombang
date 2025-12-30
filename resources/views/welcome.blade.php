@@ -226,135 +226,154 @@
 
         <div class="flex flex-col lg:flex-row gap-12">
 
-            {{-- Berita Terkini --}}
-            <div class="lg:w-2/3">
-                <div class="flex justify-between items-center mb-12">
+           {{-- Berita Terkini --}}
+<div class="lg:w-2/3">
+    <div class="flex justify-between items-center mb-12">
+        <div>
+            <div class="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 text-blue-800 text-sm font-semibold mb-4">
+                <i class="fas fa-newspaper mr-2"></i>
+                Berita Terkini
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-black text-slate-800">Informasi Terbaru</h2>
+        </div>
+        <a href="{{ route('news.public.index') }}" class="group inline-flex items-center text-blue-700 font-bold hover:text-blue-800 transition-colors">
+            <span>Lihat Semua</span>
+            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+        </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        @forelse($news as $item)
+        <div class="transition-all duration-700 bg-white rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden group border border-gray-100 card-hover-scale card-3d">
+            
+            {{-- Image / Placeholder --}}
+            <div class="relative h-48 overflow-hidden">
+                @if(is_array($item->image) && count($item->image) > 0)
+                    <img src="{{ $item->image[0] }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" loading="lazy">
+                @else
+                    <div class="w-full h-full bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center text-slate-400">
+                        <div class="text-center">
+                            <svg class="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <span class="text-sm font-medium">Tidak ada gambar</span>
+                        </div>
+                    </div>
+                @endif
+                
+                {{-- Date Badge --}}
+                <div class="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-slate-900 text-xs font-bold px-3 py-1 rounded-full shadow-lg group-hover:animate-float-up">
+                    {{ $item->created_at->format('d M Y') }}
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+
+            {{-- Content --}}
+            <div class="p-6">
+                <h3 class="text-lg font-bold text-slate-800 mb-3 group-hover:text-blue-700 transition-colors duration-300 line-clamp-2 leading-tight">
+                    {{ $item->title }}
+                </h3>
+                
+                {{-- PERBAIKAN: Menambahkan strip_tags() --}}
+                <p class="text-gray-500 text-sm mb-4 line-clamp-3 leading-relaxed">
+                    {{ Str::limit(strip_tags($item->content), 120) }}
+                </p>
+                
+                <a href="{{ route('news.public.show', $item->slug) }}" class="inline-flex items-center text-sm font-bold text-blue-600 hover:text-blue-700 group-hover:translate-x-1 transition-all duration-300">
+                    <span>Baca Selengkapnya</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+        @empty
+        <div class="col-span-1 md:col-span-2">
+            <div class="text-center py-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl border-2 border-dashed border-gray-300">
+                <div class="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span class="text-4xl">📰</span>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">Belum Ada Berita</h3>
+                <p class="text-gray-500 max-w-md mx-auto">
+                    Saat ini belum ada berita yang diterbitkan. Silakan kembali lagi nanti untuk informasi terbaru.
+                </p>
+            </div>
+        </div>
+        @endforelse
+    </div>
+</div>
+
+           {{-- Papan Pengumuman - Sticky & Enhanced --}}
+<div class="lg:w-1/3">
+    <div class="lg:sticky lg:top-8">
+        <div class="transition duration-700 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 rounded-2xl shadow-2xl p-8 text-white border border-slate-700/50">
+            
+            {{-- Header --}}
+            <div class="flex items-center justify-between mb-8 pb-6 border-b border-slate-700/50">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                        <span class="text-2xl">📢</span>
+                    </div>
                     <div>
-                        <div class="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 text-blue-800 text-sm font-semibold mb-4">
-                            <i class="fas fa-newspaper mr-2"></i>
-                            Berita Terkini
-                        </div>
-                        <h2 class="text-3xl sm:text-4xl font-black text-slate-800">Informasi Terbaru</h2>
+                        <h3 class="text-xl font-bold text-yellow-400">Papan Pengumuman</h3>
+                        <p class="text-xs text-slate-400">Informasi Penting</p>
                     </div>
-                    <a href="{{ route('news.public.index') }}" class="group inline-flex items-center text-blue-700 font-bold hover:text-blue-800 transition-colors">
-                        <span>Lihat Semua</span>
-                        <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
-                    </a>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    @forelse($news as $item)
-                    <div class="transition-all duration-700 bg-white rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden group border border-gray-100 card-hover-scale card-3d">
-                        <div class="relative h-48 overflow-hidden">
-                            @if(is_array($item->image) && count($item->image) > 0)
-                            <img src="{{ $item->image[0] }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" loading="lazy">
-                            @else
-                            <div class="w-full h-full bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center text-slate-400">
-                                <div class="text-center">
-                                    <svg class="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                    </svg>
-                                    <span class="text-sm font-medium">Tidak ada gambar</span>
-                                </div>
-                            </div>
-                            @endif
-                            <div class="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-slate-900 text-xs font-bold px-3 py-1 rounded-full shadow-lg group-hover:animate-float-up">
-                                {{ $item->created_at->format('d M Y') }}
-                            </div>
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-lg font-bold text-slate-800 mb-3 group-hover:text-blue-700 transition-colors duration-300 line-clamp-2 leading-tight">
-                                {{ $item->title }}
-                            </h3>
-                            <p class="text-gray-500 text-sm mb-4 line-clamp-3 leading-relaxed">
-                                {{ Str::limit($item->content, 120) }}
-                            </p>
-                            <a href="{{ route('news.public.show', $item->slug) }}" class="inline-flex items-center text-sm font-bold text-blue-600 hover:text-blue-700 group-hover:translate-x-1 transition-all duration-300">
-                                <span>Baca Selengkapnya</span>
-                                <i class="fas fa-arrow-right ml-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                    @empty
-                    <div class="col-span-2">
-                        <div class="text-center py-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl border-2 border-dashed border-gray-300">
-                            <div class="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
-                                <span class="text-4xl">📰</span>
-                            </div>
-                            <h3 class="text-xl font-semibold text-gray-700 mb-2">Belum Ada Berita</h3>
-                            <p class="text-gray-500 max-w-md mx-auto">
-                                Saat ini belum ada berita yang diterbitkan. Silakan kembali lagi nanti untuk informasi terbaru.
-                            </p>
-                        </div>
-                    </div>
-                    @endforelse
+                <div class="w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-thumbtack text-yellow-400 text-sm"></i>
                 </div>
             </div>
 
-            {{-- Papan Pengumuman - Sticky & Enhanced --}}
-            <div class="lg:w-1/3">
-                <div class="lg:sticky lg:top-8">
-                    <div class="transition duration-700 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 rounded-2xl shadow-2xl p-8 text-white border border-slate-700/50">
-                        <div class="flex items-center justify-between mb-8 pb-6 border-b border-slate-700/50">
-                            <div class="flex items-center">
-                                <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center mr-4 shadow-lg">
-                                    <span class="text-2xl">📢</span>
-                                </div>
-                                <div>
-                                    <h3 class="text-xl font-bold text-yellow-400">Papan Pengumuman</h3>
-                                    <p class="text-xs text-slate-400">Informasi Penting</p>
-                                </div>
-                            </div>
-                            <div class="w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center">
-                                <i class="fas fa-thumbtack text-yellow-400 text-sm"></i>
+            {{-- Announcements List --}}
+            <div class="space-y-6 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800">
+                @forelse($announcements as $info)
+                <div class="group bg-slate-800/50 rounded-xl p-4 border border-slate-700/30 hover:bg-slate-800/70 hover:border-yellow-500/30 transition-all duration-300 card-hover-scale card-3d">
+                    <div class="flex items-start space-x-3">
+                        
+                        {{-- Date Badge --}}
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex flex-col items-center justify-center shadow-lg border-2 border-emerald-400/30 group-hover:animate-float-up">
+                                <span class="text-sm font-bold text-white leading-none">{{ $info->date->format('d') }}</span>
+                                <span class="text-xs text-emerald-200 uppercase font-semibold">{{ $info->date->format('M') }}</span>
                             </div>
                         </div>
-
-                        {{-- Announcements List --}}
-                        <div class="space-y-6 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800">
-                            @forelse($announcements as $info)
-                            <div class="group bg-slate-800/50 rounded-xl p-4 border border-slate-700/30 hover:bg-slate-800/70 hover:border-yellow-500/30 transition-all duration-300 card-hover-scale card-3d">
-                                <div class="flex items-start space-x-3">
-                                    <div class="flex-shrink-0">
-                                        <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex flex-col items-center justify-center shadow-lg border-2 border-emerald-400/30 group-hover:animate-float-up">
-                                            <span class="text-sm font-bold text-white leading-none">{{ $info->date->format('d') }}</span>
-                                            <span class="text-xs text-emerald-200 uppercase font-semibold">{{ $info->date->format('M') }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 min-w-0">
-                                        <h4 class="text-sm font-bold text-gray-200 group-hover:text-yellow-400 transition-colors duration-300 leading-snug mb-2 line-clamp-2">
-                                            {{ $info->title }}
-                                        </h4>
-                                        <p class="text-xs text-gray-400 leading-relaxed line-clamp-3">
-                                            {{ Str::limit($info->content, 80) }}
-                                        </p>
-                                        <div class="mt-2 text-xs text-slate-500">
-                                            {{ $info->created_at->translatedFormat('d M Y') }}
-                                        </div>
-                                    </div>
-                                </div>
+                        
+                        {{-- Content --}}
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-sm font-bold text-gray-200 group-hover:text-yellow-400 transition-colors duration-300 leading-snug mb-2 line-clamp-2">
+                                {{ $info->title }}
+                            </h4>
+                            
+                            {{-- PERBAIKAN: strip_tags() ditambahkan di sini --}}
+                            <p class="text-xs text-gray-400 leading-relaxed line-clamp-3">
+                                {{ Str::limit(strip_tags($info->content), 80) }}
+                            </p>
+                            
+                            <div class="mt-2 text-xs text-slate-500">
+                                {{ $info->created_at->translatedFormat('d M Y') }}
                             </div>
-                            @empty
-                            <div class="text-center py-8 bg-slate-800/30 rounded-xl border border-dashed border-slate-600">
-                                <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-3">
-                                    <span class="text-xl">📭</span>
-                                </div>
-                                <p class="text-gray-400 text-sm">Tidak ada pengumuman aktif saat ini.</p>
-                            </div>
-                            @endforelse
-                        </div>
-
-                        {{-- Footer --}}
-                        <div class="mt-8 pt-6 border-t border-slate-700/50 text-center">
-                            <a href="{{ route('announcements.public.index') }}" class="inline-flex items-center text-sm text-slate-400 hover:text-yellow-400 transition-colors duration-300 group">
-                                <span>Lihat Arsip Lengkap</span>
-                                <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
-                            </a>
                         </div>
                     </div>
                 </div>
+                @empty
+                <div class="text-center py-8 bg-slate-800/30 rounded-xl border border-dashed border-slate-600">
+                    <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <span class="text-xl">📭</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">Tidak ada pengumuman aktif saat ini.</p>
+                </div>
+                @endforelse
             </div>
+
+            {{-- Footer --}}
+            <div class="mt-8 pt-6 border-t border-slate-700/50 text-center">
+                <a href="{{ route('announcements.public.index') }}" class="inline-flex items-center text-sm text-slate-400 hover:text-yellow-400 transition-colors duration-300 group">
+                    <span>Lihat Arsip Lengkap</span>
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+                       
 
         </div>
     </div>

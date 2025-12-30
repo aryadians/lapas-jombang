@@ -2,36 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Survey;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class SurveyController extends Controller
 {
-    /**
-     * Store a newly created survey response.
-     */
     public function store(Request $request)
     {
-        // Validate the request
-        $request->validate([
+        // 1. Validasi Input
+        $validated = $request->validate([
             'rating' => 'required|integer|min:1|max:4',
-            'saran' => 'nullable|string|max:1000',
+            'saran'  => 'nullable|string|max:1000',
         ]);
 
-        // Log the survey response (you can save to database later if needed)
-        Log::info('Survey Response', [
-            'rating' => $request->rating,
-            'saran' => $request->saran,
-            'ip_address' => $request->ip(),
-            'user_agent' => $request->userAgent(),
-            'timestamp' => now(),
+        // 2. Simpan ke Database
+        Survey::create([
+            'rating'     => $validated['rating'],
+            'saran'      => $validated['saran'],
+            'ip_address' => $request->ip(), // Menyimpan IP untuk mencegah spam (opsional)
+            'user_agent' => $request->header('User-Agent'),
         ]);
 
-        // For now, just return success response
-        // In production, you might want to save this to a database
+        // 3. Return JSON response (karena kita pakai AJAX)
         return response()->json([
-            'success' => true,
-            'message' => 'Terima kasih atas penilaian Anda! Masukan Anda sangat berharga untuk meningkatkan pelayanan kami.'
+            'status'  => 'success',
+            'message' => 'Terima kasih atas penilaian Anda!'
         ]);
     }
 }

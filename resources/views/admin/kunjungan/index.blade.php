@@ -42,6 +42,7 @@
     @endif
 
     {{-- SEARCH, FILTER, AND BULK ACTION FORM --}}
+    {{-- Note: Form ini defaultnya GET untuk filter. JS akan mengubahnya jadi POST untuk bulk action --}}
     <form id="bulk-action-form" action="{{ route('admin.kunjungan.index') }}" method="GET">
         <div class="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 space-y-6">
             {{-- Search & Main Filters --}}
@@ -99,13 +100,13 @@
                 <div class="h-6 w-px bg-slate-300"></div>
                 
                 @csrf
-                <button type="button" formaction="{{ route('admin.kunjungan.bulk-update') }}" onclick="confirmBulkAction(event, 'update', 'approved')" class="inline-flex items-center gap-2 px-4 py-2 bg-green-100 hover:bg-green-200 text-green-800 font-semibold rounded-lg transition-all duration-200 text-sm" title="Setujui Terpilih">
+                <button type="button" onclick="confirmBulkAction(event, 'update', 'approved')" class="inline-flex items-center gap-2 px-4 py-2 bg-green-100 hover:bg-green-200 text-green-800 font-semibold rounded-lg transition-all duration-200 text-sm" title="Setujui Terpilih">
                     <i class="fa-solid fa-check-circle"></i> Setujui
                 </button>
-                <button type="button" formaction="{{ route('admin.kunjungan.bulk-update') }}" onclick="confirmBulkAction(event, 'update', 'rejected')" class="inline-flex items-center gap-2 px-4 py-2 bg-yellow-100 hover:bg-yellow-200 text-yellow-800 font-semibold rounded-lg transition-all duration-200 text-sm" title="Tolak Terpilih">
+                <button type="button" onclick="confirmBulkAction(event, 'update', 'rejected')" class="inline-flex items-center gap-2 px-4 py-2 bg-yellow-100 hover:bg-yellow-200 text-yellow-800 font-semibold rounded-lg transition-all duration-200 text-sm" title="Tolak Terpilih">
                     <i class="fa-solid fa-times-circle"></i> Tolak
                 </button>
-                <button type="button" formaction="{{ route('admin.kunjungan.bulk-delete') }}" onclick="confirmBulkAction(event, 'delete')" class="inline-flex items-center gap-2 px-4 py-2 bg-red-100 hover:bg-red-200 text-red-800 font-semibold rounded-lg transition-all duration-200 text-sm" title="Hapus Terpilih">
+                <button type="button" onclick="confirmBulkAction(event, 'delete')" class="inline-flex items-center gap-2 px-4 py-2 bg-red-100 hover:bg-red-200 text-red-800 font-semibold rounded-lg transition-all duration-200 text-sm" title="Hapus Terpilih">
                     <i class="fa-solid fa-trash-alt"></i> Hapus
                 </button>
             </div>
@@ -232,8 +233,11 @@
     </form>
 </div>
 
+{{-- SCRIPT: SweetAlert2 Integration & Logic --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // --- 1. LOGIKA CHECKBOX (Toggle Select All & Bulk Action Bar) ---
     const selectAllCheckbox = document.getElementById('selectAll');
     const itemCheckboxes = document.querySelectorAll('.kunjungan-checkbox');
     const bulkActionBar = document.getElementById('bulkActionBar');
@@ -244,8 +248,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (selectedCount > 0) {
             selectedCountSpan.textContent = selectedCount;
             bulkActionBar.classList.remove('hidden');
+            bulkActionBar.classList.add('flex');
         } else {
             bulkActionBar.classList.add('hidden');
+            bulkActionBar.classList.remove('flex');
         }
     }
 
@@ -269,8 +275,114 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Initial check
+    // Cek awal (in case browser menyimpan state checkbox saat reload)
     updateBulkActionBar();
 });
+
+// --- 2. FUNGSI UNTUK AKSI SATUAN (Single Delete & Update) ---
+
+// Fungsi Konfirmasi Hapus Satuan
+function confirmDelete(event) {
+    event.preventDefault(); // Mencegah submit langsung
+    const form = event.target.closest('form');
+    
+    Swal.fire({
+        title: 'Hapus Data?',
+        text: "Data kunjungan ini akan dihapus permanen!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444', 
+        cancelButtonColor: '#64748b',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.submit();
+        }
+    });
+}
+
+// Fungsi Konfirmasi Update Satuan
+function confirmUpdate(event, status, name) {
+    event.preventDefault();
+    const form = event.target.closest('form');
+    const actionText = status === 'approved' ? 'menyetujui' : 'menolak';
+    const confirmColor = status === 'approved' ? '#22c55e' : '#eab308';
+
+    Swal.fire({
+        title: 'Konfirmasi Status',
+        text: `Anda yakin ingin ${actionText} kunjungan atas nama ${name}?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: confirmColor,
+        cancelButtonColor: '#64748b',
+        confirmButtonText: status === 'approved' ? 'Ya, Setujui' : 'Ya, Tolak',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.submit();
+        }
+    });
+}
+
+// --- 3. FUNGSI UNTUK AKSI MASSAL (Bulk Actions) ---
+function confirmBulkAction(event, type, status = null) {
+    event.preventDefault();
+    
+    const selectedCount = document.querySelectorAll('.kunjungan-checkbox:checked').length;
+    if (selectedCount === 0) {
+        Swal.fire('Perhatian', 'Pilih minimal satu data kunjungan.', 'error');
+        return;
+    }
+
+    const form = document.getElementById('bulk-action-form');
+    let title, text, confirmBtnColor, actionUrl;
+
+    if (type === 'delete') {
+        title = 'Hapus Masal?';
+        text = `Anda akan menghapus ${selectedCount} data terpilih secara permanen.`;
+        confirmBtnColor = '#ef4444';
+        actionUrl = "{{ route('admin.kunjungan.bulk-delete') }}";
+    } else if (type === 'update') {
+        const statusText = status === 'approved' ? 'Setujui' : 'Tolak';
+        title = `${statusText} Masal?`;
+        text = `Anda akan mengubah status ${selectedCount} data menjadi ${statusText}.`;
+        confirmBtnColor = status === 'approved' ? '#22c55e' : '#eab308';
+        actionUrl = "{{ route('admin.kunjungan.bulk-update') }}";
+    }
+
+    Swal.fire({
+        title: title,
+        text: text,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: confirmBtnColor,
+        cancelButtonColor: '#64748b',
+        confirmButtonText: 'Ya, Lanjutkan',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Trik Penting: Ubah Method Form dari GET ke POST
+            form.method = 'POST';
+            form.action = actionUrl;
+
+            // Hapus input hidden status lama jika ada (agar tidak duplikat)
+            const oldInput = document.getElementById('bulk-status-input');
+            if(oldInput) oldInput.remove();
+
+            // Jika ini update status, sisipkan input hidden status
+            if (type === 'update' && status) {
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'status';
+                hiddenInput.value = status;
+                hiddenInput.id = 'bulk-status-input';
+                form.appendChild(hiddenInput);
+            }
+
+            form.submit();
+        }
+    });
+}
 </script>
 @endsection
