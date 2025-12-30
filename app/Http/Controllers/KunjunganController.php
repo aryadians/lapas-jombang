@@ -123,7 +123,7 @@ class KunjunganController extends Controller
         });
 
         // Send confirmation email
-        Mail::to($kunjunganBaru->email_pengunjung)->send(new KunjunganConfirmationMail($kunjunganBaru));
+        Mail::to($kunjunganBaru->email_pengunjung)->queue(new KunjunganConfirmationMail($kunjunganBaru));
 
         // 5. Redirect dengan pesan sukses
         $pesanSukses = "Pendaftaran berhasil! Nomor antrian Anda: {$kunjunganBaru->nomor_antrian_harian}.";

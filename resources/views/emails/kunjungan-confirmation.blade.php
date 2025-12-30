@@ -28,19 +28,23 @@ Berikut adalah detail pendaftaran Anda:
 <br> **Status:** **PENDING**
 @endcomponent
 
-### Kode QR Status Pendaftaran
-Gunakan kode QR di bawah ini untuk memeriksa status pendaftaran Anda secara mudah melalui ponsel.
+### Kode QR Verifikasi Kunjungan
+Gunakan kode QR di bawah ini untuk verifikasi saat Anda tiba di Lapas. Simpan email ini baik-baik.
 
 <div style="text-align: center; margin-top: 15px; margin-bottom: 15px;">
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ urlencode(route('kunjungan.status', $kunjungan->id)) }}" alt="QR Code Cek Status" style="display: inline-block;">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ $kunjungan->qr_token }}" alt="QR Code Verifikasi" style="display: inline-block;">
+    <p style="font-family: monospace; font-size: 16px; margin-top: 10px; color: #333;">
+        {{ $kunjungan->qr_token }}
+    </p>
 </div>
 <p style="text-align: center; font-size: 12px; color: #666;">
-    Scan untuk cek status pendaftaran
+    Tunjukkan QR Code ini beserta token di atas kepada petugas.
 </p>
 
 **Langkah Selanjutnya:**
 *   Petugas kami akan segera memverifikasi data pendaftaran Anda.
 *   Anda akan menerima email terpisah yang berisi informasi status pendaftaran Anda (Disetujui/Ditolak) dalam waktu maksimal 1x24 jam.
+*   Jika disetujui, Anda wajib menunjukkan email ini (beserta Kode QR) kepada petugas saat akan melakukan kunjungan.
 *   Anda dapat memantau status pendaftaran Anda secara berkala melalui tombol di bawah ini.
 
 @component('mail::button', ['url' => route('kunjungan.status', $kunjungan->id)])
