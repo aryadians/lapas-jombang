@@ -14,4 +14,9 @@ class HomeController extends Controller
         // Kirim data ke view welcome
         return view('welcome', compact('news', 'announcements'));
     }
+
+    public function contact()
+    {
+        return view('contact.index');
+    }
 }

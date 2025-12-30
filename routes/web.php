@@ -40,6 +40,8 @@ Route::get('/', function () {
 });
 
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+Route::get('/kontak', [App\Http\Controllers\HomeController::class, 'contact'])->name('contact.index');
+Route::post('/kontak', [App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
 
 Route::post('/survey', [SurveyController::class, 'store'])->name('survey.store');
 

@@ -68,55 +68,64 @@
             
             {{-- FAQ Item 2 --}}
             <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden card-3d card-hover-scale">
-                <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gray-50 transition-colors duration-300">
-                    <div class="flex items-center space-x-4">
-                        <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
-                            <span class="text-white text-lg">📝</span>
+                <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gradient-to-r group-hover:from-emerald-50 group-hover:to-lime-50 transition-all duration-300">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-transform">
+                            <i class="fas fa-file-alt text-white font-bold text-lg"></i>
                         </div>
-                        <span class="text-xl font-bold text-gray-900 group-hover:text-emerald-600 transition-colors duration-300">Bagaimana cara melakukan pendaftaran kunjungan?</span>
+                        <h3 class="text-lg font-bold text-slate-800 group-hover:text-emerald-700 transition-colors">Bagaimana cara melakukan pendaftaran kunjungan?</h3>
                     </div>
-                    <div class="w-8 h-8 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-lg flex items-center justify-center shadow-lg ml-4">
-                        <i class="fas text-white text-sm transition-transform duration-300" :class="open ? 'fa-minus rotate-180' : 'fa-plus'"></i>
+                    <div class="flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full group-hover:bg-emerald-100 transition-colors">
+                        <i class="fas fa-chevron-down text-gray-500 group-hover:text-emerald-600 transition-all duration-300" :class="{'rotate-180': open}"></i>
                     </div>
                 </button>
-                <div x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 max-h-0" x-transition:enter-end="opacity-100 max-h-96" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 max-h-96" x-transition:leave-end="opacity-0 max-h-0" class="px-8 pb-6 text-gray-600 border-t border-gray-100">
-                    <p class="pt-6 leading-relaxed">Pendaftaran kunjungan dapat dilakukan secara online melalui website ini pada menu "Pendaftaran Kunjungan". Ikuti langkah-langkah yang tertera pada formulir pendaftaran dengan mengisi data diri, data narapidana yang akan dikunjungi, dan memilih jadwal kunjungan yang tersedia.</p>
+                <div x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 max-h-0" x-transition:enter-end="opacity-100 max-h-screen" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 max-h-screen" x-transition:leave-end="opacity-0 max-h-0" class="overflow-hidden">
+                    <div class="px-8 pb-6">
+                        <div class="h-px bg-gradient-to-r from-emerald-200 to-lime-200 mb-4"></div>
+                        <p class="pt-6 leading-relaxed text-gray-600">Pendaftaran kunjungan dapat dilakukan secara online melalui website ini pada menu "Pendaftaran Kunjungan". Ikuti langkah-langkah yang tertera pada formulir pendaftaran dengan mengisi data diri, data narapidana yang akan dikunjungi, dan memilih jadwal kunjungan yang tersedia.</p>
+                    </div>
                 </div>
             </div>
 
             {{-- FAQ Item 3 --}}
             <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden card-3d card-hover-scale">
-                <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gray-50 transition-colors duration-300">
-                    <div class="flex items-center space-x-4">
-                        <div class="w-10 h-10 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl flex items-center justify-center shadow-lg">
-                            <span class="text-white text-lg">📋</span>
+                <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gradient-to-r group-hover:from-yellow-50 group-hover:to-orange-50 transition-all duration-300">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-transform">
+                            <i class="fas fa-id-card text-white font-bold text-lg"></i>
                         </div>
-                        <span class="text-xl font-bold text-gray-900 group-hover:text-yellow-600 transition-colors duration-300">Apa saja persyaratan untuk kunjungan?</span>
+                        <h3 class="text-lg font-bold text-slate-800 group-hover:text-yellow-700 transition-colors">Apa saja persyaratan untuk kunjungan?</h3>
                     </div>
-                    <div class="w-8 h-8 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-lg flex items-center justify-center shadow-lg ml-4">
-                        <i class="fas text-white text-sm transition-transform duration-300" :class="open ? 'fa-minus rotate-180' : 'fa-plus'"></i>
+                    <div class="flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full group-hover:bg-yellow-100 transition-colors">
+                        <i class="fas fa-chevron-down text-gray-500 group-hover:text-yellow-600 transition-all duration-300" :class="{'rotate-180': open}"></i>
                     </div>
                 </button>
-                <div x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 max-h-0" x-transition:enter-end="opacity-100 max-h-96" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 max-h-96" x-transition:leave-end="opacity-0 max-h-0" class="px-8 pb-6 text-gray-600 border-t border-gray-100">
-                    <p class="pt-6 leading-relaxed">Persyaratan kunjungan meliputi kartu identitas yang berlaku (KTP/SIM/Paspor), bukti hubungan keluarga dengan narapidana, dan mematuhi tata tertib kunjungan yang telah ditetapkan. Detail lebih lanjut akan ditampilkan saat pendaftaran online dan dapat berubah sewaktu-waktu.</p>
+                <div x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 max-h-0" x-transition:enter-end="opacity-100 max-h-screen" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 max-h-screen" x-transition:leave-end="opacity-0 max-h-0" class="overflow-hidden">
+                    <div class="px-8 pb-6">
+                        <div class="h-px bg-gradient-to-r from-yellow-200 to-orange-200 mb-4"></div>
+                        <p class="pt-6 leading-relaxed text-gray-600">Persyaratan kunjungan meliputi kartu identitas yang berlaku (KTP/SIM/Paspor), bukti hubungan keluarga dengan narapidana, dan mematuhi tata tertib kunjungan yang telah ditetapkan. Detail lebih lanjut akan ditampilkan saat pendaftaran online dan dapat berubah sewaktu-waktu.</p>
+                    </div>
                 </div>
             </div>
 
             {{-- FAQ Item 4 --}}
             <div x-data="{ open: false }" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden card-3d card-hover-scale">
-                <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gray-50 transition-colors duration-300">
-                    <div class="flex items-center space-x-4">
-                        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                            <span class="text-white text-lg">👥</span>
+                <button @click="open = !open" class="flex justify-between items-center w-full px-8 py-6 text-left focus:outline-none group-hover:bg-gradient-to-r group-hover:from-purple-50 group-hover:to-pink-50 transition-all duration-300">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-transform">
+                            <i class="fas fa-users text-white font-bold text-lg"></i>
                         </div>
-                        <span class="text-xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-300">Apakah ada batasan jumlah pengunjung per narapidana?</span>
+                        <h3 class="text-lg font-bold text-slate-800 group-hover:text-purple-700 transition-colors">Apakah ada batasan jumlah pengunjung per narapidana?</h3>
                     </div>
-                    <div class="w-8 h-8 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-lg flex items-center justify-center shadow-lg ml-4">
-                        <i class="fas text-white text-sm transition-transform duration-300" :class="open ? 'fa-minus rotate-180' : 'fa-plus'"></i>
+                    <div class="flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full group-hover:bg-purple-100 transition-colors">
+                        <i class="fas fa-chevron-down text-gray-500 group-hover:text-purple-600 transition-all duration-300" :class="{'rotate-180': open}"></i>
                     </div>
                 </button>
-                <div x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 max-h-0" x-transition:enter-end="opacity-100 max-h-96" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 max-h-96" x-transition:leave-end="opacity-0 max-h-0" class="px-8 pb-6 text-gray-600 border-t border-gray-100">
-                    <p class="pt-6 leading-relaxed">Ya, ada batasan jumlah pengunjung per narapidana untuk menjaga ketertiban dan keamanan. Batasan ini biasanya maksimal 3-5 orang per narapidana per jadwal kunjungan. Informasi detail mengenai batasan ini akan diberikan pada saat pendaftaran atau dapat dilihat di pengumuman resmi.</p>
+                <div x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 max-h-0" x-transition:enter-end="opacity-100 max-h-screen" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 max-h-screen" x-transition:leave-end="opacity-0 max-h-0" class="overflow-hidden">
+                    <div class="px-8 pb-6">
+                        <div class="h-px bg-gradient-to-r from-purple-200 to-pink-200 mb-4"></div>
+                        <p class="pt-6 leading-relaxed text-gray-600">Ya, ada batasan jumlah pengunjung per narapidana untuk menjaga ketertiban dan keamanan. Batasan ini biasanya maksimal 3-5 orang per narapidana per jadwal kunjungan. Informasi detail mengenai batasan ini akan diberikan pada saat pendaftaran atau dapat dilihat di pengumuman resmi.</p>
+                    </div>
                 </div>
             </div>
 
@@ -226,7 +235,7 @@
                 <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
                     Jika pertanyaan Anda tidak terjawab di atas, jangan ragu untuk menghubungi kami melalui informasi kontak yang tersedia.
                 </p>
-                <a href="#contact" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 shadow-lg hover:shadow-xl btn-hover-lift">
+                <a href="{{ route('contact.index') }}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 shadow-lg hover:shadow-xl btn-hover-lift">
                     <i class="fas fa-phone mr-2"></i>
                     Hubungi Kami
                 </a>
