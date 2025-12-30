@@ -84,6 +84,11 @@ class NewsController extends Controller
         return redirect()->route('news.index')->with('success', 'Berita berhasil ditambahkan!');
     }
 
+    public function show(News $news)
+    {
+        return view('admin.news.show', compact('news'));
+    }
+
     /**
      * Menampilkan form edit berita (EDIT)
      */

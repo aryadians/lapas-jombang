@@ -47,6 +47,12 @@ class AnnouncementController extends Controller
         return redirect()->route('announcements.index')->with('success', 'Pengumuman berhasil dibuat!');
     }
 
+    // SHOW: Tampilkan detail
+    public function show(Announcement $announcement)
+    {
+        return view('admin.announcements.show', compact('announcement'));
+    }
+
     // EDIT: Form edit
     public function edit(Announcement $announcement)
     {
