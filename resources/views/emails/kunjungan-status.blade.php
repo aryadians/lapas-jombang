@@ -1,154 +1,132 @@
-@component('mail::message')
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f3f4f6; margin: 0; padding: 0; width: 100%; -webkit-text-size-adjust: none; }
+        .email-wrapper { width: 100%; margin: 0; padding: 20px; background-color: #f3f4f6; }
+        .email-content { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .header { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 30px 20px; text-align: center; border-bottom: 4px solid #fbbf24; }
+        .body { padding: 30px; color: #334155; line-height: 1.6; }
+        .footer { background-color: #f8fafc; padding: 20px; text-align: center; font-size: 12px; color: #94a3b8; border-top: 1px solid #e2e8f0; }
+        h1 { margin: 0; font-size: 20px; font-weight: bold; color: #fbbf24; text-transform: uppercase; letter-spacing: 1px; }
+        h2 { margin-top: 0; font-size: 18px; font-weight: bold; color: #1e293b; }
+        p { margin-bottom: 15px; }
+        .btn { display: inline-block; padding: 12px 24px; border-radius: 6px; font-weight: bold; text-decoration: none; color: white !important; margin: 20px 0; }
+        .btn-success { background-color: #10b981; }
+        .btn-error { background-color: #ef4444; }
+        .info-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+        .info-table td { padding: 8px 0; border-bottom: 1px solid #f1f5f9; }
+        .info-table td:first-child { font-weight: bold; color: #64748b; width: 40%; }
+        .info-table td:last-child { font-weight: bold; color: #1e293b; }
+        .badge { padding: 8px 16px; border-radius: 50px; font-weight: bold; font-size: 14px; display: inline-block; }
+        .badge-success { background-color: #dcfce7; color: #166534; border: 1px solid #16a34a; }
+        .badge-danger { background-color: #fee2e2; color: #991b1b; border: 1px solid #dc2626; }
+        .logo-img { height: 60px; width: auto; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="email-wrapper">
+        <div class="email-content">
+            
+            {{-- HEADER (Tanpa Logo Laravel) --}}
+            <div class="header">
+                {{-- Logo Lapas (Pastikan file ada di public/img/logo.png) --}}
+                {{-- Gunakan embed agar gambar terlampir dan pasti muncul --}}
+                <img src="{{ $message->embed(public_path('img/logo.png')) }}" alt="Logo Lapas" class="logo-img">
+                
+                <h1>Lapas Kelas IIB Jombang</h1>
+                <div style="color: #cbd5e1; font-size: 12px; margin-top: 5px;">Kementerian Hukum dan HAM Republik Indonesia</div>
+            </div>
 
-{{-- Header with Logo and Badges --}}
-<div style="text-align: center; margin-bottom: 30px; background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 20px; border-radius: 12px; border: 2px solid #fbbf24;">
-    <div style="margin-bottom: 15px;">
-        <img src="{{ asset('img/logo.png') }}" alt="Logo Lapas Jombang" style="height: 70px; width: auto; display: inline-block; border-radius: 50%; border: 4px solid #fbbf24; padding: 5px; background: white; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+            <div class="body">
+                @if ($kunjungan->status === 'approved')
+                    <div style="text-align: center; margin-bottom: 25px;">
+                        <span class="badge badge-success">✅ PENDAFTARAN DISETUJUI</span>
+                    </div>
+
+                    <h2>Halo, {{ $kunjungan->nama_pengunjung }}</h2>
+                    <p>Selamat! Pendaftaran kunjungan tatap muka Anda telah kami terima dan disetujui. Berikut adalah detail tiket kunjungan Anda:</p>
+
+                    <table class="info-table">
+                        <tr>
+                            <td>No. Pendaftaran</td>
+                            <td style="color: #2563eb;">#{{ $kunjungan->id }}</td>
+                        </tr>
+                        <tr>
+                            <td>No. Antrian Harian</td>
+                            <td>{{ $kunjungan->nomor_antrian_harian ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td>Tanggal</td>
+                            <td>{{ \Carbon\Carbon::parse($kunjungan->tanggal_kunjungan)->translatedFormat('l, d F Y') }}</td>
+                        </tr>
+                        <tr>
+                            <td>Sesi</td>
+                            <td>{{ ucfirst($kunjungan->sesi) }}</td>
+                        </tr>
+                        <tr>
+                            <td>Warga Binaan</td>
+                            <td>{{ $kunjungan->nama_wbp }}</td>
+                        </tr>
+                    </table>
+
+                    @if($kunjungan->qr_token)
+                    <div style="text-align: center; margin: 25px 0; padding: 20px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 8px;">
+    <p style="margin: 0 0 15px 0; color: #64748b; font-size: 13px;">Tunjukkan QR Code ini kepada petugas:</p>
+    
+   {{-- Gunakan \SimpleSoftwareIO\QrCode\Facades\QrCode --}}
+<img src="data:image/png;base64, {!! base64_encode(\SimpleSoftwareIO\QrCode\Facades\QrCode::format('png')->size(180)->generate($kunjungan->qr_token)) !!}" alt="QR Code">
+</div>
+                    @endif
+
+                    <div style="background-color: #fffbeb; border-left: 4px solid #f59e0b; padding: 15px; font-size: 13px; color: #92400e; margin-top: 20px;">
+                        <strong>⚠️ Tata Tertib:</strong>
+                        <ul style="margin: 5px 0 0 0; padding-left: 20px;">
+                            <li>Wajib membawa KTP/Identitas Asli.</li>
+                            <li>Datang 15 menit sebelum jam sesi dimulai.</li>
+                            <li>Dilarang membawa barang terlarang (HP, Sajam, Narkoba).</li>
+                        </ul>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <a href="{{ url('/') }}" class="btn btn-success">Lihat Detail di Website</a>
+                    </div>
+
+                @else
+                    {{-- JIKA DITOLAK --}}
+                    <div style="text-align: center; margin-bottom: 25px;">
+                        <span class="badge badge-danger">❌ PENDAFTARAN DITOLAK</span>
+                    </div>
+
+                    <h2>Halo, {{ $kunjungan->nama_pengunjung }}</h2>
+                    <p>Mohon maaf, pendaftaran kunjungan Anda untuk tanggal <strong>{{ \Carbon\Carbon::parse($kunjungan->tanggal_kunjungan)->translatedFormat('d F Y') }}</strong> belum dapat kami setujui saat ini.</p>
+
+                    <div style="background-color: #fef2f2; border: 1px solid #f87171; border-radius: 8px; padding: 15px; margin: 20px 0;">
+                        <h3 style="margin-top: 0; font-size: 14px; color: #b91c1c;">Kemungkinan Penyebab:</h3>
+                        <ul style="color: #7f1d1d; font-size: 13px; margin-bottom: 0; padding-left: 20px;">
+                            <li>Kuota kunjungan harian sudah penuh.</li>
+                            <li>Data pengunjung tidak valid atau masuk daftar hitam.</li>
+                            <li>Jadwal tidak sesuai ketentuan.</li>
+                        </ul>
+                    </div>
+
+                    <p>Silakan coba mendaftar kembali di lain waktu atau hubungi kami untuk informasi lebih lanjut.</p>
+
+                    <div style="text-align: center;">
+                        <a href="{{ route('kunjungan.create') }}" class="btn btn-error">Daftar Ulang</a>
+                    </div>
+                @endif
+            </div>
+
+            {{-- FOOTER CUSTOM --}}
+            <div class="footer">
+                <p style="margin: 0; font-weight: bold;">Lembaga Pemasyarakatan Kelas IIB Jombang</p>
+                <p style="margin: 5px 0 0 0;">Jl. Wahid Hasyim No. 123, Jombang, Jawa Timur</p>
+                <p style="margin: 15px 0 0 0; opacity: 0.7;">&copy; {{ date('Y') }} Sistem Informasi Lapas Jombang. All rights reserved.</p>
+            </div>
+        </div>
     </div>
-    <div style="display: inline-flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-        <span style="background: #dc2626; color: white; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; display: inline-flex; align-items: center; gap: 5px;">
-            🛡️ LAPAS JOMBANG
-        </span>
-        <span style="background: #2563eb; color: white; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; display: inline-flex; align-items: center; gap: 5px;">
-            ⚖️ KEMENKUMHAM RI
-        </span>
-    </div>
-    <h1 style="color: #fbbf24; text-align: center; margin: 10px 0 5px 0; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Status Pendaftaran Kunjungan</h1>
-    <p style="color: #e2e8f0; text-align: center; font-size: 14px; margin: 0;">Sistem Informasi Pemasyarakatan - Lembaga Pemasyarakatan Kelas 2B Jombang</p>
-</div>
-
-@if ($kunjungan->status === 'approved')
-
-{{-- Approved Badge --}}
-<div style="text-align: center; margin-bottom: 20px;">
-    <span style="background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: white; padding: 10px 20px; border-radius: 25px; font-size: 14px; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 8px rgba(22, 163, 74, 0.3);">
-        ✅ PENDAFTARAN DISETUJUI
-    </span>
-</div>
-
-# Selamat! Kunjungan Anda Disetujui
-
-Halo **{{ $kunjungan->nama_pengunjung }}**,
-
-Selamat! Pendaftaran kunjungan Anda telah **disetujui** oleh petugas kami. Mohon perhatikan detail di bawah ini dan tunjukkan email ini kepada petugas saat tiba di lokasi.
-
-@component('mail::panel')
-### 📋 Detail Kunjungan
-**Nomor Pendaftaran:** #{{ $kunjungan->id }} <br>
-**Nomor Antrian Harian:** **#{{ $kunjungan->nomor_antrian_harian }}** <br>
-**Nama Pengunjung:** {{ $kunjungan->nama_pengunjung }} <br>
-**NIK Pengunjung:** {{ $kunjungan->nik_pengunjung }} <br>
-**Alamat:** {{ $kunjungan->alamat_pengunjung }} <br>
-**Nama Warga Binaan:** {{ $kunjungan->nama_wbp }} <br>
-**Hubungan:** {{ $kunjungan->hubungan }} <br>
-**Tanggal Kunjungan:** {{ \Carbon\Carbon::parse($kunjungan->tanggal_kunjungan)->translatedFormat('l, d F Y') }}
-@if($kunjungan->sesi)
-<br> **Sesi Kunjungan:** **{{ ucfirst($kunjungan->sesi) }}**
-@endif
-@endcomponent
-
-@if($kunjungan->qr_token)
-### 📱 Kode QR Verifikasi
-Tunjukkan kode QR di bawah ini kepada petugas saat Anda tiba di lokasi untuk proses verifikasi yang lebih cepat dan aman.
-
-<div style="text-align: center; margin: 20px 0; padding: 20px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px;">
-    {!! QrCode::size(200)->generate($kunjungan->qr_token) !!}
-</div>
-@endif
-
-<div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #fbbf24; border-radius: 10px; padding: 18px; margin: 20px 0; position: relative;">
-    <div style="position: absolute; top: -10px; left: 20px; background: #f59e0b; color: white; padding: 4px 8px; border-radius: 12px; font-size: 10px; font-weight: bold;">
-        ⚠️ PENTING
-    </div>
-    <ul style="color: #92400e; margin: 0; font-size: 14px; line-height: 1.6;">
-        <li>Patuhi semua tata tertib dan aturan barang bawaan yang telah dijelaskan di website.</li>
-        <li>Pendaftaran ini berlaku untuk satu orang pengunjung.</li>
-        <li>Harap tiba di lokasi sesuai dengan tanggal dan sesi kunjungan Anda.</li>
-        <li>Bawa kartu identitas asli untuk verifikasi.</li>
-    </ul>
-</div>
-
-@component('mail::button', ['url' => url('/'), 'color' => 'success'])
-🏛️ Kunjungi Website Lapas
-@endcomponent
-
-@else
-
-{{-- Rejected Badge --}}
-<div style="text-align: center; margin-bottom: 20px;">
-    <span style="background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: white; padding: 10px 20px; border-radius: 25px; font-size: 14px; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 8px rgba(220, 38, 38, 0.3);">
-        ❌ PENDAFTARAN DITOLAK
-    </span>
-</div>
-
-# Pendaftaran Kunjungan Ditolak
-
-Halo **{{ $kunjungan->nama_pengunjung }}**,
-
-Mohon maaf, pendaftaran kunjungan Anda dengan detail di bawah ini tidak dapat kami setujui saat ini.
-
-@component('mail::panel')
-### 📋 Detail Pendaftaran
-**Nama Pengunjung:** {{ $kunjungan->nama_pengunjung }} <br>
-**Nama Warga Binaan:** {{ $kunjungan->nama_wbp }} <br>
-**Rencana Tanggal:** {{ \Carbon\Carbon::parse($kunjungan->tanggal_kunjungan)->translatedFormat('l, d F Y') }}
-@endcomponent
-
-<div style="background: #fee2e2; border: 2px solid #fca5a5; border-radius: 10px; padding: 18px; margin: 20px 0;">
-    <p style="color: #991b1b; margin: 0; font-size: 14px;">
-        <strong>Penolakan bisa disebabkan oleh beberapa hal:</strong><br>
-        • Kuota antrian yang sudah penuh<br>
-        • Data yang tidak sesuai atau tidak lengkap<br>
-        • Tidak memenuhi syarat dan ketentuan lainnya<br>
-        • Jadwal kunjungan yang bertabrakan
-    </p>
-</div>
-
-Silakan coba mendaftar kembali di lain waktu dan pastikan semua data dan persyaratan telah sesuai.
-
-@component('mail::button', ['url' => route('kunjungan.create'), 'color' => 'error'])
-🔄 Daftar Ulang Kunjungan
-@endcomponent
-
-@endif
-
-<div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 2px solid #10b981; border-radius: 10px; padding: 18px; margin: 20px 0; position: relative;">
-    <div style="position: absolute; top: -10px; left: 20px; background: #059669; color: white; padding: 4px 8px; border-radius: 12px; font-size: 10px; font-weight: bold;">
-        📞 BANTUAN
-    </div>
-    <h3 style="color: #065f46; margin: 0 0 12px 0; font-size: 16px; font-weight: bold;">Butuh Bantuan?</h3>
-    <p style="color: #065f46; margin: 0; font-size: 14px; line-height: 1.5;">
-        Hubungi Administrator Sistem Lapas Jombang:<br>
-        📧 <strong>Email:</strong> admin@lapasjombang.go.id<br>
-        📱 <strong>WhatsApp:</strong> +62 812-3456-7890<br>
-        🏢 <strong>Alamat:</strong> Jl. Raya Jombang No. 123, Jombang
-    </p>
-</div>
-
-<div style="text-align: center; margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 10px; border: 1px solid #cbd5e1;">
-    <div style="display: inline-flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-        <span style="background: #1e293b; color: white; padding: 6px 12px; border-radius: 15px; font-size: 10px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;">
-            🏛️ PEMASYARAKATAN
-        </span>
-        <span style="background: #2563eb; color: white; padding: 6px 12px; border-radius: 15px; font-size: 10px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;">
-            🔒 KEAMANAN
-        </span>
-        <span style="background: #16a34a; color: white; padding: 6px 12px; border-radius: 15px; font-size: 10px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;">
-            🤝 KEMANUSIAAN
-        </span>
-    </div>
-    <p style="color: #475569; font-size: 12px; margin: 0; line-height: 1.5;">
-        Email ini dikirim secara otomatis oleh Sistem Informasi Pemasyarakatan<br>
-        <strong>Lembaga Pemasyarakatan Kelas 2B Jombang</strong><br>
-        &copy; {{ date('Y') }} Kementerian Hukum dan HAM Republik Indonesia<br>
-        <em>"Mewujudkan Pemasyarakatan yang Bermartabat"</em>
-    </p>
-</div>
-
-@slot('subcopy')
-<div style="text-align: center; color: #9ca3af; font-size: 11px;">
-    Ini adalah email yang dibuat secara otomatis. Mohon tidak membalas email ini. Semua informasi kunjungan dapat diakses melalui website resmi kami.
-</div>
-@endslot
-
-@endcomponent
+</body>
+</html>

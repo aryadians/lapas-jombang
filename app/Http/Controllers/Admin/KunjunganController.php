@@ -8,158 +8,123 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\KunjunganStatusMail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class KunjunganController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan daftar kunjungan dengan filter.
      */
     public function index(Request $request)
     {
-        // Ambil query builder untuk model Kunjungan
         $query = Kunjungan::query();
 
-        // Filter berdasarkan status jika ada
-        if ($request->has('status') && $request->status != '') {
+        // 1. Filter Status
+        if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
 
-        // Filter berdasarkan rentang tanggal kunjungan
-        $tanggalMulai = $request->input('tanggal_mulai');
-        $tanggalSelesai = $request->input('tanggal_selesai');
-
-        if ($tanggalMulai && $tanggalSelesai) {
-            // Jika kedua tanggal ada, gunakan whereBetween
-            $query->whereBetween('tanggal_kunjungan', [$tanggalMulai, $tanggalSelesai]);
-        } elseif ($tanggalMulai) {
-            // Jika hanya tanggal mulai
-            $query->whereDate('tanggal_kunjungan', '>=', $tanggalMulai);
-        } elseif ($tanggalSelesai) {
-            // Jika hanya tanggal selesai
-            $query->whereDate('tanggal_kunjungan', '<=', $tanggalSelesai);
+        // 2. Filter Tanggal
+        if ($request->filled('tanggal_kunjungan')) {
+            $query->whereDate('tanggal_kunjungan', $request->input('tanggal_kunjungan'));
         }
 
-        // Filter berdasarkan kata kunci pencarian
-        if ($request->has('search') && $request->search != '') {
+        // 3. Filter Sesi
+        if ($request->filled('sesi')) {
+            $query->where('sesi', $request->sesi);
+        }
+
+        // 4. Search (Nama Pengunjung, WBP, NIK)
+        if ($request->filled('search')) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('nama_pengunjung', 'like', '%' . $search . '%')
-                  ->orWhere('nama_wbp', 'like', '%' . $search . '%')
-                  ->orWhere('nik_pengunjung', 'like', '%' . $search . '%');
+                    ->orWhere('nama_wbp', 'like', '%' . $search . '%')
+                    ->orWhere('nik_pengunjung', 'like', '%' . $search . '%');
             });
         }
 
-        // Urutkan dari yang terbaru dan lakukan paginasi
+        // Urutkan terbaru & Pagination
         $kunjungans = $query->latest()->paginate(15)->withQueryString();
 
-        // Kirim data ke view
         return view('admin.kunjungan.index', compact('kunjungans'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update status kunjungan (Approved/Rejected).
      */
-    public function update(Request $request, Kunjungan $kunjungan)
+    public function update(Request $request, $id)
     {
-        // Validasi input status
+        // 1. Cari Data
+        $kunjungan = Kunjungan::findOrFail($id);
+
+        // 2. Validasi Input
         $request->validate([
-            'status' => 'required|in:approved,rejected',
+            'status' => 'required|in:approved,rejected,pending',
         ]);
 
-        $updateData = ['status' => $request->status];
+        $statusBaru = $request->status;
+        $updateData = ['status' => $statusBaru];
 
-        // Jika status adalah "approved", buat token unik untuk QR code
-        // dan pastikan token belum ada.
-        if ($request->status === 'approved' && is_null($kunjungan->qr_token)) {
+        // 3. Generate QR Token jika Approved & belum punya token
+        if ($statusBaru === 'approved' && is_null($kunjungan->qr_token)) {
             $updateData['qr_token'] = Str::random(40);
         }
 
-        // Update status kunjungan (dan token jika ada)
+        // 4. Update Database
         $kunjungan->update($updateData);
 
-        // Refresh model untuk mendapatkan data terbaru (termasuk token)
+        // Refresh data agar variabel $kunjungan memuat data terbaru (termasuk token QR baru)
         $kunjungan->refresh();
 
-        // Kirim email notifikasi ke pengunjung
-        try {
-            if ($kunjungan->email_pengunjung) {
-                Mail::to($kunjungan->email_pengunjung)->send(new KunjunganStatusMail($kunjungan));
+        // 5. Logika Kirim Email
+        // Email dikirim HANYA jika status Approved atau Rejected
+        if (in_array($statusBaru, ['approved', 'rejected'])) {
+
+            if (!empty($kunjungan->email_pengunjung)) {
+                try {
+                    // Gunakan Mail::send (Sync) agar langsung terkirim
+                    Mail::to($kunjungan->email_pengunjung)
+                        ->send(new KunjunganStatusMail($kunjungan));
+                } catch (\Exception $e) {
+                    // Catat error di storage/logs/laravel.log
+                    Log::error("Gagal mengirim email ke {$kunjungan->email_pengunjung}: " . $e->getMessage());
+
+                    return redirect()->back()->with('warning', 'Status berhasil diubah, namun email notifikasi gagal terkirim. Cek log atau koneksi internet.');
+                }
             }
-        } catch (\Exception $e) {
-            // Jika email gagal dikirim, jangan hentikan proses.
-            // Admin tetap melihat sukses, tapi error email bisa di-log.
-            \Log::error("Gagal mengirim email status kunjungan ke {$kunjungan->email_pengunjung}: " . $e->getMessage());
         }
 
-        // Redirect kembali dengan pesan sukses
-        return redirect()->route('admin.kunjungan.index')->with('success', 'Status kunjungan berhasil diperbarui.');
+        return redirect()->back()->with('success', 'Status kunjungan berhasil diperbarui.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Hapus satu data kunjungan.
      */
-    public function destroy(Kunjungan $kunjungan)
+    public function destroy($id)
     {
-        // Hapus data kunjungan
+        $kunjungan = Kunjungan::findOrFail($id);
         $kunjungan->delete();
 
-        // Redirect kembali dengan pesan sukses
-        return redirect()->route('admin.kunjungan.index')->with('success', 'Data pendaftaran kunjungan berhasil dihapus.');
+        return redirect()->back()->with('success', 'Data kunjungan berhasil dihapus.');
     }
 
     /**
-     * Display the specified resource.
+     * Menampilkan detail kunjungan.
      */
-    public function show(Kunjungan $kunjungan)
+    public function show($id)
     {
+        $kunjungan = Kunjungan::findOrFail($id);
         return view('admin.kunjungan.show', compact('kunjungan'));
     }
 
     /**
-     * Show the form for verifying a QR code.
-     */
-    public function showVerificationForm()
-    {
-        return view('admin.kunjungan.verifikasi');
-    }
-
-    /**
-     * Verify the QR code token and display the visit details.
-     */
-    public function verifyQrCode(Request $request)
-    {
-        $request->validate([
-            'qr_token' => 'required|string',
-        ]);
-
-        // Cari data berdasarkan token (gunakan trim untuk hapus spasi tidak sengaja)
-        $token = trim($request->qr_token);
-
-        $kunjungan = Kunjungan::where('qr_token', $token)->first();
-
-        if ($kunjungan) {
-            // Jika ketemu, kirim data kunjungan + pesan sukses
-            return view('admin.kunjungan.verifikasi', [
-                'kunjungan' => $kunjungan,
-                'status_verifikasi' => 'success' // Flag untuk UI
-            ]);
-        } else {
-            // Jika TIDAK ketemu, kembalikan dengan input lama + pesan error
-            // Kita kirim 'kunjungan' sebagai null agar UI merespon
-            return view('admin.kunjungan.verifikasi', [
-                'kunjungan' => null,
-                'status_verifikasi' => 'failed'
-            ])->with('error', 'Token QR Code tidak ditemukan dalam database.');
-        }
-    }
-
-    /**
-     * Bulk update status for multiple kunjungans.
+     * Update Masal (Bulk Action).
      */
     public function bulkUpdate(Request $request)
     {
         $request->validate([
-            'ids' => 'required|array|min:1',
+            'ids'   => 'required|array|min:1',
             'ids.*' => 'integer|exists:kunjungans,id',
             'status' => 'required|in:approved,rejected',
         ]);
@@ -167,48 +132,81 @@ class KunjunganController extends Controller
         $ids = $request->input('ids');
         $status = $request->input('status');
 
-        // Update all selected kunjungans
         $kunjungans = Kunjungan::whereIn('id', $ids)->get();
+        $count = 0;
 
         foreach ($kunjungans as $kunjungan) {
             $updateData = ['status' => $status];
 
-            // Generate QR token for approved kunjungans if not exists
+            // Generate Token jika Approved
             if ($status === 'approved' && is_null($kunjungan->qr_token)) {
                 $updateData['qr_token'] = Str::random(40);
             }
 
             $kunjungan->update($updateData);
+            $kunjungan->refresh(); // Refresh untuk ambil data terbaru sebelum kirim email
 
-            // Send email notification
+            // Kirim Email
             try {
-                if ($kunjungan->email_pengunjung) {
+                if (!empty($kunjungan->email_pengunjung)) {
                     Mail::to($kunjungan->email_pengunjung)->send(new KunjunganStatusMail($kunjungan));
                 }
             } catch (\Exception $e) {
-                \Log::error("Gagal mengirim email status kunjungan ke {$kunjungan->email_pengunjung}: " . $e->getMessage());
+                Log::error("Bulk Update Email Error ID {$kunjungan->id}: " . $e->getMessage());
             }
+
+            $count++;
         }
 
-        return redirect()->route('admin.kunjungan.index')->with('success', 'Status ' . count($kunjungans) . ' pendaftaran kunjungan berhasil diperbarui.');
+        return redirect()->back()->with('success', "$count data kunjungan berhasil diperbarui.");
     }
 
     /**
-     * Bulk delete multiple kunjungans.
+     * Hapus Masal (Bulk Delete).
      */
     public function bulkDelete(Request $request)
     {
         $request->validate([
-            'ids' => 'required|array|min:1',
+            'ids'   => 'required|array|min:1',
             'ids.*' => 'integer|exists:kunjungans,id',
         ]);
 
         $ids = $request->input('ids');
-        $count = Kunjungan::whereIn('id', $ids)->count();
-
-        // Delete all selected kunjungans
         Kunjungan::whereIn('id', $ids)->delete();
 
-        return redirect()->route('admin.kunjungan.index')->with('success', $count . ' pendaftaran kunjungan berhasil dihapus.');
+        return redirect()->back()->with('success', count($ids) . ' data kunjungan berhasil dihapus.');
+    }
+
+    /**
+     * Form Verifikasi QR Code.
+     */
+    public function showVerificationForm()
+    {
+        return view('admin.kunjungan.verifikasi');
+    }
+
+    /**
+     * Proses Verifikasi QR Code.
+     */
+    public function verifyQrCode(Request $request)
+    {
+        $request->validate([
+            'qr_token' => 'required|string',
+        ]);
+
+        $token = trim($request->qr_token);
+        $kunjungan = Kunjungan::where('qr_token', $token)->first();
+
+        if ($kunjungan) {
+            return view('admin.kunjungan.verifikasi', [
+                'kunjungan' => $kunjungan,
+                'status_verifikasi' => 'success'
+            ]);
+        } else {
+            return view('admin.kunjungan.verifikasi', [
+                'kunjungan' => null,
+                'status_verifikasi' => 'failed'
+            ])->withErrors(['qr_token' => 'Token QR Code tidak valid atau tidak ditemukan.']);
+        }
     }
 }

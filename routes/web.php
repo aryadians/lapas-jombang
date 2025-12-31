@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewsController; // Public News Controller
@@ -18,6 +17,8 @@ use App\Models\Kunjungan;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\PasswordResetLinkController; // <--- PENTING: Import ini
+use App\Http\Controllers\Auth\NewPasswordController;
 
 
 /*
@@ -117,3 +118,30 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
+
+// ... route login dan logout Anda sebelumnya ...
+
+// --- ROUTE LUPA PASSWORD (FORGOT PASSWORD) ---
+
+// 1. Menampilkan form (Halaman yang ada input emailnya)
+Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
+    ->name('password.request');
+
+// 2. Memproses pengiriman email (Ini yang dicari oleh error 'password.email')
+Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+    ->name('password.email');
+
+// --- ROUTE RESET PASSWORD (SAAT LINK DI EMAIL DIKLIK) ---
+
+// 3. Menampilkan form input password baru
+Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
+    ->name('password.reset');
+
+// 4. Memproses update password ke database
+Route::post('reset-password', [NewPasswordController::class, 'store'])
+    ->name('password.update');

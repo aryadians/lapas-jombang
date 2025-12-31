@@ -12,47 +12,34 @@ use Illuminate\Queue\SerializesModels;
 
 class KunjunganStatusMail extends Mailable
 {
-    use SerializesModels;
+    use Queueable, SerializesModels;
 
     public $kunjungan;
 
-    /**
-     * Create a new message instance.
-     */
     public function __construct(Kunjungan $kunjungan)
     {
         $this->kunjungan = $kunjungan;
     }
 
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
         $subject = $this->kunjungan->status === 'approved'
-            ? 'Pendaftaran Kunjungan Anda Telah Disetujui'
-            : 'Pendaftaran Kunjungan Anda Ditolak';
+            ? '✅ Pendaftaran Kunjungan Disetujui - Lapas Jombang'
+            : '❌ Pendaftaran Kunjungan Ditolak - Lapas Jombang';
 
         return new Envelope(
             subject: $subject,
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
+        // Pastikan file view ada di resources/views/emails/kunjungan-status.blade.php
         return new Content(
             markdown: 'emails.kunjungan-status',
         );
     }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
     public function attachments(): array
     {
         return [];

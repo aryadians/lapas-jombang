@@ -30,20 +30,17 @@ class PasswordResetLinkController extends Controller
             'email' => ['required', 'email'],
         ]);
 
-        // Custom password reset logic
-        $user = \App\Models\User::where('email', $request->email)->first();
+        // Cara Standar Laravel (Otomatis handle token & notifikasi bawaan)
+        // Tidak perlu buat file Notification manual
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
 
-        if ($user) {
-            // Generate token
-            $token = app('auth.password.broker')->createToken($user);
-
-            // Send custom notification
-            $user->notify(new ResetPasswordNotification($token));
-
-            return back()->with('status', 'Link reset password telah dikirim ke email Anda.');
+        if ($status == Password::RESET_LINK_SENT) {
+            return back()->with('status', __($status));
         }
 
-        // If user not found, still show success message for security
-        return back()->with('status', 'Jika email terdaftar dalam sistem, link reset password akan dikirim.');
+        return back()->withInput($request->only('email'))
+            ->withErrors(['email' => __($status)]);
     }
 }
