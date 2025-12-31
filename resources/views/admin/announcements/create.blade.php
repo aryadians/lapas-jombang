@@ -1,90 +1,179 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="max-w-3xl mx-auto">
-    <a href="{{ route('announcements.index') }}" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold mb-6 transition-colors">
-        <i class="fas fa-arrow-left mr-2"></i>
-        Kembali ke Daftar Pengumuman
-    </a>
+{{-- Load Animate.css --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
-    <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
-        <div class="p-8 border-b border-slate-100 bg-slate-50">
-            <h2 class="text-2xl font-bold text-slate-800">Buat Pengumuman Baru</h2>
-            <p class="text-sm text-slate-600 mt-1">Isi formulir untuk membuat pengumuman baru.</p>
+<style>
+    /* 3D Card Effect */
+    .card-3d {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+    }
+    
+    /* Modern Gradient Text */
+    .text-gradient {
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-image: linear-gradient(to right, #1e293b, #2563eb);
+    }
+
+    /* Input Styling */
+    .input-3d {
+        transition: all 0.3s ease;
+        border: 2px solid #e2e8f0;
+    }
+    .input-3d:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        transform: translateY(-1px);
+    }
+
+    /* Trix Editor Customization */
+    trix-editor {
+        border: 2px solid #e2e8f0 !important;
+        border-radius: 0.75rem;
+        padding: 1rem;
+        min-height: 250px;
+        background-color: white;
+        transition: all 0.3s ease;
+    }
+    trix-editor:focus {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    }
+    trix-toolbar .trix-button--icon { color: #64748b; }
+    trix-toolbar .trix-button--icon:hover { color: #3b82f6; }
+    trix-toolbar .trix-button.trix-active { background: #eff6ff; color: #2563eb; }
+</style>
+
+<div class="max-w-4xl mx-auto pb-12 space-y-8 perspective-1000">
+
+    {{-- HEADER --}}
+    <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 animate__animated animate__fadeInDown">
+        <div>
+            <h1 class="text-3xl font-extrabold text-gradient">Buat Pengumuman Baru</h1>
+            <p class="text-slate-500 mt-1 font-medium">Buat informasi penting untuk publikasi.</p>
+        </div>
+        <a href="{{ route('announcements.index') }}" class="group inline-flex items-center gap-2 bg-white text-slate-600 font-bold py-2.5 px-5 rounded-xl shadow-sm border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all active:scale-95">
+            <i class="fas fa-arrow-left text-slate-400 group-hover:text-slate-600 transition-colors"></i>
+            <span>Kembali</span>
+        </a>
+    </header>
+
+    {{-- FORM CREATE --}}
+    <div class="card-3d bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden animate__animated animate__fadeInUp delay-100">
+        
+        {{-- Form Header --}}
+        <div class="bg-gradient-to-r from-slate-50 to-blue-50 p-8 border-b border-slate-100 flex items-center gap-4">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-lg transform -rotate-3">
+                <i class="fas fa-bullhorn text-2xl"></i>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold text-slate-800">Formulir Pengumuman</h2>
+                <p class="text-slate-500 text-sm">Isi detail pengumuman di bawah ini.</p>
+            </div>
         </div>
 
-        <form action="{{ route('announcements.store') }}" method="POST" id="createAnnouncementForm" class="p-8 space-y-6">
+        <form action="{{ route('announcements.store') }}" method="POST" id="createAnnouncementForm" class="p-8 space-y-8">
             @csrf
-            
-            <div>
-                <label for="title" class="block text-sm font-semibold text-slate-700 mb-2">Judul Pengumuman</label>
-                <input type="text" id="title" name="title" value="{{ old('title') }}"
-                       class="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all @error('title') border-red-300 @enderror" 
-                       placeholder="Contoh: Jadwal Kunjungan Idul Fitri" required>
-                @error('title') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-            </div>
 
-            <div>
-                <label for="date" class="block text-sm font-semibold text-slate-700 mb-2">Tanggal Kegiatan / Berlaku</label>
-                <input type="date" id="date" name="date" value="{{ old('date') }}"
-                       class="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all @error('date') border-red-300 @enderror" required>
-                @error('date') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-            </div>
-
-            <div>
-                <label for="content" class="block text-sm font-semibold text-slate-700 mb-2">Isi Pengumuman</label>
-                <input id="content" type="hidden" name="content" value="{{ old('content') }}">
-                <div class="rounded-lg border-2 border-slate-200 focus-within:border-blue-400 focus-within:ring-4 focus-within:ring-blue-100 transition-all @error('content') border-red-300 @enderror">
-                    <trix-editor input="content" class="trix-content"></trix-editor>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {{-- Judul --}}
+                <div class="md:col-span-2 space-y-2">
+                    <label for="title" class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Judul Pengumuman</label>
+                    <input type="text" id="title" name="title" value="{{ old('title') }}" 
+                        class="input-3d w-full px-4 py-3.5 rounded-xl bg-slate-50 text-slate-700 font-medium placeholder-slate-400 focus:bg-white" 
+                        placeholder="Contoh: Jadwal Kunjungan Idul Fitri" required>
+                    @error('title') <p class="text-red-500 text-xs font-bold ml-1">{{ $message }}</p> @enderror
                 </div>
-                @error('content') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+
+                {{-- Tanggal --}}
+                <div class="space-y-2">
+                    <label for="date" class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Tanggal Berlaku</label>
+                    <input type="date" id="date" name="date" value="{{ old('date') }}" 
+                        class="input-3d w-full px-4 py-3.5 rounded-xl bg-slate-50 text-slate-700 font-medium focus:bg-white" required>
+                    @error('date') <p class="text-red-500 text-xs font-bold ml-1">{{ $message }}</p> @enderror
+                </div>
+
+                {{-- Status --}}
+                <div class="space-y-2">
+                    <label for="status" class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Status Publikasi</label>
+                    <div class="relative">
+                        <select id="status" name="status" class="input-3d w-full px-4 py-3.5 rounded-xl bg-slate-50 text-slate-700 font-medium focus:bg-white appearance-none cursor-pointer" required>
+                            <option value="published" @if(old('status') == 'published') selected @endif>✅ Terbitkan Sekarang</option>
+                            <option value="draft" @if(old('status') == 'draft') selected @endif>📝 Simpan sebagai Draft</option>
+                        </select>
+                        <i class="fas fa-chevron-down absolute right-4 top-4 text-slate-400 pointer-events-none"></i>
+                    </div>
+                    @error('status') <p class="text-red-500 text-xs font-bold ml-1">{{ $message }}</p> @enderror
+                </div>
             </div>
 
-            <div>
-                <label for="status" class="block text-sm font-semibold text-slate-700 mb-2">Status Publikasi</label>
-                <select id="status" name="status" class="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all bg-white @error('status') border-red-300 @enderror" required>
-                    <option value="published" @if(old('status') == 'published') selected @endif>Terbitkan</option>
-                    <option value="draft" @if(old('status') == 'draft') selected @endif>Simpan sebagai Draft</option>
-                </select>
-                @error('status') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+            {{-- Konten (Trix) --}}
+            <div class="space-y-2">
+                <label for="content" class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Isi Pengumuman</label>
+                <input id="content" type="hidden" name="content" value="{{ old('content') }}">
+                <div class="relative">
+                    <trix-editor input="content" class="trix-content prose max-w-none"></trix-editor>
+                </div>
+                @error('content') <p class="text-red-500 text-xs font-bold ml-1">{{ $message }}</p> @enderror
             </div>
 
-            <div class="pt-6 border-t border-slate-200 flex justify-end gap-3">
-                <a href="{{ route('announcements.index') }}" class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg transition-all border border-slate-200">
+            {{-- Action Buttons --}}
+            <div class="pt-8 border-t border-slate-100 flex justify-end gap-4">
+                <a href="{{ route('announcements.index') }}" class="px-6 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl transition-all active:scale-95">
                     Batal
                 </a>
-                <button type="submit" onclick="confirmCreate(event)" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition-all">
-                    <i class="fas fa-save mr-2"></i>Simpan Pengumuman
+                <button type="submit" onclick="confirmCreate(event)" class="px-8 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-blue-500/30 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center gap-2">
+                    <i class="fas fa-save"></i> Simpan Pengumuman
                 </button>
             </div>
         </form>
     </div>
 </div>
 
-<style>
-.trix-content { min-height: 200px; }
-trix-editor { border: none !important; }
-trix-editor:focus { outline: none; }
-</style>
-
+{{-- Script SweetAlert --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-function confirmCreate(event) {
-    event.preventDefault();
-    const form = document.getElementById('createAnnouncementForm');
-    
-    Swal.fire({
-        ...swalTheme,
-        title: 'Buat Pengumuman?',
-        text: "Pastikan semua detail pengumuman sudah benar sebelum menyimpan.",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Ya, Buat',
-        cancelButtonText: 'Batal',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            form.submit();
-        }
-    });
-}
+    const swal3DConfig = {
+        showClass: { popup: 'animate__animated animate__zoomInDown animate__faster' },
+        hideClass: { popup: 'animate__animated animate__zoomOutUp animate__faster' },
+        customClass: {
+            popup: 'rounded-3xl shadow-2xl border-4 border-white/50 backdrop-blur-xl',
+            title: 'text-2xl font-black text-slate-800',
+            confirmButton: 'rounded-xl px-6 py-3 font-bold shadow-lg bg-blue-600 text-white mr-2',
+            cancelButton: 'rounded-xl px-6 py-3 font-bold shadow-lg bg-slate-200 text-slate-600'
+        },
+        buttonsStyling: false
+    };
+
+    function confirmCreate(event) {
+        event.preventDefault();
+        const form = document.getElementById('createAnnouncementForm');
+        
+        Swal.fire({
+            ...swal3DConfig,
+            title: 'Buat Pengumuman?',
+            text: "Pastikan data yang Anda masukkan sudah benar.",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Buat',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Memproses...',
+                    text: 'Mohon tunggu sebentar.',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    willOpen: () => { Swal.showLoading(); }
+                });
+                form.submit();
+            }
+        });
+    }
 </script>
 @endsection
