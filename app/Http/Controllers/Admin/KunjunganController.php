@@ -132,9 +132,25 @@ class KunjunganController extends Controller
             'qr_token' => 'required|string',
         ]);
 
-        $kunjungan = Kunjungan::where('qr_token', $request->qr_token)->first();
+        // Cari data berdasarkan token (gunakan trim untuk hapus spasi tidak sengaja)
+        $token = trim($request->qr_token);
 
-        return view('admin.kunjungan.verifikasi', compact('kunjungan'));
+        $kunjungan = Kunjungan::where('qr_token', $token)->first();
+
+        if ($kunjungan) {
+            // Jika ketemu, kirim data kunjungan + pesan sukses
+            return view('admin.kunjungan.verifikasi', [
+                'kunjungan' => $kunjungan,
+                'status_verifikasi' => 'success' // Flag untuk UI
+            ]);
+        } else {
+            // Jika TIDAK ketemu, kembalikan dengan input lama + pesan error
+            // Kita kirim 'kunjungan' sebagai null agar UI merespon
+            return view('admin.kunjungan.verifikasi', [
+                'kunjungan' => null,
+                'status_verifikasi' => 'failed'
+            ])->with('error', 'Token QR Code tidak ditemukan dalam database.');
+        }
     }
 
     /**
