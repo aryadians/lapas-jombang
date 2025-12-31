@@ -36,7 +36,7 @@ class KunjunganStatusMail extends Mailable
     {
         // Pastikan file view ada di resources/views/emails/kunjungan-status.blade.php
         return new Content(
-            markdown: 'emails.kunjungan-status',
+            view: 'emails.kunjungan-status',
         );
     }
 

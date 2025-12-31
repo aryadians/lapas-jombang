@@ -84,13 +84,15 @@ class KunjunganController extends Controller
             if (!empty($kunjungan->email_pengunjung)) {
                 try {
                     // Gunakan Mail::send (Sync) agar langsung terkirim
+                    // Pastikan config .env QUEUE_CONNECTION=sync
                     Mail::to($kunjungan->email_pengunjung)
                         ->send(new KunjunganStatusMail($kunjungan));
                 } catch (\Exception $e) {
                     // Catat error di storage/logs/laravel.log
                     Log::error("Gagal mengirim email ke {$kunjungan->email_pengunjung}: " . $e->getMessage());
 
-                    return redirect()->back()->with('warning', 'Status berhasil diubah, namun email notifikasi gagal terkirim. Cek log atau koneksi internet.');
+                    // Beri pesan warning ke admin, tapi jangan error screen
+                    return redirect()->back()->with('warning', 'Status berhasil diubah, namun email notifikasi gagal terkirim. Cek Log atau Logo/QR Code.');
                 }
             }
         }
