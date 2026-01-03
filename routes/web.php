@@ -19,6 +19,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\PasswordResetLinkController; // <--- PENTING: Import ini
 use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Guest\GalleryController; // <--- PENTING
 
 
 /*
@@ -145,3 +146,6 @@ Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
 // 4. Memproses update password ke database
 Route::post('reset-password', [NewPasswordController::class, 'store'])
     ->name('password.update');
+
+// Route Galeri (Bisa diakses publik)
+Route::get('/galeri-karya', [GalleryController::class, 'index'])->name('gallery.index');

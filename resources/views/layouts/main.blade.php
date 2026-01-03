@@ -81,6 +81,9 @@
                     <a href="{{ url('/#profil') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-semibold transition-all duration-300">Profil</a>
                     <a href="{{ route('news.public.index') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-semibold transition-all duration-300">Berita</a>
                     <a href="{{ route('announcements.public.index') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-semibold transition-all duration-300">Pengumuman</a>
+                    {{-- TAMBAHAN: MENU GALERI (Disisipkan disini) --}}
+    <a href="{{ route('gallery.index') }}" class="text-yellow-400 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-bold transition-all duration-300 flex items-center gap-2">
+        <i class="fas fa-store"></i> Galeri
                 </div>
 
                 {{-- Menu Kanan --}}
@@ -135,6 +138,10 @@
                 <a href="{{ url('/#profil') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-300 hover:text-white hover:bg-slate-800/50 transition-all duration-300">Profil</a>
                 <a href="{{ route('news.public.index') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-300 hover:text-white hover:bg-slate-800/50 transition-all duration-300">Berita</a>
                 <a href="{{ route('announcements.public.index') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-300 hover:text-white hover:bg-slate-800/50 transition-all duration-300">Pengumuman</a>
+                {{-- TAMBAHAN: MENU GALERI MOBILE --}}
+        <a href="{{ route('gallery.index') }}" class="block px-3 py-2 rounded-md text-base font-bold text-yellow-400 hover:text-white hover:bg-slate-800/50 transition-all duration-300">
+            <i class="fas fa-store mr-2"></i> Galeri Karya
+        </a>
 
                 @if (Route::has('login'))
                 <a href="{{ route('login') }}" class="block px-3 py-2 mt-2 rounded-md text-base font-medium text-gray-400 hover:text-yellow-400 hover:bg-slate-800/50 transition-all duration-300">
@@ -611,4 +618,4 @@
 
 </body>
 
-</html>sudah 
+</html>
