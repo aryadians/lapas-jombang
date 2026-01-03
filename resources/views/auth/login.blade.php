@@ -150,6 +150,6 @@
 
     {{-- Footer --}}
     <div class="mt-8 text-center text-slate-400 text-xs relative z-10 animate__animated animate__fadeInUp animate__delay-1s">
-        &copy; {{ date('Y') }} Sistem Informasi Lapas Jombang.
+        &copy; {{ date('Y') }} Sistem Informasi Lapas Kelas IIB Jombang.
     </div>
 </x-guest-layout>

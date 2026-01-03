@@ -42,7 +42,7 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
         ], false));
 
         return (new MailMessage)
-            ->subject('Reset Password - Sistem Informasi Pemasyarakatan Lapas Jombang')
+            ->subject('Reset Password - Sistem Informasi Pemasyarakatan Lapas Kelas IIB Jombang')
             ->view('emails.reset-password', [
                 'request' => (object) [
                     'email' => $notifiable->getEmailForPasswordReset(),

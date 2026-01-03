@@ -274,7 +274,7 @@
 {{-- AREA CETAK (PRINT) --}}
 <div id="printableArea" class="hidden">
     <div style="text-align: center; font-family: sans-serif; padding: 20px; border: 2px solid #000; margin: 20px;">
-        <h2 style="margin-bottom: 5px; text-transform: uppercase;">Lapas Kelas 2B Jombang</h2>
+        <h2 style="margin-bottom: 5px; text-transform: uppercase;">Lapas Kelas IIB Jombang</h2>
         <p style="margin-top: 0; font-size: 14px;">Tiket Antrian Kunjungan Tatap Muka</p>
         <hr style="margin: 20px 0;">
         <h1 style="font-size: 48px; margin: 10px 0;">#{{ $kunjungan->nomor_antrian_harian }}</h1>

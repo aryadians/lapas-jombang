@@ -7,7 +7,7 @@
     {{-- CSRF Token Wajib untuk AJAX --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Lapas Kelas 2B Jombang</title>
+    <title>Lapas Kelas IIB Jombang</title>
 
     <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/png">
 
@@ -69,7 +69,7 @@
                         </div>
 
                         <div class="flex flex-col">
-                            <span class="font-bold text-white text-lg md:text-xl tracking-wide group-hover:text-yellow-400 transition-colors duration-300">LAPAS KELAS 2B JOMBANG</span>
+                            <span class="font-bold text-white text-lg md:text-xl tracking-wide group-hover:text-yellow-400 transition-colors duration-300">LAPAS KELAS IIB JOMBANG</span>
                             <span class="text-[11px] text-yellow-500 uppercase tracking-wider font-semibold hidden md:block">Kementerian Imigrasi dan Pemasyarakatan RI</span>
                         </div>
                     </a>
@@ -362,7 +362,7 @@
                         referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
                     <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur text-slate-900 px-4 py-2 rounded-lg text-xs font-bold shadow-lg">
-                        📍 Lokasi Lapas Jombang
+                        📍 Lokasi Lapas Kelas IIB Jombang
                     </div>
                     <div class="absolute top-4 right-4 bg-blue-600/90 backdrop-blur text-white px-3 py-1 rounded-lg text-xs font-semibold shadow-lg">
                         <i class="fas fa-map-marker-alt mr-1"></i> -7.5587, 112.2313
@@ -445,7 +445,7 @@
 
             {{-- Copyright Bawah --}}
             <div class="mt-12 pt-8 border-t border-slate-800/50 text-center text-slate-500 text-sm">
-                <p>© {{ date('Y') }} Lapas Kelas 2B Jombang. All rights reserved.</p>
+                <p>© {{ date('Y') }} Lapas Kelas IIB Jombang. All rights reserved.</p>
                 <p class="mt-2 text-xs">Developed by Tim IT</p>
             </div>
         </div>

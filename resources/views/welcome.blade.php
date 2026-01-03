@@ -20,7 +20,7 @@
         <div class="mt-12 mb-16 flex justify-center">
             <div class="relative group">
                 <img src="{{ asset('img/logo.png') }}"
-                    alt="Logo Lapas Jombang"
+                    alt="Logo Lapas Kelas IIB Jombang"
                     class="h-28 md:h-36 w-auto drop-shadow-2xl animate-fade-in-down relative z-10 transform group-hover:scale-110 transition-transform duration-300"
                     onerror="this.style.display='none'" loading="lazy">
                 <div class="absolute -inset-4 bg-gradient-to-r from-blue-500/20 to-yellow-500/20 rounded-full blur-lg opacity-40 animate-pulse group-hover:opacity-70 group-hover:blur-xl group-hover:-inset-6 transition-all duration-300"></div>
@@ -29,7 +29,7 @@
 
         {{-- Main Heading --}}
         <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight leading-tight animate-fade-in-up group hover:drop-shadow-2xl transition-all">
-            Lapas Kelas 2B <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent animate-text-shimmer">Jombang</span>
+            Lapas Kelas IIB <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent animate-text-shimmer">Jombang</span>
         </h1>
 
         {{-- Subtitle --}}
@@ -101,7 +101,7 @@
                     Tentang Kami
                 </div>
                 <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-800 mb-8">
-                    Lembaga Pemasyarakatan <span class="text-blue-600">Jombang</span>
+                    Lembaga Pemasyarakatan <span class="text-blue-600">Kelas IIB Jombang</span>
                 </h2>
                 <div class="h-1 w-24 bg-gradient-to-r from-blue-500 to-yellow-500 mx-auto mb-8"></div>
                 <p class="text-lg text-gray-600 leading-relaxed max-w-4xl mx-auto">
@@ -404,7 +404,7 @@
                 Butuh Informasi <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">Lebih Lanjut?</span>
             </h2>
             <p class="text-lg text-slate-300 mb-16 leading-relaxed">
-                Hubungi kami untuk mendapatkan informasi tentang layanan kunjungan, program pembinaan, atau hal lainnya terkait Lembaga Pemasyarakatan Jombang.
+                Hubungi kami untuk mendapatkan informasi tentang layanan kunjungan, program pembinaan, atau hal lainnya terkait Lembaga Pemasyarakatan Kelas IIB Jombang.
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">

@@ -48,7 +48,7 @@
     <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 animate__animated animate__fadeInDown">
         <div>
             <h1 class="text-3xl font-extrabold text-gradient">Tambah Pengguna Baru</h1>
-            <p class="text-slate-500 mt-1 font-medium">Buat akun untuk akses sistem Lapas Jombang.</p>
+            <p class="text-slate-500 mt-1 font-medium">Buat akun untuk akses sistem Lapas Kelas IIB Jombang.</p>
         </div>
         <a href="{{ route('admin.users.index') }}" class="group inline-flex items-center gap-2 bg-white text-slate-600 font-bold py-2.5 px-5 rounded-xl shadow-sm border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all active:scale-95">
             <i class="fas fa-arrow-left text-slate-400 group-hover:text-slate-600 transition-colors"></i>

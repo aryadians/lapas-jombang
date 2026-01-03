@@ -104,7 +104,7 @@
 <body onload="window.print()" class="bg-gray-100">
     <div class="container">
         <div class="header">
-            <img src="{{ asset('img/logo.png') }}" alt="Logo Lapas Jombang">
+            <img src="{{ asset('img/logo.png') }}" alt="Logo Lapas Kelas IIB Jombang">
             <h1>Bukti Pendaftaran Kunjungan</h1>
             <p>Lembaga Pemasyarakatan Kelas IIB Jombang</p>
         </div>

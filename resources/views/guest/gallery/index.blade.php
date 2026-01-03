@@ -49,7 +49,7 @@
         </h1>
 
         <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up transform translate-z-20" style="animation-delay: 0.1s">
-            Setiap produk adalah bukti kreativitas tanpa batas di balik jeruji. Dukung kemandirian mereka dengan membeli produk berkualitas asli buatan Lapas Kelas 2B Jombang.
+            Setiap produk adalah bukti kreativitas tanpa batas di balik jeruji. Dukung kemandirian mereka dengan membeli produk berkualitas asli buatan Lapas Kelas IIB Jombang.
         </p>
 
         {{-- MARKETPLACE BUTTONS --}}

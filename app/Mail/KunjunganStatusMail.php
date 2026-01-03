@@ -24,8 +24,8 @@ class KunjunganStatusMail extends Mailable
     public function envelope(): Envelope
     {
         $subject = $this->kunjungan->status === 'approved'
-            ? '✅ Pendaftaran Kunjungan Disetujui - Lapas Jombang'
-            : '❌ Pendaftaran Kunjungan Ditolak - Lapas Jombang';
+            ? '✅ Pendaftaran Kunjungan Disetujui - Lapas Kelas IIB Jombang'
+            : '❌ Pendaftaran Kunjungan Ditolak - Lapas Kelas IIB Jombang';
 
         return new Envelope(
             subject: $subject,

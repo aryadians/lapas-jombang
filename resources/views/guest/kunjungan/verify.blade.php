@@ -15,7 +15,7 @@
     <div class="max-w-lg mx-auto my-8 bg-white rounded-lg shadow-lg p-6">
         <div class="text-center mb-6 border-b pb-4">
             <h1 class="text-2xl font-bold text-slate-800">Verifikasi Kunjungan</h1>
-            <p class="text-sm text-slate-500">Lapas Kelas 2B Jombang</p>
+            <p class="text-sm text-slate-500">Lapas Kelas IIB Jombang</p>
         </div>
 
         @if($kunjungan->status == 'approved')
