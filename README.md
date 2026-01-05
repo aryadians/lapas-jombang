@@ -63,17 +63,60 @@ Aplikasi ini dibangun menggunakan teknologi modern dan andal:
 
 ## 🚀 Getting Started
 
-Ikuti langkah-langkah ini untuk menjalankan proyek ini di lingkungan lokal Anda.
+Untuk menjalankan proyek ini secara lokal, Anda bisa mengikuti opsi instalasi cepat atau manual.
 
 ### Prerequisites
 
-Pastikan Anda telah menginstal perangkat lunak berikut:
+Sebelum memulai, pastikan sistem Anda telah terinstal:
 *   **PHP >= 8.2**
 *   **Composer**
 *   **Node.js & NPM**
-*   **MySQL** atau database sejenis
+*   **MySQL** (atau database sejenis seperti MariaDB)
+*   **Git**
 
-### Installation
+---
+
+### ⚡ Automatic Setup (Recommended)
+
+Cara ini paling cepat dan akan menjalankan sebagian besar perintah instalasi secara otomatis.
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/your-username/lapas-jombang.git
+    cd lapas-jombang
+    ```
+
+2.  **Run the setup script:**
+    Perintah ini akan menginstal dependensi, membuat file `.env`, generate key, menjalankan migrasi, dan build aset frontend.
+    ```bash
+    composer setup
+    ```
+
+3.  **Configure your database:**
+    Meskipun setup otomatis, Anda tetap harus mengatur koneksi database secara manual. Buka file `.env` yang baru dibuat dan isi detail koneksi database Anda.
+    ```env
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=lapas_jombang
+    DB_USERNAME=root
+    DB_PASSWORD=
+    ```
+    > **Penting:** Pastikan database `lapas_jombang` sudah dibuat di MySQL Anda.
+
+4.  **Run database seeder (Optional but Recommended):**
+    Untuk mengisi data awal seperti akun admin, jalankan seeder.
+    ```bash
+    php artisan db:seed
+    ```
+    > Akun admin default: `admin@example.com` | password: `password`
+
+
+---
+
+### 🛠️ Manual Installation (Step-by-step)
+
+Ikuti langkah-langkah berikut jika Anda ingin mengontrol setiap proses instalasi.
 
 1.  **Clone the repository:**
     ```bash
@@ -82,22 +125,25 @@ Pastikan Anda telah menginstal perangkat lunak berikut:
     ```
 
 2.  **Install PHP dependencies:**
+    Mengunduh semua library backend yang dibutuhkan.
     ```bash
     composer install
     ```
 
 3.  **Install JavaScript dependencies:**
+    Mengunduh semua library frontend yang dibutuhkan.
     ```bash
     npm install
     ```
 
 4.  **Create your environment file:**
-    Salin file `.env.example` menjadi `.env`.
+    Menyalin file konfigurasi contoh untuk proyek Anda.
     ```bash
     cp .env.example .env
     ```
 
 5.  **Generate application key:**
+    Membuat kunci enkripsi unik untuk mengamankan aplikasi.
     ```bash
     php artisan key:generate
     ```
@@ -114,31 +160,37 @@ Pastikan Anda telah menginstal perangkat lunak berikut:
     ```
 
 7.  **Run database migrations and seeders:**
-    Perintah ini akan membuat semua tabel dan mengisi data awal (termasuk akun admin).
+    Perintah ini akan membuat semua tabel (`migrate`) dan mengisi data awal (`seed`), termasuk akun admin.
     ```bash
     php artisan migrate --seed
     ```
     > Akun admin default: `admin@example.com` | password: `password`
 
 8.  **Build frontend assets:**
+    Mengkompilasi file CSS dan JavaScript untuk produksi.
     ```bash
     npm run build
     ```
 
-### Running The Application
+---
 
-1.  **Start the local development server:**
+### ✅ Running The Application
+
+Setelah instalasi selesai, jalankan server development:
+
+1.  **Start the Laravel server:**
     ```bash
     php artisan serve
     ```
 
-2.  **Start the Vite server (for frontend development):**
-    Buka terminal baru dan jalankan:
+2.  **(Optional) Start the Vite server for frontend development:**
+    Jika Anda ingin mengubah file CSS/JS, jalankan ini di terminal terpisah.
     ```bash
     npm run dev
     ```
 
-3.  Buka browser Anda dan kunjungi **`http://127.0.0.1:8000`**.
+3.  **Access the application:**
+    Buka browser Anda dan kunjungi **`http://127.0.0.1:8000`**.
 
 ---
 
