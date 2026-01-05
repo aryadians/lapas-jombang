@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lapas Kelas 2B Jombang</title>
+    <title>Lapas Kelas IIB Jombang</title>
     <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -34,8 +34,8 @@
             <a href="/" class="flex items-center space-x-3">
                 <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-navy-dark font-bold">L</div>
                 <div>
-                    <h1 class="text-xl font-bold tracking-wide">LAPAS JOMBANG</h1>
-                    <p class="text-xs text-gray-300">Kelas 2B - Kanwil Jawa Timur</p>
+                    <h1 class="text-xl font-bold tracking-wide">LAPAS KELAS IIB JOMBANG</h1>
+                    <p class="text-xs text-gray-300">Kelas IIB - Kanwil Jawa Timur</p>
                 </div>
             </a>
             <div class="hidden md:flex space-x-8 font-medium">
@@ -57,7 +57,7 @@
     <footer class="bg-navy-dark text-gray-300 py-10 mt-10">
         <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-                <h3 class="text-white text-lg font-bold mb-4 border-b border-gray-600 pb-2">Lapas Kelas 2B Jombang</h3>
+                <h3 class="text-white text-lg font-bold mb-4 border-b border-gray-600 pb-2">Lapas Kelas IIB Jombang</h3>
                 <p class="text-sm">Mewujudkan pelayanan pemasyarakatan yang PASTI (Profesional, Akuntabel, Sinergi, Transparan, Inovatif).</p>
             </div>
             <div>
@@ -77,7 +77,7 @@
             </div>
         </div>
         <div class="text-center text-xs mt-10 border-t border-gray-700 pt-4">
-            &copy; 2025 Lapas Kelas 2B Jombang. All rights reserved.
+            &copy; 2025 Lapas Kelas IIB Jombang. All rights reserved.
         </div>
     </footer>
 

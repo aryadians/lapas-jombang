@@ -1,7 +1,7 @@
 @component('mail::message')
 
 <div style="text-align: center; margin-bottom: 20px;">
-    <img src="{{ asset('img/logo.png') }}" alt="Lapas Jombang Logo" style="height: 80px; width: auto; display: inline-block;">
+    <img src="{{ asset('img/logo.png') }}" alt="Lapas Kelas IIB Jombang Logo" style="height: 80px; width: auto; display: inline-block;">
 </div>
 
 # Konfirmasi Pendaftaran Kunjungan Anda

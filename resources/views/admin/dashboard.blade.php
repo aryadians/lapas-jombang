@@ -54,7 +54,7 @@
                     Halo, <span class="text-gradient">{{ Auth::user()->name }}</span>! 👋
                 </h1>
                 <p class="text-blue-100/80 mt-3 text-lg font-light max-w-xl leading-relaxed">
-                    Selamat datang di Panel Kontrol Sistem Informasi Lapas Jombang. Pantau aktivitas terkini dalam satu pandangan.
+                    Selamat datang di Panel Kontrol Sistem Informasi Lapas Kelas IIB Jombang. Pantau aktivitas terkini dalam satu pandangan.
                 </p>
             </div>
             

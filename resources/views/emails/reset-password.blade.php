@@ -3,18 +3,18 @@
 {{-- Header with Logo and Badges --}}
 <div style="text-align: center; margin-bottom: 30px; background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 20px; border-radius: 12px; border: 2px solid #fbbf24;">
     <div style="margin-bottom: 15px;">
-        <img src="{{ asset('img/logo.png') }}" alt="Logo Lapas Jombang" style="height: 70px; width: auto; display: inline-block; border-radius: 50%; border: 4px solid #fbbf24; padding: 5px; background: white; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+        <img src="{{ asset('img/logo.png') }}" alt="Logo Lapas Kelas IIB Jombang" style="height: 70px; width: auto; display: inline-block; border-radius: 50%; border: 4px solid #fbbf24; padding: 5px; background: white; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
     </div>
     <div style="display: inline-flex; align-items: center; gap: 10px; margin-bottom: 10px;">
         <span style="background: #dc2626; color: white; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; display: inline-flex; align-items: center; gap: 5px;">
-            🛡️ LAPAS JOMBANG
+            🛡️ LAPAS KELAS IIB JOMBANG
         </span>
         <span style="background: #2563eb; color: white; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; display: inline-flex; align-items: center; gap: 5px;">
             ⚖️ KEMENKUMHAM RI
         </span>
     </div>
     <h1 style="color: #fbbf24; text-align: center; margin: 10px 0 5px 0; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Reset Password Akun</h1>
-    <p style="color: #e2e8f0; text-align: center; font-size: 14px; margin: 0;">Sistem Informasi Pemasyarakatan - Lembaga Pemasyarakatan Kelas 2B Jombang</p>
+    <p style="color: #e2e8f0; text-align: center; font-size: 14px; margin: 0;">Sistem Informasi Pemasyarakatan - Lembaga Pemasyarakatan Kelas IIB Jombang</p>
 </div>
 
 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin: 20px 0;">
@@ -34,7 +34,7 @@
     </p>
 
     <p style="color: #374151; margin-bottom: 15px;">
-        Kami menerima permintaan untuk mereset password akun Anda di Sistem Informasi Pemasyarakatan Lapas Kelas 2B Jombang.
+        Kami menerima permintaan untuk mereset password akun Anda di Sistem Informasi Pemasyarakatan Lapas Kelas IIB Jombang.
     </p>
 
     <p style="color: #374151; margin-bottom: 20px;">
@@ -70,7 +70,7 @@
     </div>
     <h3 style="color: #065f46; margin: 0 0 12px 0; font-size: 16px; font-weight: bold;">Butuh Bantuan?</h3>
     <p style="color: #065f46; margin: 0; font-size: 14px; line-height: 1.5;">
-        Hubungi Administrator Sistem Lapas Jombang:<br>
+        Hubungi Administrator Sistem Lapas Kelas IIB Jombang:<br>
         📧 <strong>Email:</strong> admin@lapasjombang.go.id<br>
         📱 <strong>WhatsApp:</strong> +62 812-3456-7890<br>
         🏢 <strong>Alamat:</strong> Jl. Raya Jombang No. 123, Jombang
@@ -91,7 +91,7 @@
     </div>
     <p style="color: #475569; font-size: 12px; margin: 0; line-height: 1.5;">
         Email ini dikirim secara otomatis oleh Sistem Informasi Pemasyarakatan<br>
-        <strong>Lembaga Pemasyarakatan Kelas 2B Jombang</strong><br>
+        <strong>Lembaga Pemasyarakatan Kelas IIB Jombang</strong><br>
         &copy; {{ date('Y') }} Kementerian Hukum dan HAM Republik Indonesia<br>
         <em>"Mewujudkan Pemasyarakatan yang Bermartabat"</em>
     </p>

@@ -304,7 +304,7 @@
                         <span class="font-bold text-slate-800">PENTING</span>
                     </div>
                     <p class="text-slate-600 text-center italic text-sm leading-relaxed">
-                        "Dengan menekan tombol di bawah, saya menyatakan telah membaca dan memahami seluruh tata tertib serta ketentuan yang berlaku untuk kunjungan ke Lapas Jombang."
+                        "Dengan menekan tombol di bawah, saya menyatakan telah membaca dan memahami seluruh tata tertib serta ketentuan yang berlaku untuk kunjungan ke Lapas Kelas IIB Jombang."
                     </p>
                 </div>
 

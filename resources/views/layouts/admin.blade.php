@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Admin Panel - Lapas Jombang</title>
+    <title>Admin Panel - Lapas Kelas IIB Jombang</title>
     <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -44,7 +44,7 @@
                 <img src="{{ asset('img/logo.png') }}" alt="Logo" class="h-12 w-auto mr-3" onerror="this.style.display='none'">
                 <div>
                     <h1 class="font-bold text-lg tracking-wide">ADMIN PANEL</h1>
-                    <p class="text-xs text-yellow-500 uppercase font-semibold">Lapas Jombang</p>
+                    <p class="text-xs text-yellow-500 uppercase font-semibold">Lapas Kelas IIB Jombang</p>
                 </div>
             </div>
 

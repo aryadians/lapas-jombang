@@ -1,4 +1,4 @@
-# 🏛️ Sistem Informasi Lapas Kelas 2B Jombang
+# 🏛️ Sistem Informasi Lapas Kelas IIB Jombang
 > **Laravel Test MSJ 2025 — Recruitment System Project**
 
 ![Laravel](https://img.shields.io/badge/Laravel-10-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
@@ -6,7 +6,7 @@
 ![AlpineJS](https://img.shields.io/badge/Alpine.js-8BC0D0?style=for-the-badge&logo=alpine.js&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-000000?style=for-the-badge&logo=mysql&logoColor=white)
 
-Aplikasi berbasis web modern yang dirancang untuk memfasilitasi layanan publik dan manajemen internal di **Lapas Kelas 2B Jombang**. Aplikasi ini mencakup pendaftaran kunjungan tatap muka secara online, portal berita, pengumuman, serta fitur aksesibilitas ramah disabilitas.
+Aplikasi berbasis web modern yang dirancang untuk memfasilitasi layanan publik dan manajemen internal di **Lapas Kelas IIB Jombang**. Aplikasi ini mencakup pendaftaran kunjungan tatap muka secara online, portal berita, pengumuman, serta fitur aksesibilitas ramah disabilitas.
 
 ---
 

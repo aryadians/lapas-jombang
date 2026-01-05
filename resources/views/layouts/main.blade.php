@@ -7,7 +7,7 @@
     {{-- CSRF Token Wajib untuk AJAX --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Lapas Kelas 2B Jombang</title>
+    <title>Lapas Kelas IIB Jombang</title>
 
     <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/png">
 
@@ -69,7 +69,7 @@
                         </div>
 
                         <div class="flex flex-col">
-                            <span class="font-bold text-white text-lg md:text-xl tracking-wide group-hover:text-yellow-400 transition-colors duration-300">LAPAS KELAS 2B JOMBANG</span>
+                            <span class="font-bold text-white text-lg md:text-xl tracking-wide group-hover:text-yellow-400 transition-colors duration-300">LAPAS KELAS IIB JOMBANG</span>
                             <span class="text-[11px] text-yellow-500 uppercase tracking-wider font-semibold hidden md:block">Kementerian Imigrasi dan Pemasyarakatan RI</span>
                         </div>
                     </a>
@@ -81,6 +81,9 @@
                     <a href="{{ url('/#profil') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-semibold transition-all duration-300">Profil</a>
                     <a href="{{ route('news.public.index') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-semibold transition-all duration-300">Berita</a>
                     <a href="{{ route('announcements.public.index') }}" class="text-gray-300 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-semibold transition-all duration-300">Pengumuman</a>
+                    {{-- TAMBAHAN: MENU GALERI (Disisipkan disini) --}}
+    <a href="{{ route('gallery.index') }}" class="text-yellow-400 hover:text-white hover:border-b-2 hover:border-yellow-500 px-1 py-2 text-base font-bold transition-all duration-300 flex items-center gap-2">
+        <i class="fas fa-store"></i> Galeri
                 </div>
 
                 {{-- Menu Kanan --}}
@@ -135,6 +138,10 @@
                 <a href="{{ url('/#profil') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-300 hover:text-white hover:bg-slate-800/50 transition-all duration-300">Profil</a>
                 <a href="{{ route('news.public.index') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-300 hover:text-white hover:bg-slate-800/50 transition-all duration-300">Berita</a>
                 <a href="{{ route('announcements.public.index') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-300 hover:text-white hover:bg-slate-800/50 transition-all duration-300">Pengumuman</a>
+                {{-- TAMBAHAN: MENU GALERI MOBILE --}}
+        <a href="{{ route('gallery.index') }}" class="block px-3 py-2 rounded-md text-base font-bold text-yellow-400 hover:text-white hover:bg-slate-800/50 transition-all duration-300">
+            <i class="fas fa-store mr-2"></i> Galeri Karya
+        </a>
 
                 @if (Route::has('login'))
                 <a href="{{ route('login') }}" class="block px-3 py-2 mt-2 rounded-md text-base font-medium text-gray-400 hover:text-yellow-400 hover:bg-slate-800/50 transition-all duration-300">
@@ -355,7 +362,7 @@
                         referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
                     <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur text-slate-900 px-4 py-2 rounded-lg text-xs font-bold shadow-lg">
-                        📍 Lokasi Lapas Jombang
+                        📍 Lokasi Lapas Kelas IIB Jombang
                     </div>
                     <div class="absolute top-4 right-4 bg-blue-600/90 backdrop-blur text-white px-3 py-1 rounded-lg text-xs font-semibold shadow-lg">
                         <i class="fas fa-map-marker-alt mr-1"></i> -7.5587, 112.2313
@@ -438,7 +445,7 @@
 
             {{-- Copyright Bawah --}}
             <div class="mt-12 pt-8 border-t border-slate-800/50 text-center text-slate-500 text-sm">
-                <p>© {{ date('Y') }} Lapas Kelas 2B Jombang. All rights reserved.</p>
+                <p>© {{ date('Y') }} Lapas Kelas IIB Jombang. All rights reserved.</p>
                 <p class="mt-2 text-xs">Developed by Tim IT</p>
             </div>
         </div>
@@ -611,4 +618,4 @@
 
 </body>
 
-</html>sudah 
+</html>

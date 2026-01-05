@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Lapas Kelas 2B Jombang - Sistem Informasi Pemasyarakatan</title>
+    <title>Lapas Kelas IIB Jombang - Sistem Informasi Pemasyarakatan</title>
 
     {{-- Favicon --}}
     <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/png">
@@ -41,10 +41,10 @@
             <a href="{{ url('/') }}" class="flex flex-col items-center group">
                 {{-- Logo bulat dengan border --}}
                 <div class="relative mb-4">
-                    <img src="{{ asset('img/logo.png') }}" class="w-24 h-24 rounded-full border-4 border-yellow-500 shadow-2xl group-hover:scale-110 transition-transform duration-300 bg-white p-2" alt="Logo Lapas Jombang">
+                    <img src="{{ asset('img/logo.png') }}" class="w-24 h-24 rounded-full border-4 border-yellow-500 shadow-2xl group-hover:scale-110 transition-transform duration-300 bg-white p-2" alt="Logo Lapas Kelas IIB Jombang">
                     <div class="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full blur opacity-30 group-hover:opacity-50 transition-opacity"></div>
                 </div>
-                <h2 class="text-2xl font-bold text-white tracking-wide text-center">LAPAS KELAS 2B JOMBANG</h2>
+                <h2 class="text-2xl font-bold text-white tracking-wide text-center">LAPAS KELAS IIB JOMBANG</h2>
                 <p class="text-sm text-yellow-400 font-semibold tracking-widest uppercase mt-1 text-center">Sistem Informasi Pemasyarakatan</p>
             </a>
         </div>
@@ -57,7 +57,7 @@
 
         {{-- COPYRIGHT --}}
         <div class="mt-8 text-slate-500 text-sm">
-            &copy; {{ date('Y') }} Lapas Kelas 2B Jombang.
+            &copy; {{ date('Y') }} Lapas Kelas IIB Jombang.
         </div>
     </div>
 
