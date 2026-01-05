@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/user-attachments/assets/5137579a-d754-4cf9-a673-f1ba55a6d790/logo.png" alt="Lapas Jombang Logo" width="150">
+  <img src="/public/img/logo.png" alt="Lapas Jombang Logo" width="150">
   <h1>🏛️ Sistem Informasi Lapas Kelas IIB Jombang</h1>
   <p>Aplikasi web modern untuk layanan publik dan manajemen internal di <strong>Lapas Kelas IIB Jombang</strong>, dibangun dengan Laravel 12.</p>
 
